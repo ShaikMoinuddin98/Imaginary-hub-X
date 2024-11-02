@@ -222,7 +222,12 @@ function isLoggedIn(req, res, next) {
 
 // Function to publish scheduled articles
 async function publishScheduledArticles() {
-  const currentTime = new Date();
+    const date = new Date();
+  // Calculate UTC+5
+  const utc5Date = new Date(date.getTime() +(5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
+
+  // Format it as ISO string but with "Z" to indicate UTC
+  const currentTime = new Date(utc5Date.toISOString()) // This gives you UTC time
   console.log(currentTime)
   try {
       // Find articles that are scheduled to be published up to the current minute
@@ -434,12 +439,18 @@ app.get("/article-editing/:id",isLoggedIn,async (req,res)=>{
 })
 
 app.post("/edit-article/:id",isLoggedIn,async(req,res)=>{
+    const date = new Date();
+  // Calculate UTC+5
+  const utc5Date = new Date(date.getTime() +(5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
+
+  // Format it as ISO string but with "Z" to indicate UTC
+  const currentTime = new Date(utc5Date.toISOString()) // This gives you UTC time
   let data
   if(req.body.schedule){
    data={email:req.user.email,...req.body}
   }
   else
-  data={email:req.user.email,...req.body,lastUpdated:new Date()}
+  data={email:req.user.email,...req.body,lastUpdated:currentTime}
   const u=await articles.updateOne({email:req.user.email,_id:req.params.id},data)
  
   res.json({message:"done"})
@@ -448,13 +459,19 @@ app.post("/edit-article/:id",isLoggedIn,async(req,res)=>{
 
 
 app.post("/publish-article",async(req,res)=>{
+    const date = new Date();
+  // Calculate UTC+5
+  const utc5Date = new Date(date.getTime() +(5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
+
+  // Format it as ISO string but with "Z" to indicate UTC
+  const currentTime = new Date(utc5Date.toISOString()) // This gives you UTC time
   console.log(req.user)
   let data
   if(req.body.schedule){
    data={email:req.user.email,...req.body}
   }
   else
-  data={email:req.user.email,...req.body,publishedDate:new Date()}
+  data={email:req.user.email,...req.body,publishedDate:currentTime}
   const u=new articles(data)
   await u.save()
   res.json({message:"done"})
