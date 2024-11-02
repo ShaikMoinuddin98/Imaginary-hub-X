@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Articles This Week</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .article {
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 0;
+        }
+
+        .article:last-child {
+            border-bottom: none;
+        }
+
+        .title {
+            font-size: 18px;
+            color: #007bff;
+            text-decoration: none;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .read-more {
+            font-size: 12px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .footer a:hover {
+            color: #ffb800;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            Top Articles This Week
+        </div>
+        <div class="content">
+            <% articles.forEach(function(article) { %>
+                <div class="article">
+                    <a href="http://localhost:9000/article/<%= article.title %>/<%=article._id%>" class="title"><%= article.title %></a>
+                   
+                    <a href="http://localhost:9000/article/<%= article.title %>/<%=article._id%>" class="read-more">Read more &raquo;</a>
+                </div>
+            <% }); %>
+        </div>
+        <div class="footer">
+            &copy; 2024 Imaginary Hub. All Rights Reserved. | <a href="#">Unsubscribe</a>
+        </div>
+    </div>
+</body>
+
+</html>

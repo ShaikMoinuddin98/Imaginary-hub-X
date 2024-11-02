@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile and Project</title>
+  <link rel="stylesheet" href="/public/assests/css/mainstyle.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* CSS styles */
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border-radius: 5px;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+
+    .warning {
+      color: red;
+      display: none;
+    }
+
+    .interest-buttons {
+      margin-top: 10px;
+    }
+
+    .interest-buttons button {
+      margin: 5px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: 1px solid #28a745;
+      background-color: white;
+      color: #28a745;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .interest-buttons button.active {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .profile-photo {
+      display: block;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    #photoPreview {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Create My Writing Profile</h2>
+    <form id="profileForm" action="/profile-creation" method="post" enctype="multipart/form-data">
+
+      <!-- Profile Photo Upload -->
+      <div class="form-group">
+        <label for="profilePhoto">Profile Photo (Square Image)</label>
+        <input name="profilePhoto" type="file" class="form-control-file" id="profilePhoto" accept="image/*"
+          value="<% if (data && data.img && data.img.data) { %>data:image/<%= data.img.contentType %>;base64,<%= data.img.data.toString('base64') %><% } else { %>#<% } %>"
+          required>
+        <small class="text-muted">Please upload a square image.</small>
+
+        <img id="photoPreview" class="profile-photo"
+          src="<% if (data && data.img && data.img.data) { %>data:image/<%= data.img.contentType %>;base64,<%= data.img.data.toString('base64') %><% } else { %>#<% } %>"
+          alt="Profile Photo Preview">
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input name="username" type="text" class="form-control" id="username" placeholder="Enter your username" <% if
+          (data && data.username) { %>value="<%= data.username %>"<% } %> required>
+      </div>
+
+      <!-- LinkedIn Profile -->
+      <div class="form-group">
+        <label for="linkedin">LinkedIn Profile</label>
+        <input name="linkedin" type="url" class="form-control" id="linkedin" <% if (data && data.socialmedia &&
+          data.socialmedia[0]) { %>value="<%= data.socialmedia[0] %>"<% } %>
+            placeholder="Enter your LinkedIn profile link" required>
+            <small id="linkedinWarning" class="warning">Invalid LinkedIn URL</small>
+      </div>
+
+      <!-- X (Twitter) Profile -->
+      <div class="form-group">
+        <label for="xProfile">X (Twitter) Profile</label>
+        <input name="xProfile" type="url" class="form-control" id="xProfile" <% if (data && data.socialmedia &&
+          data.socialmedia[1]) { %>value="<%= data.socialmedia[1] %>"<% } %>
+            placeholder="Enter your X (Twitter) profile link" required>
+            <small id="xWarning" class="warning">Invalid X (Twitter) URL</small>
+      </div>
+
+      <!-- Select Primary Social Media -->
+      <div class="form-group">
+        <label for="primarySocial">Select Your Primary Social Media</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="primarySocial" id="primaryLinkedIn" value="linkedin" <% if
+            (data && data.primarySocial=="linkedin" ) { %>checked<% } %> required>
+            <label class="form-check-label" for="primaryLinkedIn">LinkedIn</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="primarySocial" id="primaryX" value="x" <% if (data &&
+            data.primarySocial=="x" ) { %>checked<% } %> required>
+            <label class="form-check-label" for="primaryX">X (Twitter)</label>
+        </div>
+      </div>
+
+      <!-- Profile Heading Line -->
+      <div class="form-group">
+        <label for="profileHeading">Profile Heading</label>
+        <input name="profileHeading" type="text" class="form-control" id="profileHeading" <% if (data && data.heading) {
+          %>value="<%= data.heading %>"<% } %>
+            placeholder="Enter a short headline about yourself" required>
+      </div>
+
+      <!-- Profession -->
+      <div class="form-group">
+        <label for="profession">Profession</label>
+        <input name="profession" type="text" class="form-control" id="profession" <% if (data && data.profession) {
+          %>value="<%= data.profession %>"<% } %>
+            placeholder="Enter your profession" required>
+      </div>
+
+      <!-- Profile Description -->
+      <div class="form-group">
+        <label for="profileDescription">Profile Description</label>
+        <textarea name="profileDescription" class="form-control" id="profileDescription" rows="3"
+          placeholder="Enter a brief description about yourself" minlength="100" required>
+          <% if (data && data.description) { %><%=data.description%><% } %>
+        </textarea>
+        <small id="descriptionWarning" class="warning">Description must be at least 100 characters.</small>
+      </div>
+
+      <!-- Topics of Interest -->
+      <div class="form-group">
+        <label for="interests">Topics You're Interested In Writing About</label>
+        <div class="interest-buttons" id="interests" name="interest">
+          <button type="button"
+            class="interest-btn <% if (data.interests && data.interests.includes('Business')) { %>active<% } %>"
+            name="interest" data-topic="Business">Business+</button>
+          <button type="button"
+            class="interest-btn <% if (data.interests && data.interests.includes('Tech')) { %>active<% } %>"
+            name="interest" data-topic="Tech">Tech</button>
+          <button type="button"
+            class="interest-btn <% if (data.interests && data.interests.includes('Finance')) { %>active<% } %>"
+            name="interest" data-topic="Finance">Finance</button>
+          <button type="button"
+            class="interest-btn <% if (data.interests && data.interests.includes('Education')) { %>active<% } %>"
+            name="interest" data-topic="Education">Education</button>
+          <button type="button"
+            class="interest-btn <% if (data.interests && data.interests.includes('Psychology')) { %>active<% } %>"
+            name="interest" data-topic="Psychology">Psychology</button>
+        </div>
+      </div>
+
+      <!-- Hidden input to store selected interests -->
+      <input type="hidden" id="selectedInterests" name="interests" />
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-success">Save Profile</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <script>
+    document.querySelectorAll('.interest-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedInterests = document.getElementById('selectedInterests');
+        const topic = button.getAttribute('data-topic');
+
+        // Toggle selection
+        if (button.classList.contains('selected')) {
+          // Remove from selected interests
+          const currentInterests = selectedInterests.value.split(',').filter(item => item !== topic);
+          selectedInterests.value = currentInterests.join(',');
+          button.classList.remove('selected');
+        } else {
+          // Add to selected interests
+          const currentInterests = selectedInterests.value ? selectedInterests.value.split(',') : [];
+          if (!currentInterests.includes(topic)) {
+            currentInterests.push(topic);
+          }
+          selectedInterests.value = currentInterests.join(',');
+          button.classList.add('selected');
+        }
+      });
+    });
+
+
+    $(document).ready(function () {
+      const selectedInterests = document.getElementById('selectedInterests');
+
+      // Initialize the hidden input with the pre-selected topics
+      const initialSelectedTopics = [];
+      document.querySelectorAll('.interest-btn.active').forEach(button => {
+        const topic = button.getAttribute('data-topic');
+        initialSelectedTopics.push(topic);
+        button.classList.add('selected'); // Ensure it appears selected visually
+      });
+
+      selectedInterests.value = initialSelectedTopics.join(',');
+      // Preview the uploaded profile photo and check for square image
+      $('#profilePhoto').change(function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const img = new Image();
+            img.onload = function () {
+              if (img.width !== img.height) {
+                alert("Please upload a square image (equal width and height).");
+                $('#profilePhoto').val(''); // Clear the file input
+                $('#photoPreview').hide();
+              } else {
+                $('#photoPreview').attr('src', e.target.result);
+                $('#photoPreview').show();
+              }
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      if ($('#photoPreview').attr('src') !== '#') {
+        $('#photoPreview').show();
+      } else {
+        $('#photoPreview').hide();
+      }
+      // Handle interest button toggle
+      $('.interest-btn').click(function () {
+        $(this).toggleClass('active');
+      });
+
+      $('#profileForm').submit(function (event) {
+
+
+        const profileDescription = $('#profileDescription').val();
+        const linkedin = $('#linkedin').val();
+        const xProfile = $('#xProfile').val();
+
+        // Validate Profile Description Length
+        if (profileDescription.length < 100) {
+          $('#descriptionWarning').show();
+          return;
+        } else {
+          $('#descriptionWarning').hide();
+        }
+
+        // Validate LinkedIn and X URLs
+        const validateURL = (url, warningId) => {
+          const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[a-zA-Z0-9-_]+)*\/?$/;
+          if (!regex.test(url)) {
+            $(`#${warningId}`).show();
+            return false;
+          } else {
+            $(`#${warningId}`).hide();
+            return true;
+          }
+        };
+
+        const isLinkedInValid = validateURL(linkedin, 'linkedinWarning');
+        const isXValid = validateURL(xProfile, 'xWarning');
+
+        if (isLinkedInValid && isXValid) {
+          // Ensure a primary social media option is selected
+          const primarySocial = $('input[name="primarySocial"]:checked').val();
+          if (!primarySocial) {
+            alert('Please select your primary social media account.');
+            return;
+          }
+
+          // Gather selected topics
+          let selectedTopics = [];
+          $('.interest-btn.active').each(function () {
+            selectedTopics.push($(this).data('topic'));
+          });
+
+          // Output data (can be sent to server)
+          const formData = {
+
+            username: $('#username').val(),
+            profileHeading: $('#profileHeading').val(),
+            profession: $('#profession').val(),
+            profileDescription: profileDescription,
+            selectedTopics: selectedTopics,
+            primarySocial: primarySocial
+          };
+
+          console.log("Form Data:", formData);
+          alert("Profile saved successfully!");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

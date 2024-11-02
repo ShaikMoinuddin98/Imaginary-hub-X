@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html data-wf-domain="edulink-wbs.webflow.io" data-wf-page="658952b94ba1641a3cebcd9a"
+  data-wf-site="64fed37ef8f0a16c147f2b29" lang="en" data-wf-collection="658952b94ba1641a3cebcd89"
+  data-wf-item-slug="samuel-bishop">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Writer Profile</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <link href="/assests/css/dashboard.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+  /* Ensure the text in team-detail-content does not overflow */
+  .team-detail-content {
+    max-width: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    /* Older browsers */
+    overflow-wrap: break-word;
+    /* Modern browsers */
+    word-break: break-word;
+    /* Ensure long words break correctly */
+  }
+
+  /* Additional styling to ensure text fits within the container */
+  .team-detail-content p {
+    margin: 0;
+    /* Reset margin */
+    padding: 0;
+    /* Reset padding */
+    line-height: 1.5;
+    /* Adjust line height for better readability */
+    text-align: justify;
+    /* Justify text to align it neatly */
+  }
+</style>
+
+<body>
+  <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+    role="banner" class="navbar w-nav">
+    <div class="container w-container">
+      <div class="navbar-grid"><a href="/" class="brand w-nav-brand">
+          <h4>Imaginary Hub X</h4>
+        </a>
+        <nav role="navigation" id="w-node-_9a88710d-c477-a84b-2039-21f2865a57a2-865a579d" class="nav-menu w-nav-menu"><a
+            href="/" class="nav-link w-nav-link">Home</a>
+          <a href="/analytics" class="nav-link w-nav-link">My Analytics</a>
+          <div data-hover="true" data-delay="0" data-w-id="9a88710d-c477-a84b-2039-21f2865a57a7" class="w-dropdown">
+          </div><a href="/profile-creation" class="nav-link w-nav-link">Edit My profile</a>
+          <a href="/contact" class="nav-link w-nav-link">Contact Us</a>
+        </nav>
+        <div class="menu-button w-nav-button">
+          <div class="w-icon-nav-menu"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-inner">
+    <div class="container-small w-container">
+      <div class="team-detail">
+        <div class="w-layout-grid grid-team-detail">
+          <div id="w-node-_261925c4-9b75-5b4b-05cf-58750f499d7a-3cebcd9a"><img alt="" loading="eager" <% if
+              (data.img.data) { %>
+            src="data:image/<%= data.img.contentType %>;base64,<%= data.img.data.toString('base64') %>"
+                <%}%>
+                  <%if(data.img.data==null){%>
+                    src="/assests/images/sample photo.jpg"
+                    <%}%>
+                      class="team-detail-image" /></div>
+          <div id="w-node-_44f36bba-6d60-b64c-180e-b8590d78712f-3cebcd9a" class="team-detail-info">
+            <div class="section-title">
+              <h1>
+                <%=data.username%>
+              </h1>
+              <div>
+                <%=data.profession%>
+              </div>
+            </div>
+            <div class="team-detail-social">
+              <a href="<%=data.socialmedia[0]%>" target="_blank" class="team-social-item w-inline-block"><img
+                  src="/assests/svg/Linkedin.png" loading="lazy" alt="Linkedin" class="team-social-icon" /></a>
+              <a href="<%=data.socialmedia[1]%>" target="_blank" class="team-social-item w-inline-block"><img
+                  src="https://cdn.prod.website-files.com/64fed37ef8f0a16c147f2b29/66309b55262b12e40e63ea64_twitter-dark.svg"
+                  loading="lazy" alt="Twitter dark" class="team-social-icon" /></a>
+            </div>
+          </div>
+        </div>
+        <p>
+          <%=data.heading%>
+        </p>
+        <div class="team-name">
+          <h2 class="heading-h5">About </h2>
+          <h2 class="heading-h5">
+            <%=data.username%>
+          </h2>
+        </div>
+        <div class="team-detail-content rich-text-block w-richtext">
+          <p>
+            <%=data.description%>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="course-section section-spacing-bottom">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="section-title section-title-inline">
+        <div class="teacher-course-name">
+          <h2>Articles of</h2>
+          <h2>
+            <%=data.username%>
+          </h2>
+        </div><a href="/article-writing" class="button-dark w-button">Write a article</a>
+      </div>
+      <div class="w-dyn-list">
+        <div role="list" class="course-grid w-dyn-items">
+          <%for(item of articles){%>
+            <div role="listitem" class="w-dyn-item">
+              <a class="button-dark" href="/article-editing/<%=item._id%>">edit</a>
+
+              <a href="/article/<%=item.title%>/<%=item._id%>" class="course-item w-inline-block">
+                <div class="course-image-wrap">
+                 
+
+    
+                  <img alt="" loading="eager"
+                    data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D"
+                    <% if (item.images.length!=0) { %>
+                        src="<%=item.images[0]%>"
+                        <%}else{%>
+                      src="/assests/img/writer 1.jpg"
+                    <%}%>
+                    
+                    sizes="(max-width: 479px) 100vw, (max-width: 767px) 90vw, (max-width: 991px) 45vw, (max-width: 1279px) 29vw, 28vw"
+                    class="course-image" />
+
+                  <div class="course-teacher-wrap">
+                    <img alt="" loading="eager" <% if (data.img.data) { %>
+                    src="data:image/<%= data.img.contentType %>;base64,<%= data.img.data.toString('base64') %>"
+                        <%}%>
+                          <%if(data.img.data==null){%>
+                            src="/assests/images/sample photo.jpg"
+                            <%}%> class="course-instructor-image-rounded" />
+                              <div>
+                                <%=data.username%>
+                              </div>
+                  </div>
+                </div>
+
+                <div class="course-info">
+                  <h3 class="heading-h6">
+                    <%=item.title%>
+                  </h3>
+                  <div class="course-meta">
+                    <div class="course-meta-item">
+                      <img alt="" loading="eager" src="/assests/svg/published.svg" class="course-meta-icon" />
+                      <%if(item.schedule){%>
+                        <div>
+                          <%= new Date(item.schedule).toLocaleDateString('en-US', { year: 'numeric' , month: 'long' ,
+                            day: 'numeric' })%>
+                        </div>
+                        <%} else{%>
+                          <div>
+                            <%= new Date(item.publishedDate).toLocaleDateString('en-US', { year: 'numeric' ,
+                              month: 'long' , day: 'numeric' })%>
+                          </div>
+                          <%}%>
+                    </div>
+                    <div class="course-meta-item">
+                      <img alt="" loading="eager" src="/assests/svg/read time.svg" class="course-meta-icon" />
+                      <div>3 mins read</div>
+                    </div>
+                    <div class="course-meta-item">
+                      <img alt="" loading="eager" src="/assests/svg/read people.svg" class="course-meta-icon" />
+                      <div>1224 reads</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <%}%>
+              <!-- CSS -->
+              <style>
+                .course-item {
+                  position: relative;
+                  display: inline-block;
+                }
+
+                .edit-button {
+                  position: absolute;
+                  top: 10px;
+                  left: 10px;
+                  background-color: #28a745;
+                  color: white;
+                  padding: 5px 10px;
+                  border-radius: 5px;
+                  font-size: 12px;
+                  display: none;
+                  z-index: 1;
+                  cursor: pointer;
+                }
+
+                .course-item:hover .edit-button {
+                  display: block;
+                }
+
+                .course-image-wrap {
+                  position: relative;
+                }
+
+                .course-image {
+                  width: 100%;
+                  border-radius: 5px;
+                }
+
+                .course-teacher-wrap {
+                  margin-top: 10px;
+                  display: flex;
+                  align-items: center;
+                }
+
+                .course-instructor-image-rounded {
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  margin-right: 10px;
+                }
+
+                .course-info {
+                  margin-top: 10px;
+                }
+
+                .course-meta {
+                  display: flex;
+                  gap: 15px;
+                }
+
+                .course-meta-item {
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                }
+
+                .course-meta-icon {
+                  width: 20px;
+                  height: 20px;
+                }
+              </style>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="footer-contact-wrap">
+        <div class="inner-container">
+          <div class="section-title text-center">
+            <h2>Write something that inspires the world!</h2>
+            <p>Explore boundless opportunities for your personal and professional growth with
+            <div>Imaginary Hub X</div>
+            </p>
+          </div>
+          <div data-w-id="3adce45d-c51e-cfa3-c7a0-9885a892b18e" class="work-rounded-link"><img
+              src="https://cdn.prod.website-files.com/64fed37ef8f0a16c147f2b29/6630e18e798b673090f10cbb_years-of-experiance.png"
+              loading="eager" alt="" class="work-rounded-image" />
+            <div class="work-link-arrow">15+</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-wrap">
+        <div id="w-node-_0d13b372-0d7e-4317-0600-b15cc4d72b83-c4d72b5e" class="footer-about"><a href="/"
+            class="footer-logo-link w-inline-block">
+            <h4 style="color: white;">Imaginary Hub X</h4>
+          </a>
+        </div>
+        <div id="w-node-_0d13b372-0d7e-4317-0600-b15cc4d72b97-c4d72b5e">
+          <div class="w-layout-grid grid-footer-link">
+            <div class="footer-link-wrap">
+              <h6 class="footer-title">Home</h6><a href="/" class="footer-link">Home</a>
+              <a href="/article-writing" class="footer-link">Write now</a>
+              <a href="/about" class="footer-link">About</a>
+              <a href="/contact" class="footer-link">Contact Us</a>
+            </div>
+            <div class="footer-link-wrap">
+              <h6 class="footer-title">Newsletters</h6><a href="/allnews" class="footer-link">Latest
+                issue</a><a href="/allnews" class="footer-link">All Categories</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assests/js/dashboard.js" type="text/javascript" crossorigin="anonymous"></script>
+
+  <script src="/assests/js/dashboard1.js" type="text/javascript"></script>
+</body>
+
+</html>

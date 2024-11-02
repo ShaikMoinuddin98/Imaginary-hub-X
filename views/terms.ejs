@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer Guidelines & Monetization - Imaginary Hub</title>
+    <link rel="stylesheet" href="/public/assests/css/mainstyle.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        p,
+        li {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .button-dark {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-dark:hover {
+            background-color: #555;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .form-check {
+            margin-top: 20px;
+        }
+
+        .accept-checkbox {
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Terms & Conditions for Writers</h2>
+        <p>Welcome to Imaginary Hub’s Writer Program! Before you start contributing your unique voice to our platform,
+            please read through our terms and conditions carefully:</p>
+
+        <h3>Content Guidelines</h3>
+        <ul>
+            <li><strong>Originality:</strong> All submissions must be 100% original and created by the writer.
+                Plagiarism is strictly prohibited.</li>
+            <li><strong>Topic Relevance:</strong> Articles should align with one of our content categories: Technology,
+                Finance, Business, Education, or Human Psychology.</li>
+            <li><strong>Quality Standards:</strong> Submissions should be well-researched, insightful, and free from
+                grammatical errors. Each piece should add genuine value to our readers.</li>
+            <li><strong>Word Count:</strong> The minimum word count for any submission is 800 words, with no maximum
+                limit. However, ensure the content is concise and clear.</li>
+            <li><strong>Community Guidelines:</strong> Writers must adhere to our community guidelines, promoting
+                respectful, inclusive discussions. Offensive or harmful content is not tolerated.</li>
+        </ul>
+
+        <h3>Monetization Principles</h3>
+        <p>We believe in rewarding our writers for their contributions. Here’s how our monetization system works:</p>
+        <ul>
+            <li><strong>Revenue Sharing:</strong> Writers earn a percentage of revenue based on article engagement
+                (views, shares, comments). Higher engagement means higher earnings.</li>
+            <li><strong>Subscription Model:</strong> Premium articles are available to subscribed readers. Writers
+                receive a portion of the subscription revenue based on the readership of their articles.</li>
+            <li><strong>Sponsorships:</strong> Writers may have the opportunity to include sponsor mentions in their
+                articles. In such cases, revenue is shared between the platform and the writer.</li>
+        </ul>
+
+        <h3>Content Ownership</h3>
+        <p>By submitting your content, you grant Imaginary Hub the right to publish, distribute, and promote your
+            articles across all platforms. Writers retain the intellectual property rights to their work and can request
+            removal or withdrawal of content at any time.</p>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input accept-checkbox" type="checkbox" id="acceptCheckbox" required>
+            <label class="form-check-label checkbox-label" for="acceptCheckbox">
+                I accept the terms and conditions for writers
+            </label>
+            <div class="error-message" id="errorMessage">You must accept the terms and conditions to proceed.</div>
+        </div>
+
+        <div class="nav-right">
+            <button type="button" class="button-dark small" id="agreeButton">I agree</button>
+        </div>
+    </div>
+
+    <div class="footer mt-5">
+        <p>&copy; 2024 Imaginary Hub. All rights reserved. <a href="/views/privacy-policy.html">Privacy Policy</a></p>
+    </div>
+
+    <script>
+       document.getElementById('agreeButton').addEventListener('click', async function (event) {
+    var checkbox = document.getElementById('acceptCheckbox');
+    var errorMessage = document.getElementById('errorMessage');
+    
+    if (!checkbox.checked) {
+        event.preventDefault(); // Prevent any form of navigation
+        errorMessage.style.display = 'block'; // Show error message
+    } else {
+        errorMessage.style.display = 'none'; // Hide any previously shown error messages
+        
+        try {
+            const req = await fetch("/terms", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: true })
+            });
+
+            let resp = await req.json();
+            if (resp.message) {
+                window.location.href = "/profile-creation"; // Use href to redirect
+            } else {
+                alert("Please try again");
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+            alert("An unexpected error occurred. Please try again later.");
+        }
+    }
+});
+
+    </script>
+
+</body>
+
+</html>
