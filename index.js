@@ -701,7 +701,7 @@ app.post("/forgetpass", async (req, res) => {
           };
           console.log(payload);
           const token = jwt.sign(payload, secret, { expiresIn: "2m" });
-          const link = `http://localhost:9000/reset-pass/${user.id}/${token}`;
+          const link = `https://imaginary-hub-x.onrender.com/reset-pass/${user.id}/${token}`;
           console.log(link);
           mailoptions.to = email;
           mailoptions.subject = "Password Reset Request";
