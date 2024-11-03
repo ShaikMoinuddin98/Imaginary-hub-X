@@ -261,6 +261,58 @@
                     class="paragraph newsletters">Explore insightful content on technology, finance, business,
                     education, and psychology. Stay informed with our curated topics, designed to keep you ahead.</span>
                 </p>
+                <!-- Search Bar -->
+<div class="search-container">
+    <input type="text" placeholder="Search by authour name" id="searchInput">
+    <button onclick="performSearch()">Search</button>
+</div>
+
+<script>
+    function performSearch() {
+        const query = document.getElementById('searchInput').value;
+        if (query) {
+            alert(`Searching for: ${query}`);
+            // Here you would add code to perform the actual search, such as redirecting to a search results page
+        } else {
+            alert("Please enter a search term.");
+        }
+    }
+</script>
+
+<style>
+    /* Center search bar */
+    .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    /* Style the search input */
+    #searchInput {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+
+    /* Style the search button */
+    .search-container button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+
+    /* Button hover effect */
+    .search-container button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
             </div>
             <div class="container-medium-812px">
                 <div data-w-id="03531393-805f-ab71-2f1b-fcc6147c6d20"
@@ -362,6 +414,10 @@
                                 <ul role="list" class="footer-nav last w-list-unstyled">
                                     <li class="footer-nav-item"><a href="/subscribe"
                                             class="footer-nav-link">Subscribe</a></li>
+                                    <li class="footer-nav-item"><a href="/privacy"
+                                                class="footer-nav-link">Privacy-Policy</a></li>
+                                    <li class="footer-nav-item"><a href="/terms-cond"
+                                                    class="footer-nav-link">Terms & Conditions</a></li>
                                     <li class="footer-nav-item"><a href=""
                                             class="footer-nav-link tag w-inline-block">
                                             <div>Pricing Single</div>
