@@ -125,11 +125,13 @@
     </div>
     <div class="actions">
       <%if(data.publishedDate){%>
+        <button class="btn btn-danger" id="publishBtn">Delete this article</button>
         <button class="btn btn-success" id="publishBtn">Save</button>
         <button class="btn btn-primary" id="scheduleBtn" disabled>Schedule</button>
         <button class="btn btn-success" id="publishBtn" disabled>Publish</button>
 
         <%}else{%>
+          <button class="btn btn-success" id="publishBtn" disabled>delete</button>
           <button class="btn btn-success" id="publishBtn" disabled>Save</button>
           <button class="btn btn-primary" id="scheduleBtn">Schedule</button>
           <button class="btn btn-success" id="publishBtn">Publish</button>
