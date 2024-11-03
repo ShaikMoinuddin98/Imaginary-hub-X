@@ -119,10 +119,10 @@
                     data-name="Email Form" class="utility-page-form w-password-page"
                     data-wf-page-id="60e78cd29a6063b808d03bce"
                     data-wf-element-id="5e86ada79942c1e4247fd4c700000000000c">
-
+        
                     <img src="/assests/svg/lock.svg" alt="" loading="eager" class="icons-password-protected" />
                     <h2>Signup Page</h2>
-
+        
                     <!-- Email Field -->
                     <input class="input w-password-page w-input" autofocus="true" maxlength="256" name="email"
                         data-name="email" placeholder="Enter your email" type="email" id="email-field" required />
@@ -131,33 +131,42 @@
                     <input class="input password w-password-page w-input" autofocus="true" maxlength="256" name="pass"
                         data-name="field" placeholder="Enter your password" type="password" id="field" required />
                     <br>
-                    <!-- Forgot Password Link -->
-                    <a href="/views/forgot-password.html" class="forgot-password-link">Forgot your password?</a>
+                    <!-- Confirm Password Field -->
+                    <input class="input password w-password-page w-input" maxlength="256" name="confirm-pass"
+                        data-name="confirm-field" placeholder="Confirm your password" type="password" id="confirm-field" required />
                     <br>
                     <!-- Submit Button -->
                     <input type="submit" data-wait="Please wait..."
-                        class="button-primary full-width w-password-page w-button" value="Login" />
-
-
+                        class="button-primary full-width w-password-page w-button" value="Signup" />
+        
                     <div class="error-message w-password-page w-form-fail">
-                        <div>Incorrect email or password. Please try again.</div>
+                        <div>Passwords do not match. Please try again.</div>
                     </div>
-
+        
                     <div style="display:none" class="w-password-page w-embed w-script">
-
-                    </div>
-
-                    <div style="display:none" class="w-password-page w-embed w-script">
-                        <script type="application/javascript">(function _handlePasswordPageOnload() {
-                                if (/[?&]e=1(&|$)/.test(document.location.search)) {
-                                    document.querySelector('.w-password-page.w-form-fail').style.display = 'block';
-                                }
-                            })()</script>
+                        <script type="application/javascript">
+                            (function _handlePasswordPageOnload() {
+                                const form = document.getElementById('email-form');
+                                form.onsubmit = function() {
+                                    const password = document.getElementById('field').value;
+                                    const confirmPassword = document.getElementById('confirm-field').value;
+                                    const errorMessage = document.querySelector('.error-message');
+        
+                                    if (password !== confirmPassword) {
+                                        errorMessage.style.display = 'block';
+                                        return false; // Prevent form submission
+                                    }
+                                    errorMessage.style.display = 'none';
+                                    return true; // Allow form submission
+                                };
+                            })();
+                        </script>
                     </div>
                 </form>
             </div>
             <div class="bg utility-page"></div>
         </section>
+        
         <footer class="footer">
             <div class="container-default w-container">
                 <div data-w-id="69754c41-08b9-6ecf-91b8-95942fc59e5b" class="footer-content-top">
@@ -199,6 +208,10 @@
                                     <ul role="list" class="footer-nav last w-list-unstyled">
                                         <li class="footer-nav-item"><a href="/subscribe"
                                                 class="footer-nav-link">Subscribe</a></li>
+                                                <li class="footer-nav-item"><a href="/privacy"
+                                                    class="footer-nav-link">Privacy-Policy</a></li>
+                                        <li class="footer-nav-item"><a href="/terms-cond"
+                                                        class="footer-nav-link">Terms & Conditions</a></li>
                                         <li class="footer-nav-item"><a href=""
                                                 class="footer-nav-link tag w-inline-block">
                                                 <div>Pricing Single</div>
