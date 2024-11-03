@@ -153,13 +153,11 @@
                     <div class="newsletter-content-top-divider"></div>
                     <div>Reads: <%=data.views%> people</div>
                     <div class="newsletter-content-top-divider"></div>
-                    <button id="share-button" class="button-primary">Share</button>
                    
                 </div>
                 <div data-w-id="c56c7e68-53c6-5610-fc70-a2c26b150f66"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
                     class="rich-text w-richtext team-detail-content">
-                    <p><%-data.article%></p>
                     <figure style="max-width:1744pxpx" class="w-richtext-align-fullwidth w-richtext-figure-type-image">
                         <div>
                             <%for(i of data.images){%>
@@ -168,7 +166,133 @@
                         </div>
                         <figcaption>Mattis rhoncus urna neque viverra justo.</figcaption>
                     </figure>
+
+                    <p><%-data.article%></p>
                 </div>
+                <!-- Share Button -->
+<div class="button-container">
+    <button class="btn btn-primary" onclick="openShareModal()">Share this Page</button>
+</div>
+
+<!-- Share Modal -->
+<div id="shareModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeShareModal()">&times;</span>
+        <h2>Share this Page</h2>
+        <p>Share via:</p>
+        <ul>
+            <li><a href="#" onclick="shareOnFacebook()" class="link-underline-wrapper">Facebook</a></li>
+            <li><a href="#" onclick="shareOnTwitter()" class="link-underline-wrapper">Twitter</a></li>
+            <li><a href="#" onclick="shareOnLinkedIn()"
+                class="link-underline-wrapper">LinkedIn</a></li>
+            <li><a href="#" onclick="copyLink()"
+                class="link-underline-wrapper">Copy Link</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    const shareUrl = 'https://yourwebsite.com'; // Replace with your URL
+
+    function openShareModal() {
+        document.getElementById('shareModal').style.display = 'block';
+    }
+
+    function closeShareModal() {
+        document.getElementById('shareModal').style.display = 'none';
+    }
+
+    function shareOnFacebook() {
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        window.open(facebookUrl, '_blank');
+        closeShareModal();
+    }
+
+    function shareOnTwitter() {
+        const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`;
+        window.open(twitterUrl, '_blank');
+        closeShareModal();
+    }
+
+    function shareOnLinkedIn() {
+        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+        window.open(linkedInUrl, '_blank');
+        closeShareModal();
+    }
+
+    function copyLink() {
+        navigator.clipboard.writeText(shareUrl)
+            .then(() => {
+                alert('Link copied to clipboard!');
+                closeShareModal();
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy the link. Please try again.');
+            });
+    }
+</script>
+
+<style>
+    /* Center the button container */
+    .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 10vh; /* Full viewport height to center vertically */
+    }
+
+    .btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black with opacity */
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto; /* 15% from the top and centered */
+        padding: 2px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
                 <div data-w-id="aae45622-6d0f-fe99-2566-d7ece6899986"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
                     class="card newsletter-subscribe">
@@ -299,6 +423,10 @@
                                 <ul role="list" class="footer-nav last w-list-unstyled">
                                     <li class="footer-nav-item"><a href="/subscribe"
                                             class="footer-nav-link">Subscribe</a></li>
+                                    <li class="footer-nav-item"><a href="/privacy"
+                                                class="footer-nav-link">Privacy-Policy</a></li>
+                                    <li class="footer-nav-item"><a href="/terms-cond"
+                                                    class="footer-nav-link">Terms & Conditions</a></li>
                                     <li class="footer-nav-item"><a href=""
                                             class="footer-nav-link tag w-inline-block">
                                             <div>Pricing Single</div>
