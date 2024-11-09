@@ -125,13 +125,13 @@
     </div>
     <div class="actions">
       <%if(data.publishedDate){%>
-        <button class="btn btn-danger" id="publishBtn">Delete this article</button>
+        <button class="btn btn-danger" id="deleteBtn">Delete</button>
         <button class="btn btn-success" id="publishBtn">Save</button>
         <button class="btn btn-primary" id="scheduleBtn" disabled>Schedule</button>
         <button class="btn btn-success" id="publishBtn" disabled>Publish</button>
 
         <%}else{%>
-          <button class="btn btn-success" id="publishBtn" disabled>delete</button>
+          <button class="btn btn-danger" id="deleteBtn">Delete</button>
           <button class="btn btn-success" id="publishBtn" disabled>Save</button>
           <button class="btn btn-primary" id="scheduleBtn">Schedule</button>
           <button class="btn btn-success" id="publishBtn">Publish</button>
@@ -212,7 +212,8 @@
   <br>
   <br>
   <!-- JS for Sidebar, Formatting, Image Preview, and Modal -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!--
   <script>
     // Sidebar toggle and track active section
     let activeSection = '';
@@ -347,6 +348,27 @@
       }
     });
 
+    document.getElementById("deleteBtn").addEventListener("click",()=>{
+      alert("Are you sure to delete the article")
+      const id = location.pathname.split("/")[2]
+      fetch("/delete-article",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({id:id})
+      })
+      .then(response => response.json())
+          .then(result => {
+
+            console.log('Success:', result);
+            window.location.pathname="/dashboard"
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+    })
+
     document.getElementById('publishBtn').addEventListener('click', () => {
       if (validateArticle()) {
         const category = document.getElementById('categorySelect').value;
@@ -425,7 +447,180 @@
         alert('Please select a valid date and time.');
       }
     });
+  </script> -->
+  <script>
+    // Sidebar toggle and track active section
+    let activeSection = '';
+  
+    document.querySelectorAll('.plus-button').forEach(button => {
+      button.addEventListener('click', (event) => {
+        activeSection = event.target.id === 'titlePlus' ? 'title' : 'article';
+        document.getElementById('sidebar').classList.toggle('active');
+      });
+    });
+  
+    // Close sidebar
+    document.querySelector('.close-sidebar').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('active');
+    });
+  
+    // Formatting Buttons
+    document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold'));
+    document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic'));
+    document.getElementById('addLinkBtn').addEventListener('click', () => {
+      const selectedText = window.getSelection().toString();
+      if (selectedText) {
+        const url = prompt('Enter the URL:');
+        if (url) document.execCommand('createLink', false, url);
+      } else {
+        alert('Please select the text you want to hyperlink.');
+      }
+    });
+    document.getElementById('normalBtn').addEventListener('click', () => document.execCommand('removeFormat'));
+  
+    // Image Upload and Preview with Limit
+    function addDeleteEvent() {
+      const deleteIcon = document.querySelector('.delete-image');
+      if (deleteIcon) {
+        deleteIcon.addEventListener('click', () => {
+          const imgPreview = document.getElementById('imagePreview');
+          imgPreview.innerHTML = '';  // Clear the image preview
+          document.getElementById('imageUpload').value = "";  // Reset file input
+        });
+      }
+    }
+  
+    document.getElementById('imageUpload').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      const imgPreview = document.getElementById('imagePreview');
+      
+      if (imgPreview.childElementCount > 0) {
+        alert("You can only upload one image. Please delete the existing one to upload a new image.");
+        event.target.value = "";
+        return;
+      }
+  
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageContainer = document.createElement('div');
+          imageContainer.className = 'image-preview';
+          imageContainer.innerHTML = `
+            <img src="${e.target.result}" alt="Uploaded Image" />
+            <button class="delete-image">X</button>
+          `;
+          imgPreview.appendChild(imageContainer);
+  
+          // Add delete event to newly created delete button
+          addDeleteEvent();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  
+    // Run delete event in case preview already exists
+    addDeleteEvent();
+  
+    // Validate article content
+    function validateArticle() {
+      const title = document.getElementById('titleInput').value.trim();
+      const article = document.getElementById('articleInput').innerText.trim();
+      return title !== '' && article !== '';
+    }
+  
+    // Show schedule modal
+    document.getElementById('scheduleBtn').addEventListener('click', () => {
+      if (validateArticle()) {
+        const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+        scheduleModal.show();
+      } else {
+        alert('Please fill in the title and article content before scheduling.');
+      }
+    });
+  
+    // Publish Article
+    document.getElementById('publishBtn').addEventListener('click', () => {
+      if (validateArticle()) {
+        const category = document.getElementById('categorySelect').value;
+        const title = document.getElementById('titleInput').value;
+        const article = document.getElementById("articleInput").innerHTML;
+        const images = Array.from(document.querySelectorAll(".image-preview img")).map(img => img.src);
+        const data = { title, article, category, images };
+        const id = location.pathname.split("/")[2];
+  
+        fetch(`/edit-article/${id}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.json())
+          .then(result => {
+            console.log('Success:', result);
+            alert(`Article Published under ${category}!`);
+            window.location.pathname = "/dashboard"; // Redirect after publishing
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      } else {
+        alert('Please fill in the title and article content before publishing.');
+      }
+    });
+  
+    // Schedule Article
+    document.getElementById('saveSchedule').addEventListener('click', () => {
+      const date = document.getElementById('scheduleDate').value;
+      if (date && validateArticle()) {
+        const category = document.getElementById('categorySelect').value;
+        const title = document.getElementById('titleInput').value;
+        const article = document.getElementById("articleInput").innerHTML;
+        const images = Array.from(document.querySelectorAll(".image-preview img")).map(img => img.src);
+        const data = { schedule: date, title, article, category, images };
+        const id = location.pathname.split("/")[2];
+  
+        fetch(`/edit-article/${id}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.json())
+          .then(result => {
+            console.log('Success:', result);
+            alert(`Article scheduled for ${new Date(date).toLocaleString()}`);
+            const scheduleModal = bootstrap.Modal.getInstance(document.getElementById('scheduleModal'));
+            scheduleModal.hide();
+            window.location.pathname = "/dashboard"; // Redirect after scheduling
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      } else {
+        alert('Please select a valid date and time.');
+      }
+    });
+  
+    // Delete Article
+    document.getElementById("deleteBtn").addEventListener("click", () => {
+      if (confirm("Are you sure you want to delete the article?")) {
+        const id = location.pathname.split("/")[2];
+        fetch("/delete-article", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id })
+        })
+          .then(response => response.json())
+          .then(result => {
+            console.log('Success:', result);
+            alert("Article deleted successfully.");
+            window.location.pathname = "/dashboard"; // Redirect after deleting
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+    });
   </script>
+  
 </body>
 
 </html>
