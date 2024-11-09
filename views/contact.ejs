@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html data-wf-domain="newslettertemplate.webflow.io" data-wf-page="60e89dfce959595cd2a9437d"
+    data-wf-site="60e78cd29a6063dc4dd03bcb" lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    <meta charset="utf-8" />
+    <title>News Page - Imaginary Hub X</title>
+    <link href="/assests/css/mainstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+    /* Ensure the text in team-detail-content does not overflow */
+    .team-detail-content {
+      max-width: 100%;
+      overflow: hidden;
+      word-wrap: break-word;
+      /* Older browsers */
+      overflow-wrap: break-word;
+      /* Modern browsers */
+      word-break: break-word;
+      /* Ensure long words break correctly */
+    }
+  
+    /* Additional styling to ensure text fits within the container */
+    .team-detail-content p {
+      margin: 0;
+      /* Reset margin */
+      padding: 0;
+      /* Reset padding */
+      line-height: 1.5;
+      /* Adjust line height for better readability */
+      text-align: justify;
+      /* Justify text to align it neatly */
+    }
+  </style>
+<body>
+    <div style="opacity:0" class="page-wrapper">
+        <div data-collapse="medium" data-animation="over-left" data-duration="400"
+            data-w-id="58db7844-5919-d71b-dd74-2323ed8dffe9" data-easing="ease" data-easing2="ease" role="banner"
+            class="header w-nav">
+            <div class="container-default w-container">
+                <div class="header-wrapper">
+                    <div class="split-content header-right"><a href="/" aria-current="page"
+                            class="brand w-nav-brand w--current">
+                            <h3 style="margin: 10px;"> Imaginary Hub X</h3>
+                        </a>
+                        <div class="header-divider"></div>
+                        <nav role="navigation" class="nav-menu w-nav-menu">
+                            <ul role="list" class="header-navigation">
+                                <li class="nav-item-wrapper"><a href="/" aria-current="page"
+                                        class="nav-link w--current">Home</a></li>
+                                <li class="nav-item-wrapper"><a href="/about"
+                                        class="nav-link">About</a></li>
+                                <li class="nav-item-wrapper"><a href="/allnews" class="nav-link">Past
+                                        issues</a>
+                                </li>
+                                <li class="nav-item-wrapper">
+                                    <div data-hover="true" data-delay="0"
+                                        data-w-id="043ef42a-34a9-1a0f-55ac-1fd10d021335"
+                                        class="nav-link-dropdown w-dropdown">
+                                        <div class="nav-link dropdown w-dropdown-toggle">
+                                            <div>Our Topics <span class="dropdown-arrow"></span></div>
+                                        </div>
+                                        <nav class="dropdown-list w-dropdown-list">
+                                            <div class="dropdown-nav-main-wrapper">
+                                                <div class="dropdown-nav-pages-wrapper">
+                                                    <div class="title dropdown-nav-title">Topics
+                                                    </div>
+                                                    <div class="dropdown-nav-content">
+                                                        <ul role="list" class="dropdown-nav">
+                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                                    aria-current="page"
+                                                                    class="dropdown-nav-link w--current">Tech</a></li>
+                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                                    class="dropdown-nav-link">Fianace</a></li>
+                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                                    class="dropdown-nav-link">Bussiness News</a></li>
+                                                        </ul>
+                                                        <ul role="list" class="dropdown-nav last">
+                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                                    class="dropdown-nav-link">Education</a></li>
+                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                                    class="dropdown-nav-link tag w-inline-block">
+                                                                    <div>Human Pscyology</div>
+                                                                    <div class="dropdown-nav-link-tag">Exclusive</div>
+                                                                </a></li>
+                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                                    class="dropdown-nav-link tag w-inline-block">
+                                                                    <div>Desgin & art</div>
+                                                                    <div class="dropdown-nav-link-tag">Exclusive</div>
+                                                                </a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-nav-pages-wrapper last">
+
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </li>
+                                <li class="nav-item-wrapper button-mobile"><a href="/subscribe"
+                                        class="button-primary header-button mobile w-inline-block">
+                                        <div class="newsletter-button-icon"></div>
+                                        <div>Subscribe</div>
+                                    </a></li>
+                            </ul>
+                        </nav>
+                        <div><a href="/allnews" class="cart-button w-inline-block" role="button">
+                                <div class="w-inline-block">Latest Issue</div>
+
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="split-content header-left"><a data-w-id="03c57ad5-5287-7bc0-b112-b394ba6fbcd1"
+                            href="/writer" class="link-underline-wrapper header-link w-inline-block">
+                            <div>Become a Writer</div>
+                            <div class="underline-wrapper header-link">
+                                <div class="underline"></div>
+                            </div>
+                        </a><a href="/subscribe" class="button-primary header-button w-inline-block">
+                            <div class="newsletter-button-icon header-button"></div>
+                            <div>Subscribe</div>
+                        </a>
+                        <div class="menu-button w-nav-button">
+                            <div class="header-menu-button-icon-wrapper">
+                                <div class="icon-wrapper">
+                                    <div class="header-menu-button-icon-top"></div>
+                                    <div class="header-menu-button-icon-medium"></div>
+                                    <div class="header-menu-button-icon-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <section class="section contact">
+            <div class="container-default contact w-container">
+                <div class="contact-wrapper">
+                    <div data-w-id="d912645f-358f-7f67-ba47-d878e3f32036"
+                        style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+                        class="split-content contact-content">
+                        <div class="contact-content-top">
+                            <h1>Contact us</h1>
+                        </div>
+                        <div class="w-layout-grid contact-links-grid"><a href="mailto:contact@emailer.com"
+                                class="contact-link w-inline-block">
+                                <div class="image-wrapper contact-link-icon"><img
+                                        src="https://cdn.prod.website-files.com/60e78cd29a6063dc4dd03bcb/610351c5217b5da4cbb29c45_email-icon-newsletter-x-webflow-template.svg"
+                                        loading="eager" alt="Newsletter Icon - Newsletter X Webflow Template"
+                                        class="image contact-link-icon" /></div>
+                                <div class="contact-link-text">imaginaryhubx@gmail.com</div>
+                            </a></div>
+                    </div>
+                    <div data-w-id="30560618-11cb-aaa2-9dca-cf2ecb8144ce"
+                        style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+                        class="card contact">
+                        <div class="contact-form-block w-form">
+                            <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form"
+                                method="get" class="contact-form" data-wf-page-id="60e8cf50979e44bf986937d8"
+                                data-wf-element-id="bce64bf7-fbca-2629-4052-ea81c600c936">
+                                <div class="input-wrapper"><label for="name">Name</label><input class="input w-input"
+                                        maxlength="256" name="name" data-name="Name" placeholder="Full name" type="text"
+                                        id="name" required="" /></div>
+                                <div class="input-wrapper"><label for="email">Email Address</label><input
+                                        class="input w-input" maxlength="256" name="email" data-name="Email"
+                                        placeholder="your@emailaddress.com" type="email" id="email" required="" /></div>
+                                <div class="input-wrapper"><label for="Phone">Phone</label><input class="input w-input"
+                                        maxlength="256" name="Phone" data-name="Phone" placeholder="(548) 4587 - 6829"
+                                        type="tel" id="phone" required="" /></div>
+                                <div class="input-wrapper"><label for="Subject">Subject</label><input
+                                        class="input w-input" maxlength="256" name="Subject" data-name="Subject"
+                                        placeholder="Ex. Partners" type="text" id="subject" required="" /></div>
+                                <div id="w-node-_5acfed38-7e68-1f1e-0b6d-b871d8933f3b-986937d8" class="input-wrapper">
+                                    <label for="Message">Message</label><textarea
+                                        placeholder="Write your message here..." maxlength="5000" id="message"
+                                        name="Message" data-name="Message" class="text-area w-input"></textarea></div>
+                                <input type="submit" data-wait="Please wait..."
+                                    id="w-node-bce64bf7-fbca-2629-4052-ea81c600c93d-986937d8"
+                                    class="button-primary contact-form-button w-button" value="Send message" />
+                            </form>
+                            <div class="success-message w-form-done">
+                                <div>Your message has been submitted. <br />We will get back to you within 24-48 hours.
+                                </div>
+                            </div>
+                            <div class="error-message w-form-fail">
+                                <div>Oops! Something went wrong.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg contact"></div>
+        </section>
+        <section class="section">
+            <div class="container-medium-852px">
+                <h2 data-w-id="32d68649-e34b-5d7a-2c9d-55e9242c4fbe"
+                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+                    class="title faqs">Frequently Asked Questions</h2>
+                <div data-w-id="a7e18a4b-6622-6126-0621-9f9b91e1a5cc"
+                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+                    class="faqs-wrapper">
+                    <div data-w-id="edf38ae1-92d7-a428-3d4a-16a9e1b04121" class="card faq">
+                        <div class="card-faq-content-top">
+                            <h3 class="title card-faq">How can I subscribe to the newsletter?</h3>
+                            <div class="card-faq-icon-wrapper">
+                                <div class="card-faq-icon-1"></div>
+                                <div class="card-faq-icon-2"></div>
+                            </div>
+                        </div>
+                        <div class="card-faq-content-bottom">
+                            <div class="space faq"></div>
+                            <p class="paragraph faq">To subscribe, visit our website and enter your email in the subscription box. You’ll receive a confirmation email to verify your subscription.</p>
+                        </div>
+                    </div>
+                    <div class="card faq">
+                        <div class="card-faq-content-top">
+                            <h3 class="title card-faq">How can I unsubscribe from the newsletter?</h3>
+                            <div class="card-faq-icon-wrapper">
+                                <div class="card-faq-icon-1"></div>
+                                <div class="card-faq-icon-2"></div>
+                            </div>
+                        </div>
+                        <div class="card-faq-content-bottom">
+                            <div class="space faq"></div>
+                            <p class="paragraph faq">To unsubscribe, click the “Unsubscribe” link at the bottom of any newsletter email you receive. You can also unsubscribe via your account settings on our website.</p>
+                        </div>
+                    </div>
+                    <div class="card faq">
+                        <div class="card-faq-content-top">
+                            <h3 class="title card-faq">Why am I not receiving any emails?</h3>
+                            <div class="card-faq-icon-wrapper">
+                                <div class="card-faq-icon-1"></div>
+                                <div class="card-faq-icon-2"></div>
+                            </div>
+                        </div>
+                        <div class="card-faq-content-bottom">
+                            <div class="space faq"></div>
+                            <p class="paragraph faq">If you’re not receiving emails, check your spam or junk folder first. Ensure that our emails are not blocked by your email provider. You can also add us to your contacts to avoid this issue.</p>
+                        </div>
+                    </div>
+                    <div class="card faq">
+                        <div class="card-faq-content-top">
+                            <h3 class="title card-faq">Can I advertise in the newsletter?</h3>
+                            <div class="card-faq-icon-wrapper">
+                                <div class="card-faq-icon-1"></div>
+                                <div class="card-faq-icon-2"></div>
+                            </div>
+                        </div>
+                        <div class="card-faq-content-bottom">
+                            <div class="space faq"></div>
+                            <p class="paragraph faq">Yes, we offer advertising options within our newsletter. Please contact our sales team at imaginaryhubx@gmail.com for details on ad placements and rates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section bg-neutral-200">
+            <div data-w-id="cf981506-becc-56f8-be34-a38f285ed424"
+                style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+                class="container-medium-675px contact-social-media">
+                <h2 class="title contact-social-media">Follow us on social media</h2>
+            </div>
+            <div class="container-default w-container">
+                <div data-w-id="74d4cf18-acd5-8cc3-fe57-34742100c498"
+                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+                    class="w-layout-grid contact-social-media-grid">
+                   <a href="https://www.instagram.com/thejabirhussain" target="_blank"
+                        class="card contact-social-media w-inline-block">
+                        <div class="image-wrapper card-contact-social-media-icon instagram"><img
+                                src="https://cdn.prod.website-files.com/60e78cd29a6063dc4dd03bcb/60ef5cd6ffba6a6297b9633f_icon-3-social-media-newsletter-x-template.svg"
+                                loading="eager" alt="Instagram - Newsletter X Webflow Template"
+                                class="image card-contact-social-media-icon" /></div>
+                        <div class="card-contact-social-media-content">
+                            <h3 class="title card-contact-social-media">Instagram</h3>
+                            
+                            <div href="#story" class="link-underline-wrapper">
+                                <div>Follow us</div>
+                                <div class="underline-wrapper">
+                                    <div class="underline"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a><a href="https://www.linkedin.com/" target="_blank"
+                        class="card contact-social-media w-inline-block">
+                        <div class="image-wrapper card-contact-social-media-icon linkedin"><img
+                                src="https://cdn.prod.website-files.com/60e78cd29a6063dc4dd03bcb/60ef5cd6baf75a1d54ae4723_icon-4-social-media-newsletter-x-template.svg"
+                                loading="eager" alt="LinkedIn - Newsletter X Webflow Template"
+                                class="image card-contact-social-media-icon" /></div>
+                        <div class="card-contact-social-media-content">
+                            <h3 class="title card-contact-social-media">LinkedIn</h3>
+                            <div href="#story" class="link-underline-wrapper">
+                                <div>Follow us</div>
+                                <div class="underline-wrapper">
+                                    <div class="underline"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a><a href="https://www.youtube.com/@ImaginaryHub" target="_blank"
+                        class="card contact-social-media w-inline-block">
+                        <div class="image-wrapper card-contact-social-media-icon youtube"><img
+                                src="https://cdn.prod.website-files.com/60e78cd29a6063dc4dd03bcb/60ef5cd699d5493b810258e8_icon-5-social-media-newsletter-x-template.svg"
+                                loading="eager" alt="YouTube - Newsletter X Webflow Template"
+                                class="image card-contact-social-media-icon" /></div>
+                        <div class="card-contact-social-media-content">
+                            <h3 class="title card-contact-social-media">YouTube</h3>
+                            <div href="#story" class="link-underline-wrapper">
+                                <div>Follow us</div>
+                                <div class="underline-wrapper">
+                                    <div class="underline"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a><a href="https://www.whatsapp.com/" target="_blank"
+                        class="card contact-social-media w-inline-block">
+                        <div class="image-wrapper card-contact-social-media-icon whatsapp"><img
+                                src="https://cdn.prod.website-files.com/60e78cd29a6063dc4dd03bcb/60ef5cd69757da65c8ac7987_icon-6-social-media-newsletter-x-template.svg"
+                                loading="eager" alt="WhatsApp - Newsletter X Webflow Template"
+                                class="image card-contact-social-media-icon" /></div>
+                        <div class="card-contact-social-media-content">
+                            <h3 class="title card-contact-social-media">WhatsApp</h3>
+                            <div href="#story" class="link-underline-wrapper">
+                                <div>Follow us</div>
+                                <div class="underline-wrapper">
+                                    <div class="underline"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a></div>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container-default w-container">
+                <div data-w-id="69754c41-08b9-6ecf-91b8-95942fc59e5b" class="footer-content-top">
+                    <div class="split-content footer-content-top-main-content"><a href="/"
+                            aria-current="page"
+                            class="footer-logo-container w-inline-block w--current link-underline-wrapper">
+                            <h3 class="footer-logo-container">Imaginary Hub X</h3>
+                        </a>
+                        <p class="paragraph footer-content-top-main-content-paragraph">Get the latest insights and
+                            trends delivered straight to your inbox, covering tech, finance, business, education, and
+                            psychology.</span>
+                        </p>
+                    </div>
+                    <div class="newsletter-form-block footer-newsletter w-form">
+                        <form id="newsletter-form" class="newsletter-form">
+                            <input class="input newsletter w-input" maxlength="256" name="email"
+                                placeholder="Enter your email address" type="email" required />
+                            <!-- Subscribe Button -->
+                            <div class="button-primary newsletter">
+                                <div class="newsletter-button-icon"></div>
+                                <!-- Triggering the Popup with the existing classes -->
+                                <button type="button" class="newsletter-button-text w-button"
+                                    onclick="openCategoryPopup()">Subscribe</button>
+                            </div>
+                        </form>
+                        <div class="success-message w-form-done">
+                            <div>Thanks for joining my newsletter.</div>
+                        </div>
+                        <div class="error-message w-form-fail">
+                            <div>Oops! Something went wrong.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider footer-content-top-divider"></div>
+                <div data-w-id="3f15247b-179c-b94a-4019-bc7e40900fba" class="footer-content">
+                    <div class="footer-menu-main-content">
+                        <div class="footer-menu-wrapper">
+                            <div class="title footer-menu-title">Useful Links</div>
+                            <div class="footer-menu-content">
+                                <ul role="list" class="footer-nav w-list-unstyled">
+                                    <li class="footer-nav-item"><a href="/" aria-current="page"
+                                            class="footer-nav-link w--current">Home</a></li>
+                                    <li class="footer-nav-item"><a href="/about"
+                                            class="footer-nav-link">About</a></li>
+                                    <li class="footer-nav-item"><a href="/contact"
+                                            class="footer-nav-link">Contact-us</a>
+                                    </li>
+                                    <li class="footer-nav-item"><a href="/allnews"
+                                            class="footer-nav-link tag w-inline-block">
+                                            <div>Newsletters</div>
+                                            <div class="footer-nav-link-tag">ALL</div>
+                                        </a></li>
+                                    <li class="footer-nav-item"><a href="/allnews"
+                                            class="footer-nav-link tag w-inline-block">
+                                            <div>Latest issues</div>
+                                            <div class="footer-nav-link-tag">Single</div>
+                                        </a></li>
+                                </ul>
+                                <ul role="list" class="footer-nav last w-list-unstyled">
+                                    <li class="footer-nav-item"><a href="/subscribe"
+                                            class="footer-nav-link">Subscribe</a></li>
+                                    <li class="footer-nav-item"><a href="/privacy"
+                                                class="footer-nav-link">Privacy-Policy</a></li>
+                                    <li class="footer-nav-item"><a href="/terms-cond"
+                                                    class="footer-nav-link">Terms & Conditions</a></li>
+                                    <li class="footer-nav-item"><a href=""
+                                            class="footer-nav-link tag w-inline-block">
+                                            <div>Pricing Single</div>
+                                            <div class="footer-nav-link-tag">eCommerce</div>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-menu-wrapper last">
+                        </div>
+                    </div>
+                 
+                </div>
+                <div class="divider footer-content-bottom-divider"></div>
+                <div data-w-id="4a24e60e-bea5-a418-e416-88b53fbdd0a6" class="footer-content-bottom">
+                    <div class="footer-small-print">Copyright © Imaginary Hub X</div>
+                </div>
+        </footer>
+        </a>
+        <script>
+            document.documentElement.setAttribute('data-wf-page', '60e8cf50979e44bf986937d8');
+            document.documentElement.setAttribute('data-wf-site', '60e78cd29a6063dc4dd03bcb');
+            document.documentElement.setAttribute('data-wf-status', '1');
+            document.documentElement.setAttribute('lang', 'en');</script>
+        <script src="/assests/js/page.js" type="text/javascript"></script>
+        <script src="/assests/js/main.js" type="text/javascript"></script>
+        <script>
+            // Get DOM elements
+            const subscribeButtons = document.querySelectorAll('.button-primary.newsletter');
+            const categoryPopup = document.getElementById('categoryPopup');
+            const confirmButton = categoryPopup.querySelector('.popup-buttons').firstElementChild;
+            const closeButton = categoryPopup.querySelector('.popup-buttons').lastElementChild;
+            const thanksMessage = document.getElementById('thanksMessage');
+            const categoryCheckboxes = document.querySelectorAll('.subscribe-category-checkbox');
+            const successMessages = document.querySelectorAll('.success-message');
+            const errorMessages = document.querySelectorAll('.error-message');
+
+            let currentEmailInput = null;
+
+            // Add click handlers to all subscribe buttons
+            subscribeButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const emailInput = this.previousElementSibling;
+
+                    if (!emailInput || !emailInput.value) {
+                        showError('Please enter an email address');
+                        return;
+                    }
+
+                    if (!isValidEmail(emailInput.value)) {
+                        showError('Please enter a valid email address');
+                        return;
+                    }
+
+                    currentEmailInput = emailInput;
+                    showCategoryPopup();
+                });
+            });
+
+            // Show/hide popup functions
+            function showCategoryPopup() {
+                categoryPopup.style.display = 'flex';
+                // Reset checkboxes
+                categoryCheckboxes.forEach(checkbox => checkbox.classList.remove('selected'));
+            }
+
+            function hideCategoryPopup() {
+                categoryPopup.style.display = 'none';
+                thanksMessage.style.display = 'none';
+            }
+
+            // Toggle category selection
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function () {
+                    this.classList.add('selected');
+                });
+            });
+
+            // Handle form submission
+            confirmButton.addEventListener('click', async function () {
+                const selectedCategories = Array.from(categoryCheckboxes)
+                    .filter(checkbox => checkbox.classList.contains('selected'))
+                    .map(checkbox => checkbox.textContent.trim());
+
+                if (selectedCategories.length === 0) {
+                    showError('Please select at least one category');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: currentEmailInput.value,
+                            topics: selectedCategories
+                        })
+                    });
+
+                    if (response.ok) {
+                        showSuccess();
+                        setTimeout(hideCategoryPopup, 2000);
+                    } else {
+                        throw new Error('Subscription failed');
+                    }
+                } catch (error) {
+                    showError('Failed to subscribe. Please try again later.');
+                }
+            });
+
+            // Close popup when clicking close button
+            closeButton.addEventListener('click', hideCategoryPopup);
+
+            // Helper functions
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function showSuccess() {
+                thanksMessage.style.display = 'block';
+                successMessages.forEach(msg => msg.style.display = 'block');
+                errorMessages.forEach(msg => msg.style.display = 'none');
+            }
+
+            function showError(message) {
+                errorMessages.forEach(msg => {
+                    msg.querySelector('div').textContent = message;
+                    msg.style.display = 'block';
+                });
+                successMessages.forEach(msg => msg.style.display = 'none');
+            }
+        </script>
+</body>
+
+</html>

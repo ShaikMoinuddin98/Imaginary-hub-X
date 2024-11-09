@@ -144,27 +144,27 @@
                                                     </div>
                                                     <div class="dropdown-nav-content">
                                                         <ul role="list" class="dropdown-nav">
-                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                            <li class="dropdown-nav-item"><a href="/tech"
                                                                     aria-current="page"
                                                                     class="dropdown-nav-link w--current">Tech</a></li>
-                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                            <li class="dropdown-nav-item"><a href="/finance"
                                                                     class="dropdown-nav-link">Fianace</a></li>
-                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                            <li class="dropdown-nav-item"><a href="/business"
                                                                     class="dropdown-nav-link">Bussiness News</a></li>
                                                         </ul>
                                                         <ul role="list" class="dropdown-nav last">
-                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                            <li class="dropdown-nav-item"><a href="/education"
                                                                     class="dropdown-nav-link">Education</a></li>
-                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                            <li class="dropdown-nav-item"><a href="/pyschology"
                                                                     class="dropdown-nav-link tag w-inline-block">
                                                                     <div>Human Pscyology</div>
                                                                     <div class="dropdown-nav-link-tag">Exclusive</div>
                                                                 </a></li>
-                                                            <li class="dropdown-nav-item"><a href="/allnews"
+                                                            <!-- <li class="dropdown-nav-item"><a href="/allnews"
                                                                     class="dropdown-nav-link tag w-inline-block">
                                                                     <div>Desgin & art</div>
                                                                     <div class="dropdown-nav-link-tag">Exclusive</div>
-                                                                </a></li>
+                                                                </a></li> -->
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -217,8 +217,8 @@
             <div class="container-default w-container">
                 <div class="subscribe-wrapper">
                     <div class="split-content subscribe-left">
-                        <h1 class="title subscribe">Subscribe to our newsletter today</h1>
-                        <p class="paragraph subscribe">Stay informed and empowered with our curated content!</p>
+                        <h1 class="title subscribe">A weekly newsletter about tech, and more</h1>
+                        <p class="paragraph subscribe">Stay informed with the latest insights on emerging technologies, smart investments, startups, education, and personal development.</p>
 
                         <div class="w-layout-grid subscribe-features-grid">
                             <div class="subscribe-feature-wrapper">
@@ -259,8 +259,10 @@
                         </div>
                     </div>
 
-                    <div class="split-content subscribe-right">
-                        <img src="assests/img/subscribe.png" alt="Subscribe" class="image subscribe-mockup" />
+                    <div class="split-content home-hero-right">
+                        <div class="home-hero-shape"></div>
+                        <img src="/assests/img/email.jpg" loading="eager"  class="image subscribe-mockup" />
+                        <!-- <img src="/public/assests/img/news-home.jpg" loading="eager" Template" class="image subscribe-mockup" /> -->
                     </div>
                 </div>
             </div>
@@ -339,7 +341,7 @@
                 </div>
             </div>
         </section>
-        <section class="section bg-neutral-200">
+        <!-- <section class="section bg-neutral-200">
             <div data-w-id="b24c8019-0743-256b-0e87-daa291de43f8"
                 style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
                 class="container-small-536px past-newsletters">
@@ -356,30 +358,6 @@
 
 
 
-                    <%for(item of data){%>
-                        <div role="listitem" class="newsletter-item w-dyn-item">
-                            <a href="/article/<%=item.title%>/<%=item._id%>" class="card newsletter w-inline-block">
-                                <div class="card-newsletter-content-top">
-
-                                    <div class="card-newsletter-issue-wrapper">
-                                        <div>
-                                            <%=item.username%>
-                                        </div>
-                                    </div>
-                                    <div class="card-newsletter-content-top-divider"></div>
-                                    <div>
-                                        <%= new Date(item.publishedDate).toLocaleDateString('en-US', { year: 'numeric' ,
-                                            month: 'long' , day: 'numeric' })%>
-                                    </div>
-                                </div>
-                                <h2 class="title card-newsletter heading-size-h3">
-                                    <%=item.title%>
-                                </h2>
-                                <!-- <p class="paragraph card-newsletter"><%-item.article.split(" ").slice(0, 10).join(' ').replace(/<[^>]*>/g, '')%></p> -->
-                            </a>
-                        </div>
-                        <%}%>
-
 
 
                 </div>
@@ -390,7 +368,7 @@
                         newsletters</a>
                 </div>
             </div>
-        </section>
+        </section> -->
         <section class="section bg-primary-1 cta">
             <div class="container-default w-container">
                 <div class="cta-wrapper">
@@ -447,7 +425,7 @@
             <div class="container-default w-container">
                 <h2 data-w-id="f8336831-3cc4-0c9b-9568-56435013e15e"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="title testimonials">Who’s Behind the Newsletter</h2>
+                    class="title testimonials"><a href="/all-writer">Who’s Behind the Newsletter</a></h2>
                 <div data-delay="4000" data-animation="slide" class="testimonials-slider w-slider" data-autoplay="false"
                     data-easing="ease"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -593,6 +571,10 @@
                                 <ul role="list" class="footer-nav last w-list-unstyled">
                                     <li class="footer-nav-item"><a href="/subscribe"
                                             class="footer-nav-link">Subscribe</a></li>
+                                            <li class="footer-nav-item"><a href="/privacy"
+                                              class="footer-nav-link">Privacy-Policy</a></li>
+                                  <li class="footer-nav-item"><a href="/terms-cond"
+                                                  class="footer-nav-link">Terms & Conditions</a></li>
                                     <li class="footer-nav-item"><a href="" class="footer-nav-link tag w-inline-block">
                                             <div>Pricing Single</div>
                                             <div class="footer-nav-link-tag">eCommerce</div>
@@ -603,31 +585,10 @@
                         <div class="footer-menu-wrapper last">
                         </div>
                     </div>
-                    <div class="footer-newsletter-main-wrapper">
-                        <div class="title footer-menu-title">Last newsletters</div>
-                        <div class="w-dyn-list">
-                            <div role="list" class="footer-newsletters-wrapper w-dyn-items">
-                                <%for(i=0;i<3;i++){%>
-                                    <div role="listitem" class="footer-newsletter-item w-dyn-item"><a
-                                            data-w-id="4f1c1c30-29f8-3c0b-8134-b332cb06473f"
-                                            href="/article/<%=data[i].title%>/<%=data[i]._id%>"
-                                            class="footer-newsletter-item-wrapper w-inline-block">
-                                            <!-- <div class="footer-newsletter-item-issue-wrapper">
-                                        <div>ISSUE #</div>
-                                        <div>156</div>
-                                    </div> -->
-                                            <div class="title footer-newsletter-item-title">
-                                                <%=data[i].title%>
-                                            </div>
-                                        </a></div>
-                                    <%}%>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="divider footer-content-bottom-divider"></div>
                 <div data-w-id="4a24e60e-bea5-a418-e416-88b53fbdd0a6" class="footer-content-bottom">
-                    <div class="footer-small-print">Copyright © Imaginary Hub X | Designed by Jabir Hussain</div>
+                    <div class="footer-small-print">Copyright © Imaginary Hub X</div>
                 </div>
         </footer>
         </a>

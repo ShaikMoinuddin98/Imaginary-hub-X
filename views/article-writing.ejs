@@ -198,6 +198,151 @@
   <script>
     // Sidebar toggle and track active section
     let activeSection = '';
+  
+    document.querySelectorAll('.plus-button').forEach(button => {
+      button.addEventListener('click', (event) => {
+        activeSection = event.target.id === 'titlePlus' ? 'title' : 'article';
+        document.getElementById('sidebar').classList.toggle('active');
+      });
+    });
+  
+    // Close sidebar
+    document.querySelector('.close-sidebar').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('active');
+    });
+  
+    // Text Formatting Buttons
+    document.getElementById('boldBtn').addEventListener('click', () => {
+      document.execCommand('bold');
+    });
+  
+    document.getElementById('italicBtn').addEventListener('click', () => {
+      document.execCommand('italic');
+    });
+  
+    document.getElementById('addLinkBtn').addEventListener('click', () => {
+      const selectedText = window.getSelection().toString();
+      if (selectedText) {
+        const url = prompt('Enter the URL:');
+        if (url) {
+          document.execCommand('createLink', false, url);
+        }
+      } else {
+        alert('Please select the text you want to hyperlink.');
+      }
+    });
+  
+    document.getElementById('normalBtn').addEventListener('click', () => {
+      document.execCommand('removeFormat');
+    });
+  
+    // Image Preview Functionality with Limit
+    document.getElementById('imageUpload').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      const imgPreview = document.getElementById('imagePreview');
+  
+      if (imgPreview.childElementCount > 0) {
+        alert("You can only upload one image. Please delete the existing one to upload a new image.");
+        return;
+      }
+  
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const imageContainer = document.createElement('div');
+          imageContainer.className = 'image-preview';
+          imageContainer.innerHTML = `
+            <img src="${e.target.result}" alt="Uploaded Image" />
+            <button class="delete-image">X</button>
+          `;
+          imgPreview.appendChild(imageContainer);
+  
+          // Delete image
+          imageContainer.querySelector('.delete-image').addEventListener('click', () => {
+            imgPreview.removeChild(imageContainer);
+            event.target.value=""
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  
+    // Validate Article Content
+    function validateArticle() {
+      const title = document.getElementById('titleInput').value.trim();
+      const article = document.getElementById('articleInput').innerText.trim();
+      return title !== '' && article !== '';
+    }
+  
+    // Handle Publish or Schedule
+    function handlePublishOrSchedule(isSchedule = false) {
+      if (!validateArticle()) {
+        alert('Please fill in the title and article content before proceeding.');
+        return;
+      }
+  
+      const title = document.getElementById('titleInput').value;
+      const article = document.getElementById("articleInput").innerHTML;
+      const category = document.getElementById('categorySelect').value;
+      const images = Array.from(document.querySelectorAll(".image-preview img")).map(img => img.src);
+      const data = { title, article, category, images };
+  
+      // Add schedule date if scheduling
+      if (isSchedule) {
+        const date = document.getElementById('scheduleDate').value;
+        if (!date) {
+          alert('Please select a valid date and time.');
+          return;
+        }
+        data.schedule = date;
+      }
+  
+      fetch('/publish-article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(result => {
+          console.log('Success:', result);
+          alert(isSchedule ? 'Article Scheduled!' : 'Article Published!');
+          // Redirect after successful operation if needed
+          // window.location.href = 'dashboard.html';
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('There was an error processing your request.');
+        });
+    }
+  
+    // Schedule button
+    document.getElementById('scheduleBtn').addEventListener('click', () => {
+      if (validateArticle()) {
+        const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+        scheduleModal.show();
+      } else {
+        alert('Please fill in the title and article content before scheduling.');
+      }
+    });
+  
+    // Save Schedule button in Modal
+    document.getElementById('saveSchedule').addEventListener('click', () => {
+      handlePublishOrSchedule(true);
+      const scheduleModal = bootstrap.Modal.getInstance(document.getElementById('scheduleModal'));
+      scheduleModal.hide();
+    });
+  
+    // Publish button
+    document.getElementById('publishBtn').addEventListener('click', () => {
+      handlePublishOrSchedule(false);
+    });
+  </script>
+  
+  <!-- <script>
+    // Sidebar toggle and track active section
+    let activeSection = '';
 
     document.querySelectorAll('.plus-button').forEach(button => {
       button.addEventListener('click', (event) => {
@@ -343,7 +488,6 @@
           .then(result => {
 
             console.log('Success:', result);
-            alert(`Article Published under ${category}!`);
           })
           .catch(error => {
             console.error('Error:', error);
@@ -382,7 +526,6 @@
           .then(result => {
 
             console.log('Success:', result);
-            alert(`Article scheduled for ${new Date(date).toLocaleString()}`);
           })
           .catch(error => {
             console.error('Error:', error);
@@ -397,7 +540,7 @@
         alert('Please select a valid date and time.');
       }
     });
-  </script>
+  </script> -->
 </body>
 
 </html>
