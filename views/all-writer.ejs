@@ -31,7 +31,7 @@
                         class="img-cover-absolute" /></div>
             </div>
         </div>
-        <div id="story" data-w-id="52935f18-eb14-39e3-fafc-a254ebc5e4ef" class="story-section">
+        <!-- <div id="story" data-w-id="52935f18-eb14-39e3-fafc-a254ebc5e4ef" class="story-section">
             <div class="story-track">
                 <div class="story-scroll-indicator">
                     <div class="tag-text-style">our story</div>
@@ -178,13 +178,64 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="authors-list-section">
             <div class="wrap">
                 <div class="section-intro">
                     <div class="tag-text-style">our authors</div>
                     <div class="section-intro-line"></div>
                 </div>
+                <div class="search-container">
+                    <input type="text" placeholder="Search by authour name" id="searchInput">
+                    <button onclick="performSearch()">Search</button>
+                </div>
+                
+                <script>
+                    function performSearch() {
+                        const query = document.getElementById('searchInput').value;
+                        if (query) {
+                            alert(`Searching for: ${query}`);
+                            // Here you would add code to perform the actual search, such as redirecting to a search results page
+                        } else {
+                            alert("Please enter a search term.");
+                        }
+                    }
+                </script>
+                
+                <style>
+                    /* Center search bar */
+                    .search-container {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-top: 20px;
+                    }
+                
+                    /* Style the search input */
+                    #searchInput {
+                        padding: 10px;
+                        width: 300px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px 0 0 5px;
+                        outline: none;
+                    }
+                
+                    /* Style the search button */
+                    .search-container button {
+                        padding: 10px;
+                        background-color: #007bff;
+                        color: white;
+                        border: none;
+                        border-radius: 0 5px 5px 0;
+                        cursor: pointer;
+                    }
+                
+                    /* Button hover effect */
+                    .search-container button:hover {
+                        background-color: #0056b3;
+                    }
+                </style>
+                
                 <div class="authors-cms-list w-dyn-list">
                     <div role="list" class="authors-grid w-dyn-items">
                         <div role="listitem" class="w-dyn-item"><a href="#"
@@ -323,6 +374,8 @@
                                     <div class="line-moves"></div>
                                 </div>
                             </a></div>
+                            <button class="w-button">Previous</button></a>
+                            <button class="w-button" style="position: relative; left: 100%;">Next</button>
                     </div>
                 </div>
             </div>
