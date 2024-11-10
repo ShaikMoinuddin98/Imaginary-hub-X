@@ -136,6 +136,7 @@
         display: none;
     }
 </style>
+
 <body>
     <div style="opacity:0" class="page-wrapper">
         <div data-collapse="medium" data-animation="over-left" data-duration="400"
@@ -239,8 +240,8 @@
             </div>
             <div class="bg header-bg"></div>
         </div>
-          <!-- Category Selection Popup -->
-          <div id="categoryPopup" class="popup-overlay">
+        <!-- Category Selection Popup -->
+        <div id="categoryPopup" class="popup-overlay">
             <div class="popup-content">
                 <h3>Select Your Interests</h3>
                 <div class="category-checkboxes">
@@ -380,7 +381,8 @@
                     <div data-w-id="8fd11f0d-7812-a53b-7de8-eeaf7ac2d8d4"
                         style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
                         class="split-content story-left">
-                        <div class="image-wrapper story"><img <% if (data.img.data) { %>
+                        <div class="image-wrapper story"><img 
+                            <% if (data.img.data) { %>
                             src="data:image/<%= data.img.contentType %>;base64,<%= data.img.data.toString('base64') %>"
                                     <%}%>
                                         <%if(data.img.data==null){%>
@@ -456,8 +458,7 @@
         <footer class="footer">
             <div class="container-default w-container">
                 <div data-w-id="69754c41-08b9-6ecf-91b8-95942fc59e5b" class="footer-content-top">
-                    <div class="split-content footer-content-top-main-content"><a href="/"
-                            aria-current="page"
+                    <div class="split-content footer-content-top-main-content"><a href="/" aria-current="page"
                             class="footer-logo-container w-inline-block w--current link-underline-wrapper">
                             <h3 class="footer-logo-container">Imaginary Hub X</h3>
                         </a>
@@ -495,10 +496,8 @@
                                 <ul role="list" class="footer-nav w-list-unstyled">
                                     <li class="footer-nav-item"><a href="/" aria-current="page"
                                             class="footer-nav-link w--current">Home</a></li>
-                                    <li class="footer-nav-item"><a href="/about"
-                                            class="footer-nav-link">About</a></li>
-                                    <li class="footer-nav-item"><a href="/contact"
-                                            class="footer-nav-link">Contact</a>
+                                    <li class="footer-nav-item"><a href="/about" class="footer-nav-link">About</a></li>
+                                    <li class="footer-nav-item"><a href="/contact" class="footer-nav-link">Contact</a>
                                     </li>
                                     <li class="footer-nav-item"><a href="/allnews"
                                             class="footer-nav-link tag w-inline-block">
@@ -514,8 +513,7 @@
                                 <ul role="list" class="footer-nav last w-list-unstyled">
                                     <li class="footer-nav-item"><a href="/subscribe"
                                             class="footer-nav-link">Subscribe</a></li>
-                                    <li class="footer-nav-item"><a href=""
-                                            class="footer-nav-link tag w-inline-block">
+                                    <li class="footer-nav-item"><a href="" class="footer-nav-link tag w-inline-block">
                                             <div>Pricing Single</div>
                                             <div class="footer-nav-link-tag">eCommerce</div>
                                         </a></li>
@@ -525,7 +523,7 @@
                         <div class="footer-menu-wrapper last">
                         </div>
                     </div>
-                 
+
                 </div>
                 <div class="divider footer-content-bottom-divider"></div>
                 <div data-w-id="4a24e60e-bea5-a418-e416-88b53fbdd0a6" class="footer-content-bottom">
@@ -550,105 +548,105 @@
             const categoryCheckboxes = document.querySelectorAll('.subscribe-category-checkbox');
             const successMessages = document.querySelectorAll('.success-message');
             const errorMessages = document.querySelectorAll('.error-message');
-      
+
             let currentEmailInput = null;
-      
+
             // Add click handlers to all subscribe buttons
             subscribeButtons.forEach(button => {
-              button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const emailInput = this.previousElementSibling;
-      
-                if (!emailInput || !emailInput.value) {
-                  showError('Please enter an email address');
-                  return;
-                }
-      
-                if (!isValidEmail(emailInput.value)) {
-                  showError('Please enter a valid email address');
-                  return;
-                }
-      
-                currentEmailInput = emailInput;
-                showCategoryPopup();
-              });
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const emailInput = this.previousElementSibling;
+
+                    if (!emailInput || !emailInput.value) {
+                        showError('Please enter an email address');
+                        return;
+                    }
+
+                    if (!isValidEmail(emailInput.value)) {
+                        showError('Please enter a valid email address');
+                        return;
+                    }
+
+                    currentEmailInput = emailInput;
+                    showCategoryPopup();
+                });
             });
-      
+
             // Show/hide popup functions
             function showCategoryPopup() {
-              categoryPopup.style.display = 'flex';
-              // Reset checkboxes
-              categoryCheckboxes.forEach(checkbox => checkbox.classList.remove('selected'));
+                categoryPopup.style.display = 'flex';
+                // Reset checkboxes
+                categoryCheckboxes.forEach(checkbox => checkbox.classList.remove('selected'));
             }
-      
+
             function hideCategoryPopup() {
-              categoryPopup.style.display = 'none';
-              thanksMessage.style.display = 'none';
+                categoryPopup.style.display = 'none';
+                thanksMessage.style.display = 'none';
             }
-      
+
             // Toggle category selection
             categoryCheckboxes.forEach(checkbox => {
-              checkbox.addEventListener('click', function () {
-                this.classList.add('selected');
-              });
+                checkbox.addEventListener('click', function () {
+                    this.classList.add('selected');
+                });
             });
-      
+
             // Handle form submission
             confirmButton.addEventListener('click', async function () {
-              const selectedCategories = Array.from(categoryCheckboxes)
-                .filter(checkbox => checkbox.classList.contains('selected'))
-                .map(checkbox => checkbox.textContent.trim());
-      
-              if (selectedCategories.length === 0) {
-                showError('Please select at least one category');
-                return;
-              }
-      
-              try {
-                const response = await fetch('/subscribe', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    email: currentEmailInput.value,
-                    topics: selectedCategories
-                  })
-                });
-      
-                if (response.ok) {
-                  showSuccess();
-                  setTimeout(hideCategoryPopup, 2000);
-                } else {
-                  throw new Error('Subscription failed');
+                const selectedCategories = Array.from(categoryCheckboxes)
+                    .filter(checkbox => checkbox.classList.contains('selected'))
+                    .map(checkbox => checkbox.textContent.trim());
+
+                if (selectedCategories.length === 0) {
+                    showError('Please select at least one category');
+                    return;
                 }
-              } catch (error) {
-                showError('Failed to subscribe. Please try again later.');
-              }
+
+                try {
+                    const response = await fetch('/subscribe', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: currentEmailInput.value,
+                            topics: selectedCategories
+                        })
+                    });
+
+                    if (response.ok) {
+                        showSuccess();
+                        setTimeout(hideCategoryPopup, 2000);
+                    } else {
+                        throw new Error('Subscription failed');
+                    }
+                } catch (error) {
+                    showError('Failed to subscribe. Please try again later.');
+                }
             });
-      
+
             // Close popup when clicking close button
             closeButton.addEventListener('click', hideCategoryPopup);
-      
+
             // Helper functions
             function isValidEmail(email) {
-              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             }
-      
+
             function showSuccess() {
-              thanksMessage.style.display = 'block';
-              successMessages.forEach(msg => msg.style.display = 'block');
-              errorMessages.forEach(msg => msg.style.display = 'none');
+                thanksMessage.style.display = 'block';
+                successMessages.forEach(msg => msg.style.display = 'block');
+                errorMessages.forEach(msg => msg.style.display = 'none');
             }
-      
+
             function showError(message) {
-              errorMessages.forEach(msg => {
-                msg.querySelector('div').textContent = message;
-                msg.style.display = 'block';
-              });
-              successMessages.forEach(msg => msg.style.display = 'none');
+                errorMessages.forEach(msg => {
+                    msg.querySelector('div').textContent = message;
+                    msg.style.display = 'block';
+                });
+                successMessages.forEach(msg => msg.style.display = 'none');
             }
-          </script>
+        </script>
 </body>
 
 </html>
