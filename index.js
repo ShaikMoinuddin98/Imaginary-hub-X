@@ -292,22 +292,25 @@ const sendWeeklyTopArticles = async () => {
     const topArticles = await getTopArticlesForTopics(user.topics, start, end);
 
     if (topArticles.length > 0) {
-      ejs.renderFile(
-        __dirname + "/views/template.ejs",
-        { articles: topArticles },
-        async (err, html) => {
-          if (err) {
-            console.log("Error rendering EJS:", err);
-          } else {
-            // Use `html` for sending email
-
-            mailoptions.to = user.email;
-            mailoptions.subject = "Weekly Updates";
-            mailoptions.html = html;
-            await send(transporter, mailoptions);
+      try{
+      const html = await new Promise((resolve, reject) => {
+        ejs.renderFile(
+          __dirname + "/views/template.ejs",
+          { articles: topArticles },
+          (err, htmlContent) => {
+            if (err) return reject(err);
+            resolve(htmlContent);
           }
-        }
-      );
+        );
+      });
+
+      mailoptions.to = user.email;
+      mailoptions.subject = "Weekly Updates";
+      mailoptions.html = html;
+      await send(transporter, mailoptions);
+    } catch (err) {
+      console.error(`Error processing email for ${user.email}:`, err);
+    }
     }
   }
 };
@@ -327,38 +330,37 @@ cron.schedule("35 13 * * 6", async () => {
 
 
 
-//  sendWeeklyTopArticles()
 
 app.get("/", async (req, res) => {
-  try{
+  try {
     res.render("index.ejs");
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
 // Routes
 app.get("/dashboard", isLoggedIn, async (req, res) => {
-  try{
-  let c = await creator.find({ email: req.user.email });
-  let arts = await articles.find({ email: req.user.email });
+  try {
+    let c = await creator.find({ email: req.user.email });
+    let arts = await articles.find({ email: req.user.email });
 
-  if (!c[0].profession) res.redirect("/profile-creation");
-  else res.render("dashboard.ejs", { data: c[0], articles: arts });
+    if (!c[0].profession) res.redirect("/profile-creation");
+    else res.render("dashboard.ejs", { data: c[0], articles: arts });
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
 app.get("/signup", (req, res) => {
-  try{
-  res.render("signup.ejs");
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    res.render("signup.ejs");
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.post("/signup", async (req, res) => {
@@ -388,9 +390,9 @@ app.post("/signup", async (req, res) => {
           res.json({ message: err.message });
         });
     });
-  } 
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
@@ -422,289 +424,290 @@ app.post("/login", (req, res, next) => {
 });
 
 app.get("/logout", async (req, res, next) => {
-  try{
-  await req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/login");
-  });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    await req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/login");
+    });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/about", async (req, res) => {
-  try{
-  let arts = await articles.find({}, "views");
-  let totalviews = 0;
-  for (i of arts) {
-    totalviews += i.views;
+  try {
+    let arts = await articles.find({}, "views");
+    let totalviews = 0;
+    for (i of arts) {
+      totalviews += i.views;
+    }
+    let subs = await subscribers.countDocuments({});
+    res.render("about.ejs", {
+      views: totalviews,
+      subs: subs,
+      totalarts: arts.length,
+    });
   }
-  let subs = await subscribers.countDocuments({});
-  res.render("about.ejs", {
-    views: totalviews,
-    subs: subs,
-    totalarts: arts.length,
-  });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/allnews", async (req, res) => {
-  try{
-  let arts = await articles
-    .find({ publishedDate: { $exists: true } })
-    .sort({ engagementRatio: -1 });
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true } })
+      .sort({ engagementRatio: -1 });
 
-  for (let i = 0; i < arts.length; i++) {
-    let u = await creator.findOne({ email: arts[i].email }, "username");
-    arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
   }
-  res.render("allnews.ejs", { data: arts });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/tech", async (req, res) => {
-  try{
-  let arts = await articles
-    .find({ publishedDate: { $exists: true },category:"Tech" })
-    .sort({ engagementRatio: -1 });
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true }, category: "Tech" })
+      .sort({ engagementRatio: -1 });
 
-  for (let i = 0; i < arts.length; i++) {
-    let u = await creator.findOne({ email: arts[i].email }, "username");
-    arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
   }
-  res.render("allnews.ejs", { data: arts });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/business", async (req, res) => {
-  try{
-  let arts = await articles
-    .find({ publishedDate: { $exists: true } ,category:"Business"})
-    .sort({ engagementRatio: -1 });
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true }, category: "Business" })
+      .sort({ engagementRatio: -1 });
 
-  for (let i = 0; i < arts.length; i++) {
-    let u = await creator.findOne({ email: arts[i].email }, "username");
-    arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
   }
-  res.render("allnews.ejs", { data: arts });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/education", async (req, res) => {
-  try{
-  let arts = await articles
-    .find({ publishedDate: { $exists: true } ,category:"Education"})
-    .sort({ engagementRatio: -1 });
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true }, category: "Education" })
+      .sort({ engagementRatio: -1 });
 
-  for (let i = 0; i < arts.length; i++) {
-    let u = await creator.findOne({ email: arts[i].email }, "username");
-    arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
   }
-  res.render("allnews.ejs", { data: arts });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/psychology", async (req, res) => {
-  try{
-  let arts = await articles
-    .find({ publishedDate: { $exists: true },category:"Psychology" })
-    .sort({ engagementRatio: -1 });
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true }, category: "Psychology" })
+      .sort({ engagementRatio: -1 });
 
-  for (let i = 0; i < arts.length; i++) {
-    let u = await creator.findOne({ email: arts[i].email }, "username");
-    arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
   }
-  res.render("allnews.ejs", { data: arts });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/finance", async (req, res) => {
-  try{
-  let arts = await articles
-    .find({ publishedDate: { $exists: true },category:"Finance" })
-    .sort({ engagementRatio: -1 });
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true }, category: "Finance" })
+      .sort({ engagementRatio: -1 });
 
-  for (let i = 0; i < arts.length; i++) {
-    let u = await creator.findOne({ email: arts[i].email }, "username");
-    arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
   }
-  res.render("allnews.ejs", { data: arts });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/analytics", (req, res) => {
-  try{
-  res.render("analytics.ejs");
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    res.render("analytics.ejs");
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
-app.get("/article-writing",isLoggedIn, (req, res) => {
-  try{
-  res.render("article-writing.ejs");
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+app.get("/article-writing", isLoggedIn, (req, res) => {
+  try {
+    res.render("article-writing.ejs");
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/article-editing/:id", isLoggedIn, async (req, res) => {
-  try{
-  let art = await articles.findOne({ _id: req.params.id });
-  res.render("article-editing.ejs", { data: art });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    let art = await articles.findOne({ _id: req.params.id });
+    res.render("article-editing.ejs", { data: art });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.post("/edit-article/:id", isLoggedIn, async (req, res) => {
-  try{
-  const date = new Date();
-  // Calculate UTC+5
-  const utc5Date = new Date(date.getTime() + (5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
+  try {
+    const date = new Date();
+    // Calculate UTC+5
+    const utc5Date = new Date(date.getTime() + (5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
 
-  // Format it as ISO string but with "Z" to indicate UTC
-  const currentTime = new Date(utc5Date.toISOString()); // This gives you UTC time
-  let data;
-  if (req.body.schedule) {
-    data = { email: req.user.email, ...req.body };
-  } else
-    data = { email: req.user.email, ...req.body, lastUpdated: currentTime };
-  const u = await articles.updateOne(
-    { email: req.user.email, _id: req.params.id },
-    data
-  );
+    // Format it as ISO string but with "Z" to indicate UTC
+    const currentTime = new Date(utc5Date.toISOString()); // This gives you UTC time
+    let data;
+    if (req.body.schedule) {
+      data = { email: req.user.email, ...req.body };
+    } else
+      data = { email: req.user.email, ...req.body, lastUpdated: currentTime };
+    const u = await articles.updateOne(
+      { email: req.user.email, _id: req.params.id },
+      data
+    );
 
-  res.json({ message: "done" });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+    res.json({ message: "done" });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.post("/delete-article", isLoggedIn, async (req, res) => {
-  try{
-  let id = req.body.id;
-  let d = await articles.deleteOne({ _id: id });
-  res.status(200).json({ message: "ok" });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    let id = req.body.id;
+    let d = await articles.deleteOne({ _id: id });
+    res.status(200).json({ message: "ok" });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
-app.post("/publish-article",isLoggedIn, async (req, res) => {
-  try{
-  const date = new Date();
-  // Calculate UTC+5
-  const utc5Date = new Date(date.getTime() + (5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
+app.post("/publish-article", isLoggedIn, async (req, res) => {
+  try {
+    const date = new Date();
+    // Calculate UTC+5
+    const utc5Date = new Date(date.getTime() + (5 * 60 + 30) * 60 * 1000); // Adding 5 hours in milliseconds
 
-  // Format it as ISO string but with "Z" to indicate UTC
-  const currentTime = new Date(utc5Date.toISOString()); // This gives you UTC time
-  console.log(req.user);
-  let data;
-  if (req.body.schedule) {
-    data = { email: req.user.email, ...req.body };
-  } else
-    data = { email: req.user.email, ...req.body, publishedDate: currentTime };
-  const u = new articles(data);
-  await u.save();
-  res.json({ message: "done" });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+    // Format it as ISO string but with "Z" to indicate UTC
+    const currentTime = new Date(utc5Date.toISOString()); // This gives you UTC time
+    console.log(req.user);
+    let data;
+    if (req.body.schedule) {
+      data = { email: req.user.email, ...req.body };
+    } else
+      data = { email: req.user.email, ...req.body, publishedDate: currentTime };
+    const u = new articles(data);
+    await u.save();
+    res.json({ message: "done" });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 app.get("/contact", (req, res) => {
-  try{
-  res.render("contact.ejs");
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    res.render("contact.ejs");
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/forgot-password", (req, res) => {
-  try{
-  res.render("forgot-password.ejs");
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    res.render("forgot-password.ejs");
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/article/:title/:id", async (req, res) => {
-  try{
-  req.params.title = req.params.title.replace(/%20/g, " ");
-  let a = await articles.findOne({
-    title: req.params.title,
-    _id: req.params.id,
-  });
-  let u = await creator.findOne({ email: a.email }, "username");
-  let top3arts = await articles
-    .find({
-      publishedDate: { $exists: true },
-      email: a.email,
-    })
-    .sort({ engagementRatio: -1 })
-    .limit(3);
-
-  if (a.publishedDate)
-    res.render("newstemplate.ejs", {
-      data: a,
-      toparts: top3arts,
-      username: u.username,
+  try {
+    req.params.title = decodeURIComponent(req.params.title)
+    console.log(req.params)
+    let a = await articles.findOne({
+      title: req.params.title,
+      _id: req.params.id,
     });
-  else res.json({ message: "Article Not yet published" });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+    let u = await creator.findOne({ email: a.email }, "username");
+    let top3arts = await articles
+      .find({
+        publishedDate: { $exists: true },
+        email: a.email,
+      })
+      .sort({ engagementRatio: -1 })
+      .limit(3);
+
+    if (a.publishedDate)
+      res.render("newstemplate.ejs", {
+        data: a,
+        toparts: top3arts,
+        username: u.username,
+      });
+    else res.json({ message: "Article Not yet published" });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/profile-creation", isLoggedIn, async (req, res) => {
-  try{
-  if (req.user.termsAccept) {
-    let c = await creator.findOne({ email: req.user.email });
-    if (c.profession) {
-      res.render("profile-creation.ejs", { data: c });
+  try {
+    if (req.user.termsAccept) {
+      let c = await creator.findOne({ email: req.user.email });
+      if (c.profession) {
+        res.render("profile-creation.ejs", { data: c });
+      } else {
+        res.render("profile-creation.ejs", { data: {} });
+      }
     } else {
-      res.render("profile-creation.ejs", { data: {} });
+      res.redirect("/terms");
     }
-  } else {
-    res.redirect("/terms");
   }
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.post(
@@ -745,7 +748,7 @@ app.post(
       }
       const u = await creator.updateOne({ email: req.user.email }, updata);
 
-      ejs.renderFile(__dirname + "/views/writer-email.ejs",{name:req.body.username}, (err, html) => {
+      ejs.renderFile(__dirname + "/views/writer-email.ejs", { name: req.body.username }, (err, html) => {
         if (err) {
           console.log("Error rendering EJS:", err);
         } else {
@@ -758,16 +761,16 @@ app.post(
         }
       });
       res.redirect("/dashboard");
-    } 
-    catch(err){
-      res.render("error.ejs",{message:err.message})
+    }
+    catch (err) {
+      res.render("error.ejs", { message: err.message })
     }
   }
 );
 
 app.get("/profile/:name", async (req, res) => {
   try {
-    req.params.name = req.params.name.replace(/%20/g, " ");
+    req.params.name = decodeURIComponent(req.params.name)
     console.log(req.params);
 
     let d = await creator.findOne({ username: req.params.name });
@@ -793,8 +796,8 @@ app.get("/profile/:name", async (req, res) => {
       res.status(404).send({ message: "Profile not found." });
     }
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 app.get("/subscribe", (req, res) => {
@@ -842,8 +845,8 @@ app.post("/subscribe", async (req, res) => {
     });
     return res.status(201).json({ message: "Subscription successful!" });
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
@@ -862,8 +865,8 @@ app.post("/terms", isLoggedIn, async (req, res) => {
       res.json({ message: false });
     }
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
@@ -872,92 +875,92 @@ app.get("/writer", (req, res) => {
 });
 
 app.post("/update-engagement", async (req, res) => {
-  try{
-  console.log(req.body);
-  const { articleId, views, shares, totalScrollDepth, timeSpent } = req.body;
+  try {
+    console.log(req.body);
+    const { articleId, views, shares, totalScrollDepth, timeSpent } = req.body;
 
-  await articles.findByIdAndUpdate(articleId, {
-    $inc: {
-      views: views,
-      shares: shares,
-      scrolldepth: totalScrollDepth,
-      timespent: timeSpent,
-    },
-  });
+    await articles.findByIdAndUpdate(articleId, {
+      $inc: {
+        views: views,
+        shares: shares,
+        scrolldepth: totalScrollDepth,
+        timespent: timeSpent,
+      },
+    });
 
-  await articles.updateOne({ _id: articleId }, [
-    {
-      $set: {
-        engagementRatio: {
-          $divide: [
-            {
-              $add: [
-                "$views",
-                { $multiply: ["$shares", 2] },
-                "$scrolldepth",
-                { $divide: ["$timespent", 60] },
-              ],
-            },
-            "$views",
-          ],
+    await articles.updateOne({ _id: articleId }, [
+      {
+        $set: {
+          engagementRatio: {
+            $divide: [
+              {
+                $add: [
+                  "$views",
+                  { $multiply: ["$shares", 2] },
+                  "$scrolldepth",
+                  { $divide: ["$timespent", 60] },
+                ],
+              },
+              "$views",
+            ],
+          },
         },
       },
-    },
-  ]);
+    ]);
 
-  res.send({ success: true });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+    res.send({ success: true });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/get-analytics", isLoggedIn, async (req, res) => {
-  try{
-  let article = await articles.find(
-    { email: req.user.email },
-    "title views shares timespent scrolldepth engagementRatio"
-  );
+  try {
+    let article = await articles.find(
+      { email: req.user.email },
+      "title views shares timespent scrolldepth engagementRatio"
+    );
 
-  res.json({ article });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+    res.json({ article });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/writers", async (req, res) => {
-  try{
-  let w=await creator.find({username:{$exists:true}})
-  res.render("all-writer.ejs",{data:w});
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    let w = await creator.find({ username: { $exists: true } })
+    res.render("all-writer.ejs", { data: w });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 
 app.post("/search-article", async (req, res) => {
-  try{
-  let u = await creator.findOne(
-    { username: { $regex: new RegExp(`^${req.body.name}$`, "i") } },
-    "email"
-  );
-  let a = u?.email ? await articles.find({ email: u.email }) : [];
-  res.json({ data: a });
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    let u = await creator.findOne(
+      { username: { $regex: new RegExp(`^${req.body.name}$`, "i") } },
+      "email"
+    );
+    let a = u?.email ? await articles.find({ email: u.email }) : [];
+    res.json({ data: a });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.get("/forget-password", (req, res) => {
-  try{
-  res.render("forgot-password.ejs");
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+  try {
+    res.render("forgot-password.ejs");
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 });
 
 app.post("/forgetpass", async (req, res) => {
@@ -987,8 +990,8 @@ app.post("/forgetpass", async (req, res) => {
       throw new Error("User not found");
     }
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
@@ -999,8 +1002,8 @@ app.get("/reset-pass/:id/:token", (req, res) => {
     const payload = jwt.verify(token, secret);
     res.render("resetpass.ejs", { url: `${id}/${token}` });
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
@@ -1033,30 +1036,30 @@ app.post("/reset-pass/:id/:token", async (req, res) => {
         });
     }
   }
-  catch(err){
-    res.render("error.ejs",{message:err.message})
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
   }
 });
 
-app.post("/search-writer",async(req,res)=>{
-  try{
-  let w=await creator.find({username:new RegExp(req.body.name, 'i')})
-  res.json({data:w})
-}
-catch(err){
-  res.render("error.ejs",{message:err.message})
-}
+app.post("/search-writer", async (req, res) => {
+  try {
+    let w = await creator.find({ username: new RegExp(req.body.name, 'i') })
+    res.json({ data: w })
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
 })
 
-app.get("/privacy",(req,res)=>{
+app.get("/privacy", (req, res) => {
   res.render("privacy.ejs")
 })
 
-app.get("/terms-cond",(req,res)=>{
+app.get("/terms-cond", (req, res) => {
   res.render("terms-cond.ejs")
 })
 
-app.get("/error",(req,res)=>{
+app.get("/error", (req, res) => {
   res.render("error.ejs")
 })
 

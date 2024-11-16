@@ -146,7 +146,7 @@
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
                     class="newsletter-content-top">
                     <div class="newsletter-issue-wrapper">
-                        <a href="/profile/<%=username%>" class="link-underline-wrapper">
+                        <a href="/profile/<%=encodeURIComponent(username)%>" class="link-underline-wrapper">
                             <div><%=username%></div>
                         </a>
                     </div>
@@ -349,7 +349,7 @@
                     <div role="list" class="newsletters-grid w-dyn-items">
                         <%for(i of toparts){%>
                         <div role="listitem" class="newsletter-item w-dyn-item"><a
-                                href="/article/<%=i.title%>/<%=i._id%>"
+                                href="/article/<%=encodeURIComponent(i.title)%>/<%=i._id%>"
                                 class="card newsletter w-inline-block">
                                 <div class="card-newsletter-content-top">
                                     <div class="card-newsletter-issue-wrapper">
