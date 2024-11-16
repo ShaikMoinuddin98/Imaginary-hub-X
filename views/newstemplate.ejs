@@ -4,7 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <head>
+
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>News Page - Imaginary Hub X</title>
     <link href="/assests/css/mainstyle.css" rel="stylesheet" type="text/css" />
@@ -184,16 +186,15 @@
         <ul>
             <li><a href="#" onclick="shareOnFacebook()" class="link-underline-wrapper" id="share-button">Facebook</a></li>
             <li><a href="#" onclick="shareOnTwitter()" class="link-underline-wrapper" id="share-button">Twitter</a></li>
-            <li><a href="#" onclick="shareOnLinkedIn()"
-                class="link-underline-wrapper" id="share-button">LinkedIn</a></li>
-            <li><a href="#" onclick="copyLink()"
-                class="link-underline-wrapper" id="share-button">Copy Link</a></li>
+            <li><a href="#" onclick="shareOnLinkedIn()" class="link-underline-wrapper" id="share-button">LinkedIn</a></li>
+            <li><a href="#" onclick="copyLink()" class="link-underline-wrapper" id="share-button">Copy Link</a></li>
         </ul>
     </div>
 </div>
 
 <script>
-    const shareUrl = 'https://yourwebsite.com'; // Replace with your URL
+    // Capture the current page URL dynamically
+    const shareUrl = window.location.href;
 
     function openShareModal() {
         document.getElementById('shareModal').style.display = 'block';
@@ -293,6 +294,7 @@
         cursor: pointer;
     }
 </style>
+
 
                 <div data-w-id="aae45622-6d0f-fe99-2566-d7ece6899986"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
