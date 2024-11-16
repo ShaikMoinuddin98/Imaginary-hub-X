@@ -225,7 +225,7 @@
                                             src = '/assests/img/sample photo.jpg'
                                         }
                                         html = `   
-                                        <div role="listitem" class="w-dyn-item"><a href='profile/${item.username}' class="author-item w-inline-block">
+                                        <div role="listitem" class="w-dyn-item"><a href='profile/${encodeURIComponent(item.username)}' class="author-item w-inline-block">
                                 <div class="author-item-img-wrap">
                                     <img alt="" loading="lazy"
                                     src=${src}
@@ -300,7 +300,7 @@
                 <div class="authors-cms-list w-dyn-list">
                     <div role="list" class="authors-grid w-dyn-items">
                         <%for(item of data){%>
-                        <div role="listitem" class="w-dyn-item"><a href="profile/<%=item.username%>" class="author-item w-inline-block">
+                        <div role="listitem" class="w-dyn-item"><a href="profile/<%=encodeURIComponent(item.username)%>" class="author-item w-inline-block">
                                 <div class="author-item-img-wrap"><img alt="" loading="lazy"
                                     <% if (item.img.data) { %>
                                         src="data:image/<%= item.img.contentType %>;base64,<%= item.img.data.toString('base64') %>"

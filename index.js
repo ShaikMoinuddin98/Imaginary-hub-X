@@ -662,7 +662,8 @@ catch(err){
 
 app.get("/article/:title/:id", async (req, res) => {
   try{
-  req.params.title = req.params.title.replace(/%20/g, " ");
+  req.params.title =decodeURIComponent(req.params.title)
+  console.log(req.params)
   let a = await articles.findOne({
     title: req.params.title,
     _id: req.params.id,
@@ -767,7 +768,7 @@ app.post(
 
 app.get("/profile/:name", async (req, res) => {
   try {
-    req.params.name = req.params.name.replace(/%20/g, " ");
+    req.params.name = decodeURIComponent(req.params.name)
     console.log(req.params);
 
     let d = await creator.findOne({ username: req.params.name });

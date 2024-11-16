@@ -287,7 +287,7 @@
                 let inhtml=""
                 for(item of result.data){
             
-                let title=item.title
+                let title=encodeURIComponent(item.title)
                 let id=item._id
                 let username=query
                 let publishdate=new Date(item.publishedDate).toLocaleDateString('en-US', {
@@ -364,7 +364,7 @@
                     <div role="list" class="newsletters-grid w-dyn-items">
                         <div role="listitem" class="newsletter-item w-dyn-item">
                             <%for(item of data){%>
-                                <a href="/article/<%=item.title%>/<%=item._id%>" class="card newsletter w-inline-block">
+                                <a href="/article/<%=encodeURIComponent(item.title)%>/<%=item._id%>" class="card newsletter w-inline-block">
                                     <div class="card-newsletter-content-top">
 
                                         <div class="card-newsletter-issue-wrapper">
