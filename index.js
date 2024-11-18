@@ -316,7 +316,7 @@ const sendWeeklyTopArticles = async () => {
 };
 
 // Schedule to run every Monday at 9:00 AM
-cron.schedule("10 9 * * 1", async () => {
+cron.schedule("35 15 * * 1", async () => {
   try {
     console.log("Sending top articles to subscribers...");
     await sendWeeklyTopArticles();
