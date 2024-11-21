@@ -888,17 +888,17 @@ app.post("/update-engagement", async (req, res) => {
       },
     });
 
-    await articles.updateOne({ _id: articleId }, [
+     await articles.updateOne({ _id: articleId }, [
       {
         $set: {
           engagementRatio: {
             $divide: [
               {
                 $add: [
-                  "$views",
-                  { $multiply: ["$shares", 2] },
-                  "$scrolldepth",
-                  { $divide: ["$timespent", 60] },
+                  { $multiply: ["$views", 0.5] },
+                  { $multiply: ["$shares", 0.3] },
+                  { $multiply: ["$scrolldepth", 0.15] },
+                  { $multiply: [{ $divide: ["$timespent", 60] }, 0.05] },
                 ],
               },
               "$views",
@@ -907,6 +907,7 @@ app.post("/update-engagement", async (req, res) => {
         },
       },
     ]);
+
 
     res.send({ success: true });
   }
