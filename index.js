@@ -490,6 +490,23 @@ app.get("/tech", async (req, res) => {
   }
 });
 
+app.get("/art", async (req, res) => {
+  try {
+    let arts = await articles
+      .find({ publishedDate: { $exists: true }, category: "Design & Art" })
+      .sort({ engagementRatio: -1 });
+
+    for (let i = 0; i < arts.length; i++) {
+      let u = await creator.findOne({ email: arts[i].email }, "username");
+      arts[i].username = u ? u.username : "Unknown"; // Add username to each article
+    }
+    res.render("allnews.ejs", { data: arts });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
+});
+
 app.get("/business", async (req, res) => {
   try {
     let arts = await articles
