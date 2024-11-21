@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express");
 const ejs = require("ejs");
 const app = express();
@@ -1080,6 +1081,6 @@ app.get("/error", (req, res) => {
   res.render("error.ejs")
 })
 
-app.listen(9000, () => {
+app.listen(process.env.PORT || "9000", () => {
   console.log("listening on port 9000");
 });
