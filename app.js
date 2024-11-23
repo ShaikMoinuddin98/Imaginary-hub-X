@@ -74,7 +74,7 @@ main()
 
 async function main() {
   await mongoose.connect(
-    "mongodb+srv://ImaginaryMoin:Moin-0908@cluster0.zdni4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://ImaginaryMoin:Moin-0908@cluster0.zdni4.mongodb.net/"
   );
 }
 
