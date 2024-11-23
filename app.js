@@ -74,7 +74,7 @@ main()
 
 async function main() {
   await mongoose.connect(
-    "mongodb+srv://ImaginaryMoin:Moin-0908@cluster0.zdni4.mongodb.net"
+   "mongodb+srv://King-Moin:Moin-7093@cluster0.3uvscb7.mongodb.net"
   );
 }
 
