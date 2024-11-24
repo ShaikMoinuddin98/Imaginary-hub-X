@@ -74,7 +74,7 @@ main()
 
 async function main() {
   await mongoose.connect(
-"mongodb+srv://ImaginaryMoin:Moin-0908@cluster0.zdni4.mongodb.net"
+    process.env.MONGO_DB_URI
   );
 }
 
