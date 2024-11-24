@@ -108,38 +108,15 @@
 
     <div class="content-section">
         <!-- Technology Section -->
-        <h2>Top Articles in Technology</h2>
-        <div class="article-item">
-            <a href="#" class="article-title">The Future of AI in Everyday Life</a>
-            <p class="article-category">Category: Technology</p>
-            <p>Explore how AI is set to transform daily tasks and shape the future of innovation.</p>
-        </div>
-        <div class="article-item">
-            <a href="#" class="article-title">5 Breakthroughs in Renewable Energy Tech</a>
-            <p class="article-category">Category: Technology</p>
-            <p>Discover recent advancements in sustainable technology and their impact.</p>
-        </div>
+         <%for(article of articles){%>
+            <h2>Top Articles in <%=article.category%></h2>
+            <div class="article-item">
+                <a href="https://imaginaryhub.in/article/<%=article.title%>/<%=article._id%>" class="article-title"><%=article.title%></a>
+                <p class="article-category">Category: <%=article.category%></p>
+            </div>
 
-        <!-- Finance Section -->
-        <h2>Top Articles in Finance</h2>
-        <div class="article-item">
-            <a href="#" class="article-title">Navigating Market Volatility: Tips for Investors</a>
-            <p class="article-category">Category: Finance</p>
-            <p>Strategies to manage investments during uncertain economic times.</p>
-        </div>
-        <div class="article-item">
-            <a href="#" class="article-title">Understanding Cryptocurrency Trends</a>
-            <p class="article-category">Category: Finance</p>
-            <p>An in-depth look at the evolving landscape of digital currencies.</p>
-        </div>
-
-        <!-- Education Section -->
-        <h2>Top Articles in Education</h2>
-        <div class="article-item">
-            <a href="#" class="article-title">How to Prepare for Modern Job Market Challenges</a>
-            <p class="article-category">Category: Education</p>
-            <p>Essential skills and tips for students and professionals.</p>
-        </div>
+            <%}%>
+        
 
         <a href="#" class="button">Explore More Articles</a>
     </div>

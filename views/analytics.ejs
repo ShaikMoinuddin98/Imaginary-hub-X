@@ -84,7 +84,7 @@
             <div class="col-md-4">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">Money Generated</h5>
+                        <h5 class="card-title">Average Scroll Depth</h5>
                         <p id="moneyGenerated" class="card-text">Loading...</p>
                     </div>
                 </div>
@@ -131,17 +131,18 @@
             let data = await response.json();
              data=data.article
              console.log(data)
-             let monthlyReaders=0,engagementRate=0,moneyGenerated=0;
+             let monthlyReaders=0,engagementRate=0,totalScrollDepth=0;
              let articlesdata=[]
              for(i of data){
                 monthlyReaders+=i.views
                 engagementRate+=i.engagementRatio
-                articlesdata.push({title:i.title,readers:i.views,engagement:i.engagementRatio.toFixed(0)})
+                totalScrollDepth+=i.scrolldepth/i.views
+                articlesdata.push({title:i.title,readers:i.views,engagement:i.engagementRatio.toFixed(0),scrolldepth:i.scrolldepth.toFixed(0)})
              }
             // Simulated dynamic data fetching from the backend
             return {
                 monthlyReaders,
-                moneyGenerated,
+                totalScrollDepth:totalScrollDepth.toFixed(0)/data.length,
                 engagementRate:engagementRate.toFixed(0)/data.length,
                 articleData:articlesdata,
                 trafficSources: [30, 50, 10, 10],
@@ -158,17 +159,20 @@
             fetchedData = await fetchData(); // Fetch data once and store it globally
 
             let selecttag=document.querySelector("#articleSelect")
+            
             for(i of fetchedData.articleData){
                 let opt=document.createElement("option")
                 opt.value=i.title
                 opt.innerText=i.title
                 selecttag.appendChild(opt)
+                
             }
+            selecttag.value=selecttag.childNodes[0]
             
 
             document.getElementById('monthlyReaders').innerText = fetchedData.monthlyReaders;
             document.getElementById('engagementRate').innerText = `${fetchedData.engagementRate}%`;
-            document.getElementById('moneyGenerated').innerText = `$${fetchedData.moneyGenerated}`;
+            document.getElementById('moneyGenerated').innerText = `${fetchedData.totalScrollDepth}`;
 
             // Update traffic chart
             const ctxTraffic = document.getElementById('trafficChart').getContext('2d');
@@ -219,7 +223,7 @@
                     },
                     {
                         label: 'Revenue',
-                        data: fetchedData.monthlyTrends.revenue,
+                        data: fetchedData.monthlyTrends.scrolldepth,
                         borderColor: 'orange',
                         fill: false,
                     }
@@ -229,8 +233,8 @@
                 type: 'line',
                 data: monthlyData,
             });
-        }
 
+        }
         async function updateArticlePerformance() {
             const selectedArticle = document.getElementById('articleSelect').value;
             const selectedData = fetchedData.articleData.find(article => article.title === selectedArticle);
@@ -239,7 +243,7 @@
                 <p><strong>Title:</strong> ${selectedData.title}</p>
                 <p><strong>Readers:</strong> ${selectedData.readers}</p>
                 <p><strong>Engagement:</strong> ${selectedData.engagement}%</p>
-                <p><strong>Revenue:</strong> $${selectedData.revenue}</p>
+                <p><strong>Revenue:</strong> ${selectedData.scrolldepth}%</p>
             `;
 
             // Show article graphs
@@ -281,7 +285,7 @@
                 labels: ['Revenue Generated'],
                 datasets: [{
                     label: 'Revenue',
-                    data: [selectedData.revenue],
+                    data: [selectedData.scrolldepth],
                     backgroundColor: ['orange'],
                 }]
             };

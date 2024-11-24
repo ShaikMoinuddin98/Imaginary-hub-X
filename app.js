@@ -17,7 +17,7 @@ const jwt = require("jsonwebtoken"); //for creating temporary tokens
 const { type } = require("os");
 const { exit } = require("process");
 
-const JWT_SECRET = "Moin-JWT";
+const JWT_SECRET = process.env.JWT_SECRET
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -33,20 +33,20 @@ const upload = multer({ storage: storage });
 //configuring the transporter for sending mails
 const transporter = nodemailer.createTransport({
   service: "gmail",
-  host: "smtp.gmail.com",
+  host: process.env.NODE_MAIL_HOST,
   port: 465,
   secure: true,
   auth: {
-    user: "imaginary.hub1@gmail.com",
-    pass: "hbur gyqg nvgx ltlg",
+    user: process.env.NODE_MAIL_USER,
+    pass: process.env.NODE_MAIL_PASS,
   },
 });
 
 //configuring our mail like the details of mail
 const mailoptions = {
   from: {
-    name: "Testing",
-    address: "imaginary.hub1@gmail.com", //add your gmail here
+    name: "ImaginaryHub X",
+    address: process.env.NODE_MAIL_USER, //add your gmail here
   },
   to: "",
   subject: "",
@@ -74,7 +74,7 @@ main()
 
 async function main() {
   await mongoose.connect(
-    "mongodb+srv://King-Moin:Moin-7093@cluster0.3uvscb7.mongodb.net/"
+    process.env.MONGO_DB_URI
   );
 }
 
@@ -194,7 +194,7 @@ const articles = mongoose.model("article", articleschema);
 const subscribers = mongoose.model("subscriber", subscribeschema);
 // Configuring session options
 const sessionOption = {
-  secret: "Moin-7396Session",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
 };
@@ -288,15 +288,13 @@ const getTopArticlesForTopics = async (topics, startDate, endDate) => {
 const sendWeeklyTopArticles = async () => {
   const { start, end } = getLastWeekRange();
   const subs = await subscribers.find();
-
   for (let user of subs) {
     const topArticles = await getTopArticlesForTopics(user.topics, start, end);
-
     if (topArticles.length > 0) {
       try{
       const html = await new Promise((resolve, reject) => {
         ejs.renderFile(
-          __dirname + "/views/template.ejs",
+          __dirname + "/views/curated-email.ejs",
           { articles: topArticles },
           (err, htmlContent) => {
             if (err) return reject(err);
@@ -316,8 +314,11 @@ const sendWeeklyTopArticles = async () => {
   }
 };
 
+
+
+
 // Schedule to run every Monday at 9:00 AM
-cron.schedule("35 15 * * 1", async () => {
+cron.schedule("0 9 * * 1", async () => {
   try {
     console.log("Sending top articles to subscribers...");
     await sendWeeklyTopArticles();
@@ -384,6 +385,18 @@ app.post("/signup", async (req, res) => {
       c.save()
 
         .then((re) => {
+          ejs.renderFile(__dirname + "/views/writer-email.ejs", (err, html) => {
+            if (err) {
+              console.log("Error rendering EJS:", err);
+            } else {
+              // Use `html` for sending email
+    
+              mailoptions.to = req.user.email;
+              mailoptions.subject = "Welcome to Imaginary Hub X";
+              mailoptions.html = html;
+              send(transporter, mailoptions);
+            }
+          });
           res.redirect("/terms");
         })
         .catch((err) => {
@@ -765,18 +778,7 @@ app.post(
       }
       const u = await creator.updateOne({ email: req.user.email }, updata);
 
-      ejs.renderFile(__dirname + "/views/writer-email.ejs", { name: req.body.username }, (err, html) => {
-        if (err) {
-          console.log("Error rendering EJS:", err);
-        } else {
-          // Use `html` for sending email
-
-          mailoptions.to = req.user.email;
-          mailoptions.subject = "Welcome to Imaginary Hub X";
-          mailoptions.html = html;
-          send(transporter, mailoptions);
-        }
-      });
+      
       res.redirect("/dashboard");
     }
     catch (err) {
@@ -823,6 +825,7 @@ app.get("/subscribe", (req, res) => {
 
 app.post("/subscribe", async (req, res) => {
   let { email, topics } = req.body;
+  console.log(topics)
   // let topics=["business","tech","psychology"]
 
   try {
@@ -996,13 +999,13 @@ app.post("/forgetpass", async (req, res) => {
       };
       console.log(payload);
       const token = jwt.sign(payload, secret, { expiresIn: "2m" });
-      const link = `https://imaginary-hub-x.onrender.com/reset-pass/${user.id}/${token}`;
+      const link = `${process.env.BASE_URL}/reset-pass/${user.id}/${token}`;
       console.log(link);
       mailoptions.to = email;
       mailoptions.subject = "Password Reset Request";
       mailoptions.text = `use this link for updating password,link expires in 2 min,${link}`;
       send(transporter, mailoptions).then((re) => {
-        res.status(200).json({ message: "mail sent to given email" });
+        res.render("error.ejs",{ message: "mail sent to given email" });
       });
     } else {
       throw new Error("User not found");
@@ -1033,7 +1036,7 @@ app.post("/reset-pass/:id/:token", async (req, res) => {
   const secret = JWT_SECRET + "Moin-7093";
   try {
     if (password.length < 6) {
-      res.status(406).json({ message: "pass must be greater than 6 chars" });
+      res.render('error.ejs',{ message: "pass must be greater than 6 chars" });
     } else {
       const payload = jwt.verify(token, secret);
       let u = await data.findOne({ email: payload.email });
@@ -1046,11 +1049,11 @@ app.post("/reset-pass/:id/:token", async (req, res) => {
           console.log(u);
           let d = new data(cp);
           let ruser = await data.register(d, password);
-          res.status(200).json({ message: "password changed successfully" });
+          res.render("error.ejs",{ message: "password changed successfully" });
         })
         .catch((err) => {
           console.log(err);
-          res.status(406).json({ message: err.message });
+          res.render("error.ejs", { message: err.message })
         });
     }
   }
@@ -1080,6 +1083,22 @@ app.get("/terms-cond", (req, res) => {
 app.get("/error", (req, res) => {
   res.render("error.ejs")
 })
+
+// 404 Page Not Found Middleware
+app.use((req, res, next) => {
+  const error = new Error("Page Not Found");
+  error.status = 404;
+  next(error); // Pass the error to the error-handling middleware
+});
+
+// General Error-Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log the error stack for debugging
+  res.status(err.status || 500).render("error.ejs", {
+    message: err.message || "An unexpected error occurred.",
+    status: err.status || 500,
+  });
+});
 
 app.listen(process.env.PORT || "9000", () => {
   console.log("listening on port 9000");
