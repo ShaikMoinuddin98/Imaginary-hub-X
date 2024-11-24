@@ -1079,7 +1079,9 @@ app.get("/privacy", (req, res) => {
 app.get("/terms-cond", (req, res) => {
   res.render("terms-cond.ejs")
 })
-
+app.get("/core-team",(req,res)=>{
+  res.render("core-team.ejs")
+})
 app.get("/error", (req, res) => {
   res.render("error.ejs")
 })
