@@ -90,19 +90,38 @@
             color: #007BFF;
             text-decoration: none;
         }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #f5f5f5;
+            }
+            .email-container {
+                background-color: #1e1e1e;
+                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            }
+            .header h1, .membership-section h2 {
+                color: #f5f5f5;
+            }
+            .highlight {
+                background-color: #ffc107;
+                color: #000;
+            }
+            .features li::before,
+            .membership-section li::before {
+                color: #ffc107;
+            }
+            .footer {
+                color: #ccc;
+            }
+            .footer a {
+                color: #ffc107;
+            }
+        }
     </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7QXPMYT3BK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7QXPMYT3BK');
-</script>
 <body>
-
 <div class="email-container">
     <div class="header">
         <h1>Welcome to Imaginary Hub X!</h1>
@@ -112,9 +131,8 @@
         <p><strong>Jabir Hussain</strong><br>Founder, Imaginary Hub X</p>
     </div>
 
-
     <div class="membership-section">
-        <h2>what you can do with <span class="highlight">Imaginary Hub X subscription</span></h2>
+        <h2>What you can do with <span class="highlight">Imaginary Hub X subscription</span></h2>
         <p>Take your experience to the next level with our membership:</p>
         <ul>
             <li>Access premium, subscriber-only content</li>
@@ -123,7 +141,7 @@
             <li>Bookmark, share, and discuss articles that inspire you</li>
             <li>Contribute your own thoughts and join community discussions</li>
         </ul>
-        <a href="https://www.imaginaryhub.in/allnews" class="button">welcome to our community</a>
+        <a href="https://www.imaginaryhub.in/allnews" class="button">Welcome to Our Community</a>
     </div>
 
     <div class="footer">
@@ -131,6 +149,5 @@
         <p><a href="#">Unsubscribe</a> · <a href="https://www.imaginaryhub.in/contact">Help Center</a> · <a href="https://www.imaginaryhub.in/privacy">Privacy Policy</a> · <a href="https://www.imaginaryhub.in/terms-cond">Terms of Service</a></p>
     </div>
 </div>
-
 </body>
 </html>
