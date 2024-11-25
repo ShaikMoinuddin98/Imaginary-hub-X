@@ -1092,21 +1092,7 @@ app.get("/error", (req, res) => {
   res.render("error.ejs")
 })
 
-// 404 Page Not Found Middleware
-app.use((req, res, next) => {
-  const error = new Error("Page Not Found");
-  error.status = 404;
-  next(error); // Pass the error to the error-handling middleware
-});
 
-// General Error-Handling Middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack); // Log the error stack for debugging
-  res.status(err.status || 500).render("error.ejs", {
-    message: err.message || "An unexpected error occurred.",
-    status: err.status || 500,
-  });
-});
 
 app.listen(process.env.PORT || "9000", () => {
   console.log("listening on port 9000");
