@@ -899,35 +899,41 @@ app.post("/update-engagement", async (req, res) => {
     console.log(req.body);
     const { articleId, views, shares, totalScrollDepth, timeSpent } = req.body;
 
-    await articles.findByIdAndUpdate(articleId, {
+    const updateResult = await articles.findByIdAndUpdate(articleId, {
       $inc: {
-        views: views,
-        shares: shares,
-        scrolldepth: totalScrollDepth,
-        timespent: timeSpent,
+        views: views || 0,
+        shares: shares || 0,
+        scrolldepth: totalScrollDepth || 0,
+        timespent: timeSpent || 0,
       },
     });
 
-     await articles.updateOne({ _id: articleId }, [
-      {
-        $set: {
-          engagementRatio: {
-            $divide: [
-              {
-                $add: [
-                  { $multiply: ["$views", 0.5] },
-                  { $multiply: ["$shares", 0.3] },
-                  { $multiply: ["$scrolldepth", 0.15] },
-                  { $multiply: [{ $divide: ["$timespent", 60] }, 0.05] },
-                ],
-              },
-              "$views",
-            ],
+    console.log("Increment Update Result:", updateResult);
+
+    const engagementUpdateResult = await articles.updateOne(
+      { _id: articleId },
+      [
+        {
+          $set: {
+            engagementRatio: {
+              $divide: [
+                {
+                  $add: [
+                    { $multiply: ["$views", 0.5] },
+                    { $multiply: ["$shares", 0.3] },
+                    { $multiply: ["$scrolldepth", 0.15] },
+                    { $multiply: [{ $divide: ["$timespent", 60] }, 0.05] },
+                  ],
+                },
+                "$views",
+              ],
+            },
           },
         },
-      },
-    ]);
+      ]
+    );
 
+    console.log("Engagement Update Result:", engagementUpdateResult);
 
     res.send({ success: true });
   }
