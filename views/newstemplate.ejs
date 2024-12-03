@@ -499,27 +499,22 @@
             });
            
 
-            window.addEventListener("unload",async function () {
-                const timeSpent = (Date.now() - startTime) / 1000; // Time spent in seconds
+           document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+        const timeSpent = (Date.now() - startTime) / 1000;
 
-                // Prepare data to send
-                const engagementData = {
-                    articleId:articleId ,
-                    views: hasViewed ? 1 : 0,
-                    shares: shared,
-                    
-                    totalScrollDepth,
-                   
-                    timeSpent,
-                };
-                const blob = new Blob([JSON.stringify(engagementData)], { type: 'application/json' });
+        const engagementData = {
+            articleId: articleId,
+            views: hasViewed ? 1 : 0,
+            shares: shared,
+            totalScrollDepth,
+            timeSpent,
+        };
 
-                // Send data to the server
-                navigator.sendBeacon('/update-engagement',blob);
-
-           
-            }
-        )
+        const blob = new Blob([JSON.stringify(engagementData)], { type: 'application/json' });
+        navigator.sendBeacon('/update-engagement', blob);
+    }
+});
 
         </script>
 </body>
