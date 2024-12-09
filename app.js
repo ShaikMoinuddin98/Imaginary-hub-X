@@ -257,18 +257,35 @@ cron.schedule("* * * * *", () => {
   publishScheduledArticles();
 });
 
+// const getLastWeekRange = () => {
+//   const now = new Date();
+//   const lastMonday = new Date(now);
+//   lastMonday.setDate(now.getDate() - ((now.getDay() + 6) % 7)); // Last Monday
+//   lastMonday.setHours(0, 0, 0, 0);
+
+//   const thisMonday = new Date(lastMonday);
+//   thisMonday.setDate(lastMonday.getDate() + 7); // This Monday
+//   thisMonday.setHours(0, 0, 0, 0);
+
+//   return { start: lastMonday, end: thisMonday };
+// };
+
 const getLastWeekRange = () => {
   const now = new Date();
+  const day = now.getDay(); // 0 (Sunday) to 6 (Saturday)
+  const daysSinceLastMonday = day === 0 ? 6 : day - 1; // Adjust for Sunday (0)
+
   const lastMonday = new Date(now);
-  lastMonday.setDate(now.getDate() - ((now.getDay() + 6) % 7)); // Last Monday
-  lastMonday.setHours(0, 0, 0, 0);
+  lastMonday.setDate(now.getDate() - daysSinceLastMonday - 7); // Last week's Monday
+  lastMonday.setHours(0, 0, 0, 0); // Set to local midnight
 
   const thisMonday = new Date(lastMonday);
-  thisMonday.setDate(lastMonday.getDate() + 7); // This Monday
-  thisMonday.setHours(0, 0, 0, 0);
+  thisMonday.setDate(lastMonday.getDate() + 7); // This week's Monday
+  thisMonday.setHours(0, 0, 0, 0); // Set to local midnight
 
   return { start: lastMonday, end: thisMonday };
 };
+
 
 const getTopArticlesForTopics = async (topics, startDate, endDate) => {
   const topArticles = await Promise.all(
