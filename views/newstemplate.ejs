@@ -9,7 +9,7 @@
      <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="<%= data.title %>" />
     <meta property="og:description" content="<%= data.description || 'A compelling article on a valuable topic.' %>" />
-    <meta property="og:image" content="<%= data.image || '/assets/default-image.jpg' %>" />
+    <meta property="og:image" content="<%= data.images[0] || '/assets/default-image.jpg' %>" />
     <meta property="og:url" content="<%= data.url || 'https://example.com' %>" />
     <meta property="og:type" content="article" />
 
@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%= data.title %>">
     <meta name="twitter:description" content="<%= data.description || 'A compelling article on a valuable topic.' %>">
-    <meta name="twitter:image" content="<%= data.image || '/assets/default-image.jpg' %>">
+    <meta name="twitter:image" content="<%= data.images[0] || '/assets/default-image.jpg' %>">
 
     <!-- Page Title -->
     <title><%= data.title %></title>
