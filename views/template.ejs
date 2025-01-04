@@ -107,9 +107,9 @@
         <div class="content">
             <% articles.forEach(function(article) { %>
                 <div class="article">
-                    <a href="https://imaginary-hub-x.onrender.com/article/<%= encodeURIComponent(article.title) %>/<%=article._id%>" class="title"><%= article.title %></a>
+                    <a href="https://imaginary-hub-x.onrender.com/article/<%= article.title.replace(/ /g, "-") %>/<%=article._id%>" class="title"><%= article.title %></a>
                    
-                    <a href="https://imaginary-hub-x.onrender.com/article/<%= encodeURIComponent(article.title) %>/<%=article._id%>" class="read-more">Read more &raquo;</a>
+                    <a href="https://imaginary-hub-x.onrender.com/article/<%= article.title.replace(/ /g, "-") %>/<%=article._id%>" class="read-more">Read more &raquo;</a>
                 </div>
             <% }); %>
         </div>

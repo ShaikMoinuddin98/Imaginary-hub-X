@@ -209,7 +209,9 @@
 
 <script>
     // Capture the current page URL dynamically
-    const shareUrl = window.location.href;
+    let id=window.location.pathname.split('/')[3]
+    const shareUrl = window.location.origin+`/article/<%-data.title%>/${id}`.replace(/ /g,'-');
+   
 
     function openShareModal() {
         document.getElementById('shareModal').style.display = 'block';
@@ -364,7 +366,7 @@
                     <div role="list" class="newsletters-grid w-dyn-items">
                         <%for(i of toparts){%>
                         <div role="listitem" class="newsletter-item w-dyn-item"><a
-                                href="/article/<%=encodeURIComponent(i.title)%>/<%=i._id%>"
+                                href="/article/<%=i.title.replace(/ /g, "-")%>/<%=i._id%>"
                                 class="card newsletter w-inline-block">
                                 <div class="card-newsletter-content-top">
                                     <div class="card-newsletter-issue-wrapper">

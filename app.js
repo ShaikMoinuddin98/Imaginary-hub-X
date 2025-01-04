@@ -394,9 +394,10 @@ app.post("/signup", async (req, res) => {
               mailoptions.to = req.user.email;
               mailoptions.subject = "Welcome to Imaginary Hub X";
               mailoptions.html = html;
-              send(transporter, mailoptions);
+              send(transporter, mailoptions)  
             }
           });
+          mailoptions.html=""
           res.redirect("/terms");
         })
         .catch((err) => {
@@ -692,10 +693,15 @@ app.get("/forgot-password", (req, res) => {
   }
 });
 
+app.get("/curated",async(req,res)=>{
+  const data=await articles.find({})
+  res.render("curated-email.ejs",{articles:data})
+})
+
 app.get("/article/:title/:id", async (req, res) => {
   try {
-    req.params.title = decodeURIComponent(req.params.title)
-    console.log(req.params)
+    req.params.title = req.params.title.replace(/-/g," ")
+    console.log(req.params.title)
     let a = await articles.findOne({
       title: req.params.title,
       _id: req.params.id,
@@ -861,7 +867,9 @@ app.post("/subscribe", async (req, res) => {
         mailoptions.subject = "Congratulations For Being a Subscriber";
         mailoptions.html = html;
         send(transporter, mailoptions);
+        mailoptions.html=""
       }
+      
     });
     return res.status(201).json({ message: "Subscription successful!" });
   }

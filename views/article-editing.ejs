@@ -6,12 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Article Writing Page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link
-    href="/assests/svg/IH X.png"
-    rel="shortcut icon" type="image/x-icon" />
-<link
-    href="/assests/svg/IH X.png"
-    rel="apple-touch-icon" />
+  <link href="/assests/svg/IH X.png" rel="shortcut icon" type="image/x-icon" />
+  <link href="/assests/svg/IH X.png" rel="apple-touch-icon" />
   <style>
     .header {
       display: flex;
@@ -125,11 +121,12 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QXPMYT3BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
 
   gtag('config', 'G-7QXPMYT3BK');
 </script>
+
 <body>
 
   <!-- Header Section -->
@@ -157,12 +154,16 @@
   <div class="container">
     <!-- Title Section -->
     <div class="title-section">
-      <input type="text" class="form-control" placeholder="Title" id="titleInput" <%if(data.title){%>value='<%=data.title%>'<%}%>>
+      <input type="text" class="form-control" placeholder="Title" id="titleInput" <%if(data.title){%>value='
+      <%=data.title%>'<%}%>>
     </div>
 
     <!-- Article Section -->
     <div class="article-section">
-      <div id="articleInput" contenteditable="true" class="form-control" style="min-height: 400px; overflow-y: auto;"><%if(data.article){%><%-data.article%><%}%></div>
+      <div id="articleInput" contenteditable="true" class="form-control" style="min-height: 400px; overflow-y: auto;">
+        <%if(data.article){%><%-data.article%>
+            <%}%>
+      </div>
       <button class="btn btn-primary plus-button" id="articlePlus">+</button>
     </div>
 
@@ -191,7 +192,7 @@
         <option value="Business" <%=data.category==='Business' ? 'selected' : '' %>>Business</option>
         <option value="Education" <%=data.category==='Education' ? 'selected' : '' %>>Education</option>
         <option value="Psychology" <%=data.category==='Psychology' ? 'selected' : '' %>>Human Psychology</option>
-    <option value="Psychology" <%=data.category==='Design & Art' ? 'selected' : '' %>>Design & Art</option>
+        <option value="Psychology" <%=data.category==='Design & Art' ? 'selected' : '' %>>Design & Art</option>
       </select>
     </div>
   </div>
@@ -227,8 +228,8 @@
   <br>
   <br>
   <!-- JS for Sidebar, Formatting, Image Preview, and Modal -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<!--
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!--
   <script>
     // Sidebar toggle and track active section
     let activeSection = '';
@@ -464,21 +465,32 @@
     });
   </script> -->
   <script>
+    const inputField = document.getElementById("titleInput");
+
+    inputField.addEventListener("input", (event) => {
+      // Check if the value contains a hyphen
+      if (inputField.value.includes("-")) {
+        // Prompt the user
+        alert("Hyphens (-) are not allowed!");
+        // Remove the hyphen from the input
+        inputField.value = inputField.value.replace(/-/g, "");
+      }
+    });
     // Sidebar toggle and track active section
     let activeSection = '';
-  
+
     document.querySelectorAll('.plus-button').forEach(button => {
       button.addEventListener('click', (event) => {
         activeSection = event.target.id === 'titlePlus' ? 'title' : 'article';
         document.getElementById('sidebar').classList.toggle('active');
       });
     });
-  
+
     // Close sidebar
     document.querySelector('.close-sidebar').addEventListener('click', () => {
       document.getElementById('sidebar').classList.remove('active');
     });
-  
+
     // Formatting Buttons
     document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold'));
     document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic'));
@@ -492,7 +504,7 @@
       }
     });
     document.getElementById('normalBtn').addEventListener('click', () => document.execCommand('removeFormat'));
-  
+
     // Image Upload and Preview with Limit
     function addDeleteEvent() {
       const deleteIcon = document.querySelector('.delete-image');
@@ -504,17 +516,17 @@
         });
       }
     }
-  
+
     document.getElementById('imageUpload').addEventListener('change', (event) => {
       const file = event.target.files[0];
       const imgPreview = document.getElementById('imagePreview');
-      
+
       if (imgPreview.childElementCount > 0) {
         alert("You can only upload one image. Please delete the existing one to upload a new image.");
         event.target.value = "";
         return;
       }
-  
+
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -525,24 +537,24 @@
             <button class="delete-image">X</button>
           `;
           imgPreview.appendChild(imageContainer);
-  
+
           // Add delete event to newly created delete button
           addDeleteEvent();
         };
         reader.readAsDataURL(file);
       }
     });
-  
+
     // Run delete event in case preview already exists
     addDeleteEvent();
-  
+
     // Validate article content
     function validateArticle() {
       const title = document.getElementById('titleInput').value.trim();
       const article = document.getElementById('articleInput').innerText.trim();
       return title !== '' && article !== '';
     }
-  
+
     // Show schedule modal
     document.getElementById('scheduleBtn').addEventListener('click', () => {
       if (validateArticle()) {
@@ -552,7 +564,7 @@
         alert('Please fill in the title and article content before scheduling.');
       }
     });
-  
+
     // Publish Article
     document.getElementById('publishBtn').addEventListener('click', () => {
       if (validateArticle()) {
@@ -562,7 +574,7 @@
         const images = Array.from(document.querySelectorAll(".image-preview img")).map(img => img.src);
         const data = { title, article, category, images };
         const id = location.pathname.split("/")[2];
-  
+
         fetch(`/edit-article/${id}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -581,7 +593,7 @@
         alert('Please fill in the title and article content before publishing.');
       }
     });
-  
+
     // Schedule Article
     document.getElementById('saveSchedule').addEventListener('click', () => {
       const date = document.getElementById('scheduleDate').value;
@@ -592,7 +604,7 @@
         const images = Array.from(document.querySelectorAll(".image-preview img")).map(img => img.src);
         const data = { schedule: date, title, article, category, images };
         const id = location.pathname.split("/")[2];
-  
+
         fetch(`/edit-article/${id}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -613,7 +625,7 @@
         alert('Please select a valid date and time.');
       }
     });
-  
+
     // Delete Article
     document.getElementById("deleteBtn").addEventListener("click", () => {
       if (confirm("Are you sure you want to delete the article?")) {
@@ -635,7 +647,7 @@
       }
     });
   </script>
-  
+
 </body>
 
 </html>

@@ -133,7 +133,7 @@
             <div role="listitem" class="w-dyn-item">
               <a class="button-dark" href="/article-editing/<%=item._id%>">edit</a>
 
-              <a href="/article/<%=encodeURIComponent(item.title)%>/<%=item._id%>" class="course-item w-inline-block">
+              <a href="/article/<%=item.title.replace(/ /g, "-")%>/<%=item._id%>" class="course-item w-inline-block">
                 <div class="course-image-wrap">
                  
 

@@ -111,7 +111,7 @@
          <%for(article of articles){%>
             <h2>Top Articles in <%=article.category%></h2>
             <div class="article-item">
-                <a href="https://imaginaryhub.in/article/<%=article.title%>/<%=article._id%>" class="article-title"><%=article.title%></a>
+                <a href="https://imaginaryhub.in/article/<%=article.title.replace(/ /g, "-")%>/<%=article._id%>" class="article-title"><%=article.title%></a>
                 <p class="article-category">Category: <%=article.category%></p>
             </div>
 
