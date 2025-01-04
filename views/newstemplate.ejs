@@ -4,11 +4,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <head>
-
+<!-- Google ad tag -->
+<meta name="google-adsense-account" content="ca-pub-6290396655730555">
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6290396655730555"
+     crossorigin="anonymous"></script> -->
     <meta charset="utf-8" />
+     <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<%= data.title %>" />
+    <meta property="og:description" content="<%= data.description || 'A compelling article on a valuable topic.' %>" />
+    <meta property="og:image" content="https://i.postimg.cc/SNKyYCWP/download-1.png" />
+    <meta property="og:url" content="<%= data.url || 'https://example.com' %>" />
+    <meta property="og:type" content="article" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= data.title %>">
+    <meta name="twitter:description" content="<%= data.description || 'A compelling article on a valuable topic.' %>">
+    <meta name="twitter:image" content="https://i.postimg.cc/SNKyYCWP/download-1.png">
+
+    <!-- Page Title -->
+    <title><%= data.title %></title>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>News Page - Imaginary Hub X</title>
+    <title><%=data.title%></title>
     <link href="/assests/css/mainstyle.css" rel="stylesheet" type="text/css" />
 <link
     href="/assests/svg/IH X.png"
@@ -124,8 +143,8 @@
                                     </a></li>
                             </ul>
                         </nav>
-                        <div><a href="/allnews" class="cart-button w-inline-block" role="button">
-                                <div class="w-inline-block">Latest Issue</div>
+                       <div><a href="/writers" class="cart-button w-inline-block" role="button">
+                                <div class="w-inline-block">Our Writers</div>
 
                             </a>
 
@@ -182,12 +201,24 @@
                                 <img src='<%=i%>' loading="lazy" alt="" />
                                 <%}%>
                         </div>
-                         <!-- <figcaption>Mattis rhoncus urna neque viverra justo.</figcaption> -->
+                         <!-- <figcaption>Mattis rhoncus urna neque viverra justo.</figcaption> bock ad -->
+                       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6290396655730555"
+     crossorigin="anonymous"></script>
+<!-- Google ads Horizontal -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6290396655730555"
+     data-ad-slot="9238327274"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                     </figure>
 
                     <p><%-data.article%></p>
                 </div>
-                <!-- Share Button -->
+ <!-- Share Button -->
 <div class="button-container">
     <button class="btn btn-primary" onclick="openShareModal()">Share this Page</button>
 </div>
@@ -311,7 +342,18 @@
         cursor: pointer;
     }
 </style>
-
+ <!-- article ad block -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6290396655730555"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-6290396655730555"
+     data-ad-slot="8125228602"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
                 <div data-w-id="aae45622-6d0f-fe99-2566-d7ece6899986"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -501,27 +543,22 @@
             });
            
 
-            window.addEventListener("unload",async function () {
-                const timeSpent = (Date.now() - startTime) / 1000; // Time spent in seconds
+           document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+        const timeSpent = (Date.now() - startTime) / 1000;
 
-                // Prepare data to send
-                const engagementData = {
-                    articleId:articleId ,
-                    views: hasViewed ? 1 : 0,
-                    shares: shared,
-                    
-                    totalScrollDepth,
-                   
-                    timeSpent,
-                };
-                const blob = new Blob([JSON.stringify(engagementData)], { type: 'application/json' });
+        const engagementData = {
+            articleId: articleId,
+            views: hasViewed ? 1 : 0,
+            shares: shared,
+            totalScrollDepth,
+            timeSpent,
+        };
 
-                // Send data to the server
-                navigator.sendBeacon('/update-engagement',blob);
-
-           
-            }
-        )
+        const blob = new Blob([JSON.stringify(engagementData)], { type: 'application/json' });
+        navigator.sendBeacon('/update-engagement', blob);
+    }
+});
 
         </script>
 </body>
