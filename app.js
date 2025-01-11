@@ -13,6 +13,8 @@ const multer = require("multer");
 const cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken"); //for creating temporary tokens
+const { v4: uuidv4 } = require('uuid');
+const cookieParser = require('cookie-parser');
 
 const { type } = require("os");
 const { exit } = require("process");
@@ -25,6 +27,25 @@ app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+  let userId = req.cookies.userId;
+
+  if (!userId) {
+    userId = uuidv4(); // Generate a new UUID
+    res.cookie('userId', userId, {
+      httpOnly: true, // Prevent client-side access
+      secure: false,  // Set to true in production with HTTPS
+      maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+    });
+  }
+
+  req.userId = userId; // Attach to request
+  next();
+});
+
 
 // Set up Multer for file uploads
 const storage = multer.memoryStorage();
@@ -137,6 +158,10 @@ const articleschema = new mongoose.Schema({
   lastUpdated: {
     type: Date,
   },
+  likes:{
+    type:[String],
+    default:[]
+  }
 });
 
 const subscribeschema = new mongoose.Schema({
@@ -717,6 +742,7 @@ app.get("/curated",async(req,res)=>{
 
 app.get("/article/:title/:id", async (req, res) => {
   try {
+    let userId=req.userId
     req.params.title = req.params.title.replace(/-/g," ")
     console.log(req.params.title)
     let a = await articles.findOne({
@@ -731,12 +757,13 @@ app.get("/article/:title/:id", async (req, res) => {
       })
       .sort({ engagementRatio: -1 })
       .limit(3);
-
+    let liked=a.likes.includes(userId)?true:false
     if (a.publishedDate)
       res.render("newstemplate.ejs", {
         data: a,
         toparts: top3arts,
         username: u.username,
+        liked
       });
     else res.json({ message: "Article Not yet published" });
   }
@@ -922,15 +949,29 @@ app.get("/writer", (req, res) => {
 app.post("/update-engagement", async (req, res) => {
   try {
     console.log(req.body);
-    const { articleId, views, shares, totalScrollDepth, timeSpent } = req.body;
+    const userId = req.userId
+    const { articleId, views, shares, totalScrollDepth, timeSpent ,liked} = req.body;
 
-    const updateResult = await articles.findByIdAndUpdate(articleId, {
+    const updateObject = {
       $inc: {
         views: views || 0,
         shares: shares || 0,
         scrolldepth: totalScrollDepth || 0,
         timespent: timeSpent || 0,
       },
+    };
+  
+    // Add conditional operation for likes
+    if (liked) {
+      updateObject.$addToSet = { likes: userId }; // Add userId to likes
+    } else {
+      updateObject.$pull = { likes: userId }; // Remove userId from likes
+    }
+  
+    // Perform the update operation
+    const updateResult = await articles.findByIdAndUpdate(articleId, updateObject, {
+      new: true, // Return the updated document
+      upsert: true, // Create document if it doesn't exist
     });
 
     console.log("Increment Update Result:", updateResult);

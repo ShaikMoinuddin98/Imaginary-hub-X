@@ -29,6 +29,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%=data.title%></title>
     <link href="/assests/css/mainstyle.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 <link
     href="/assests/svg/IH X.png"
     rel="shortcut icon" type="image/x-icon" />
@@ -68,6 +70,9 @@
       /* Adjust line height for better readability */
       text-align: justify;
       /* Justify text to align it neatly */
+    }
+    #liked{
+        color: #74C0FC;
     }
   </style>
 <body>
@@ -190,6 +195,14 @@
                     <div class="newsletter-content-top-divider"></div>
                     <div>Reads: <%=data.views%> people</div>
                     <div class="newsletter-content-top-divider"></div>
+
+                    <div>
+                       <i id="liked" <%if(!liked){%>style="display: none;"<%}%> class="fa-solid fa-thumbs-up fa-xl" ></i>
+                        <i id="unliked" <%if(liked){%>style="display: none;"<%}%> class="fa-regular fa-thumbs-up fa-xl"></i>
+                    </div>
+                    <div id="likescount"><%=data.likes.length%></div>
+
+
                    
                 </div>
                 <div data-w-id="c56c7e68-53c6-5610-fc70-a2c26b150f66"
@@ -512,6 +525,24 @@
             let articleId=location.pathname.split("/")[3]
             let hasViewed = false;
             let shared = 0;
+            let liked=<%- liked %>;
+
+           let unlike= document.getElementById("unliked")
+           let like=document.getElementById("liked")
+           let likescount=document.getElementById("likescount")
+           unlike.addEventListener("click",()=>{
+                liked=!liked
+                like.style.display="block"
+                unlike.style.display="none"
+                likescount.innerText=parseInt(likescount.innerText)+1
+
+            })
+            like.addEventListener("click",()=>{
+                liked=!liked
+                like.style.display="none"
+                unlike.style.display="block"
+                likescount.innerText=parseInt(likescount.innerText)-1
+            })
          
 
             let shbtns=document.querySelectorAll("#share-button")
@@ -553,6 +584,7 @@
             shares: shared,
             totalScrollDepth,
             timeSpent,
+            liked
         };
 
         const blob = new Blob([JSON.stringify(engagementData)], { type: 'application/json' });
