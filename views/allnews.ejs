@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
 
     <meta charset="utf-8" />
@@ -132,6 +130,30 @@
     }
 </style>
 
+<!--Sorting Styling-->
+<style>
+    .filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.filter-container select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+</style>
 <body>
     <div style="opacity:0" class="page-wrapper">
         <div data-collapse="medium" data-animation="over-left" data-duration="400"
@@ -378,36 +400,55 @@
         background-color: #0056b3;
     }
 </style>
+<!-- Sorting and Filtering Options -->
+<div class="filter-container">
+    <label for="sortBy">Sort By:</label>
+    <select id="sortBy" onchange="sortArticles()">
+        <option value="newest">Newest to Oldest</option>
+        <option value="oldest">Oldest to Newest</option>
+        <option value="views">Most Viewed</option>
+        <option value="author">Author Name (A-Z)</option>
+    </select>
 
-            </div>
+    <label for="categoryFilter">Filter by Category:</label>
+    <select id="categoryFilter" onchange="filterArticles()">
+        <option value="all">All Categories</option>
+        <option value="Tech">Tech</option>
+        <option value="Finance">Finance</option>
+        <option value="Business">Business</option>
+        <option value="Education">Education</option>
+        <option value="Human Psychology">Human Psychology</option>
+        <option value="Design & Art">Design & Art</option>
+    </select>
+</div>
+
+    </div>
             <div class="container-medium-812px">
                 <div data-w-id="03531393-805f-ab71-2f1b-fcc6147c6d20"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
                     class="w-dyn-list">
                     <div role="list" class="newsletters-grid w-dyn-items">
-                        <div role="listitem" class="newsletter-item w-dyn-item">
-                            <%for(item of data){%>
-                                <a href="/article/<%=item.title.replace(/ /g, "-")%>/<%=item._id%>" class="card newsletter w-inline-block">
-                                    <div class="card-newsletter-content-top">
-
-                                        <div class="card-newsletter-issue-wrapper">
-                                            <div>
-                                                <%=item.username%>
+                        <div class="newsletters-grid">
+                            <% for(let item of data) { %>
+                                <div role="listitem" class="newsletter-item w-dyn-item"
+                                    data-category="<%= item.category ? item.category : 'Uncategorized' %>"
+                                    data-views="<%= item.views ? item.views : 0 %>">
+                                    <a href="/article/<%= item.title.replace(/ /g, "-") %>/<%= item._id %>" class="card newsletter w-inline-block">
+                                        <div class="card-newsletter-content-top">
+                                            <div class="card-newsletter-issue-wrapper">
+                                                <div><%= item.username ? item.username : 'Unknown Author' %></div> <!-- Author Name -->
                                             </div>
+                                            <div class="card-newsletter-content-top-divider"></div>
+                                            <div><%= item.publishedDate ? new Date(item.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'No Date' %></div> <!-- Date -->
                                         </div>
-                                        <div class="card-newsletter-content-top-divider"></div>
-                                        <div>
-                                            <%= new Date(item.publishedDate).toLocaleDateString('en-US', {
-                                                year: 'numeric' , month: 'long' , day: 'numeric' })%>
-                                        </div>
-                                    </div>
-                                    <h2 class="title card-newsletter heading-size-h3">
-                                        <%=item.title%>
-                                    </h2>
-                                    <!-- <p class="paragraph card-newsletter"><%-item.article.split(" ").slice(0, 10).join(' ').replace(/<[^>]*>/g, '')%></p> -->
-                                </a>
-                                <%}%>
+                                        <h2 class="title card-newsletter heading-size-h3">
+                                            <%= item.title ? item.title : 'Untitled Article' %>
+                                        </h2>
+                                    </a>
+                                </div>
+                            <% } %> <!-- Make sure the loop closes properly -->
                         </div>
+                        
 
                     </div>
                     <br>
@@ -615,6 +656,46 @@
                 successMessages.forEach(msg => msg.style.display = 'none');
             }
         </script>
+        <!--sorting functionality js-->
+        <script>
+            function sortArticles() {
+                const sortBy = document.getElementById("sortBy").value;
+                let articles = Array.from(document.querySelectorAll(".newsletter-item"));
+        
+                articles.sort((a, b) => {
+                    let dateA = new Date(a.querySelector(".card-newsletter-content-top div:last-child").innerText);
+                    let dateB = new Date(b.querySelector(".card-newsletter-content-top div:last-child").innerText);
+                    let viewsA = parseInt(a.getAttribute("data-views") || 0);
+                    let viewsB = parseInt(b.getAttribute("data-views") || 0);
+                    let authorA = a.querySelector(".card-newsletter-issue-wrapper div").innerText.toLowerCase();
+                    let authorB = b.querySelector(".card-newsletter-issue-wrapper div").innerText.toLowerCase();
+        
+                    if (sortBy === "newest") return dateB - dateA;
+                    if (sortBy === "oldest") return dateA - dateB;
+                    if (sortBy === "views") return viewsB - viewsA;
+                    if (sortBy === "author") return authorA.localeCompare(authorB);
+                });
+        
+                let container = document.querySelector(".newsletters-grid");
+                container.innerHTML = "";
+                articles.forEach(article => container.appendChild(article));
+            }
+        
+            function filterArticles() {
+                const selectedCategory = document.getElementById("categoryFilter").value;
+                let articles = document.querySelectorAll(".newsletter-item");
+        
+                articles.forEach(article => {
+                    let category = article.getAttribute("data-category");
+                    if (selectedCategory === "all" || category === selectedCategory) {
+                        article.style.display = "block";
+                    } else {
+                        article.style.display = "none";
+                    }
+                });
+            }
+        </script>
+        
 </body>
 
 </html>
