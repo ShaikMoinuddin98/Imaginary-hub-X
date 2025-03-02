@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-wf-domain="newslettertemplate.webflow.io" data-wf-page="60e89dfce959595cd2a9437d"
+<html  data-wf-page="60e89dfce959595cd2a9437d"
     data-wf-site="60e78cd29a6063dc4dd03bcb" lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -75,7 +75,56 @@
         color: #74C0FC;
     }
   </style>
+ <style>
+    .floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #007bff;
+    color: white;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+    z-index: 9999;
+}
+
+.floating-btn:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+.floating-btn i {
+    font-size: 28px;
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 600px) {
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .floating-btn i {
+        font-size: 22px;
+    }
+}
+
+ </style>
 <body>
+   <!-- Floating Play Button -->
+<button id="floatingPlayButton" class="floating-btn">
+    <i class="fas fa-play"></i>
+</button>
+
     <div style="opacity:0" class="page-wrapper">
         <div data-collapse="medium" data-animation="over-left" data-duration="400"
             data-w-id="58db7844-5919-d71b-dd74-2323ed8dffe9" data-easing="ease" data-easing2="ease" role="banner"
@@ -195,15 +244,12 @@
                     <div class="newsletter-content-top-divider"></div>
                     <div>Reads: <%=data.views%> people</div>
                     <div class="newsletter-content-top-divider"></div>
-
+                    
                     <div>
                        <i id="liked" <%if(!liked){%>style="display: none;"<%}%> class="fa-solid fa-thumbs-up fa-xl" ></i>
                         <i id="unliked" <%if(liked){%>style="display: none;"<%}%> class="fa-regular fa-thumbs-up fa-xl"></i>
                     </div>
                     <div id="likescount"><%=data.likes.length%></div>
-
-
-                   
                 </div>
                 <div data-w-id="c56c7e68-53c6-5610-fc70-a2c26b150f66"
                     style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -218,7 +264,11 @@
                       
                     </figure>
 
-                    <p><%-data.article%></p>
+                    <article id="articleContent">
+                        <%- data.article %>
+                    </article>
+                    
+                    
                 </div>
  <!-- Share Button -->
 <div class="button-container">
@@ -580,8 +630,133 @@
         navigator.sendBeacon('/update-engagement', blob);
     }
 });
+    </script>    
+   <script>
+    let speech = null;
+    let synth = window.speechSynthesis;
+    let isPlaying = false;
+    const playButton = document.getElementById("floatingPlayButton");
 
-        </script>
+    // Function to get a female English voice
+    function getFemaleEnglishVoice() {
+        let voices = synth.getVoices();
+        return voices.find(voice => voice.lang === "en-US" && voice.name.includes("Female")) || 
+               voices.find(voice => voice.lang === "en-US"); // Fallback to any English voice
+    }
+
+    // Function to speak text
+    function speakText(text) {
+        if (speech) synth.cancel(); // Stop any ongoing speech
+        speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "en-US";
+
+        let voice = getFemaleEnglishVoice();
+        if (voice) {
+            speech.voice = voice;
+        }
+
+        console.log("Speaking with voice:", voice ? voice.name : "Default");
+        synth.speak(speech);
+        isPlaying = true;
+        playButton.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+
+    // Function to start reading the article
+    function startReading() {
+        const articleElement = document.getElementById("articleContent");
+
+        if (!articleElement) {
+            alert("Article content not found!");
+            return;
+        }
+
+        let articleText = "";
+        articleElement.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, blockquote").forEach(el => {
+            articleText += el.innerText + ". ";
+        });
+
+        if (!articleText.trim()) {
+            alert("No readable text found in the article!");
+            return;
+        }
+
+        console.log("Text to Speak:", articleText);
+
+        // Force speechSynthesis to load voices before speaking
+        if (synth.getVoices().length === 0) {
+            synth.onvoiceschanged = () => speakText(articleText);
+        } else {
+            speakText(articleText);
+        }
+    }
+
+    // Floating Play Button Click Event
+    playButton.addEventListener("click", function () {
+        if (isPlaying) {
+            synth.pause();
+            isPlaying = false;
+            playButton.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+            if (synth.paused) {
+                synth.resume();
+            } else {
+                startReading();
+            }
+            isPlaying = true;
+            playButton.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+    });
+
+    // Stop speech when leaving the page
+    window.addEventListener("beforeunload", function () {
+        synth.cancel();
+    });
+
+    // Reset button when speech ends
+    speechSynthesis.addEventListener("end", () => {
+        isPlaying = false;
+        playButton.innerHTML = '<i class="fas fa-play"></i>';
+    });
+
+    // **Voice Command Feature**
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.lang = "en-US";
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
+        console.log("User Said:", transcript);
+
+        if (transcript.includes("hi imaginary hub, read the article")) {
+            console.log("Voice Command Detected! Starting to read...");
+
+            // Create a visible button to simulate user interaction
+            const tempButton = document.createElement("button");
+            tempButton.textContent = "Start Reading";
+            tempButton.style.position = "fixed";
+            tempButton.style.top = "10px";
+            tempButton.style.left = "10px";
+            tempButton.style.zIndex = "10000";
+            document.body.appendChild(tempButton);
+
+            // Show a message to the user
+            alert("Click the 'Start Reading' button to begin.");
+
+            // Wait for the user to click the button
+            tempButton.addEventListener("click", () => {
+                startReading();
+                document.body.removeChild(tempButton); // Clean up the button
+            }, { once: true });
+        }
+    };
+
+    // Start listening for voice commands when the page loads
+    setTimeout(() => {
+        recognition.start();
+    }, 2000);
+</script>
+            
 </body>
 
 </html>

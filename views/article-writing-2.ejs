@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Writing Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #292929;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .main-content {
+      margin-top: 80px;
+      padding: 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .editor-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .title-input {
+      border: none;
+      font-size: 2.5rem;
+      font-weight: bold;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      padding: 10px 0;
+      outline: none;
+    }
+    .editor {
+      min-height: 500px;
+      outline: none;
+      font-size: 1.2rem;
+      padding: 20px 0;
+    }
+    .toolbar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: none;
+    }
+    .toolbar.show {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .toolbar button {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      color: #292929;
+      transition: all 0.2s;
+    }
+    .toolbar button:hover {
+      background: #f0f0f0;
+      color: #007bff;
+    }
+    .draggable-image {
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+      cursor: move;
+      max-width: 100%;
+    }
+    .draggable-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .image-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 4px;
+      padding: 5px;
+      display: none;
+    }
+    .draggable-image:hover .image-controls {
+      display: flex;
+      gap: 5px;
+    }
+    .image-controls button {
+      background: none;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      color: #292929;
+    }
+    .image-controls button:hover {
+      color: #007bff;
+    }
+    .resize-handle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #007bff;
+      border-radius: 50%;
+    }
+    .resize-handle.nw { top: -5px; left: -5px; cursor: nw-resize; }
+    .resize-handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
+    .resize-handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; }
+    .resize-handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
+    .category-select {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 200px;
+    }
+    .published-time {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+    /* Placeholder text */
+    [contenteditable=true]:empty:before {
+      content: attr(placeholder);
+      color: #999;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <h4 class="mb-0">
+            <a href="/" style="text-decoration: none; color: inherit;">Imaginary Hub X</a>
+          </h4>
+        </div>
+        <div class="d-flex gap-3">
+          <select class="form-select" id="categorySelect" style="width: auto;">
+            <option value="Business">Business</option>
+            <option value="Tech">Tech</option>
+            <option value="Education">Education</option>
+            <option value="Psychology">Human Psychology</option>
+            <option value="Finance">Finance</option>
+            <option value="Design">Design & Art</option>
+          </select>
+          <button class="btn btn-outline-secondary" id="scheduleBtn">
+            <i class="fas fa-clock"></i> Schedule
+          </button>
+          <button class="btn btn-outline-secondary" id="saveDraftBtn">
+            <i class="fas fa-save"></i> Save Draft
+          </button>
+          <button class="btn btn-success" id="publishBtn">
+            <i class="fas fa-publish"></i> Publish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="editor-container">
+      <input type="text" class="title-input" id="titleInput" placeholder="Title" maxlength="100">
+      <div class="editor" id="editor" contenteditable="true" placeholder="Tell your story..."></div>
+    </div>
+  </div>
+
+  <!-- Formatting Toolbar -->
+  <div class="toolbar" id="toolbar">
+    <button onclick="formatText('bold')" title="Bold"><i class="fas fa-bold"></i></button>
+    <button onclick="formatText('italic')" title="Italic"><i class="fas fa-italic"></i></button>
+    <button onclick="formatText('underline')" title="Underline"><i class="fas fa-underline"></i></button>
+    <button onclick="formatHeading()" title="Heading"><i class="fas fa-heading"></i></button>
+    <button onclick="formatText('justifyLeft')" title="Align Left"><i class="fas fa-align-left"></i></button>
+    <button onclick="formatText('justifyCenter')" title="Align Center"><i class="fas fa-align-center"></i></button>
+    <button onclick="formatText('justifyRight')" title="Align Right"><i class="fas fa-align-right"></i></button>
+    <button onclick="addLink()" title="Add Link"><i class="fas fa-link"></i></button>
+    <button onclick="addImage()" title="Add Image"><i class="fas fa-image"></i></button>
+  </div>
+
+  <!-- Schedule Modal -->
+  <div class="modal fade" id="scheduleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Schedule Publication</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Select Date and Time</label>
+            <input type="datetime-local" class="form-control" id="scheduleDateTime">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="confirmScheduleBtn">Schedule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Initialize elements
+    const editor = document.getElementById('editor');
+    const toolbar = document.getElementById('toolbar');
+    const titleInput = document.getElementById('titleInput');
+    titleInput.addEventListener("input", (event) => {
+        // Check if the value contains a hyphen
+        if (titleInput.value.includes("-")) {
+          // Prompt the user
+          alert("Hyphens (-) are not allowed!");
+          // Remove the hyphen from the input
+          titleInput.value = titleInput.value.replace(/-/g, "");
+        }
+      });
+    const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+
+    // Editor event listeners
+    editor.addEventListener('keydown', handleEditorKeydown);
+    editor.addEventListener('input', handleEditorInput);
+    document.addEventListener('selectionchange', handleSelectionChange);
+    
+    // Drag and drop functionality
+    editor.addEventListener('dragover', handleDragOver);
+    editor.addEventListener('drop', handleDrop);
+    editor.addEventListener('paste', handlePaste);
+
+    // Button event listeners
+    document.getElementById('scheduleBtn').addEventListener('click', () => scheduleModal.show());
+    document.getElementById('saveDraftBtn').addEventListener('click', saveDraft);
+    document.getElementById('publishBtn').addEventListener('click', publishArticle);
+    document.getElementById('confirmScheduleBtn').addEventListener('click', scheduleArticle);
+
+    // Text formatting functions
+    function formatText(command) {
+      document.execCommand(command, false, null);
+      editor.focus();
+    }
+
+    function formatHeading() {
+      document.execCommand('formatBlock', false, 'h2');
+      editor.focus();
+    }
+
+    function addLink() {
+      const selection = window.getSelection();
+      const url = prompt('Enter the URL:', 'https://');
+      if (url && selection.toString().length > 0) {
+        document.execCommand('createLink', false, url);
+      }
+    }
+
+    // Image handling functions
+    function addImage() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = handleImageSelect;
+      input.click();
+    }
+
+    function handleImageSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          insertImage(event.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function insertImage(src) {
+      const imageContainer = document.createElement('div');
+      imageContainer.className = 'draggable-image';
+      imageContainer.draggable = true;
+      
+      const img = document.createElement('img');
+      img.src = src;
+      
+      const controls = document.createElement('div');
+      controls.className = 'image-controls';
+      controls.innerHTML = `
+        <button onclick="deleteImage(this)"><i class="fas fa-trash"></i></button>
+        <button onclick="resizeImage(this, 'smaller')"><i class="fas fa-compress"></i></button>
+        <button onclick="resizeImage(this, 'larger')"><i class="fas fa-expand"></i></button>
+      `;
+      imageContainer.appendChild(img);
+      imageContainer.appendChild(controls);
+      
+      // Add resize handles
+      ['nw', 'ne', 'sw', 'se'].forEach(pos => {
+        const handle = document.createElement('div');
+        handle.className = `resize-handle ${pos}`;
+        handle.addEventListener('mousedown', initResize);
+        imageContainer.appendChild(handle);
+      });
+      insertAtCursor(imageContainer);
+    }
+
+    function deleteImage(button) {
+      button.closest('.draggable-image').remove();
+    }
+
+    function resizeImage(button, action) {
+      const img = button.closest('.draggable-image').querySelector('img');
+      const currentWidth = img.offsetWidth;
+      const newWidth = action === 'larger' ? currentWidth * 1.1 : currentWidth * 0.9;
+      img.style.width = `${newWidth}px`;
+    }
+
+    // Drag and drop handlers
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const files = e.dataTransfer.files;
+      if (files.length > 0 && files[0].type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          insertImage(event.target.result);
+        };
+        reader.readAsDataURL(files[0]);
+      }
+    }
+
+    // Paste handler for images
+    function handlePaste(e) {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (const item of items) {
+        if (item.type.indexOf('image') === 0) {
+          e.preventDefault();
+          const blob = item.getAsFile();
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            insertImage(event.target.result);
+          };
+          reader.readAsDataURL(blob);
+        }
+      }
+    }
+
+    // Toolbar visibility
+    function handleSelectionChange() {
+      const selection = window.getSelection();
+      if (selection.toString().trim() !== '') {
+        toolbar.classList.add('show');
+      } else {
+        toolbar.classList.remove('show');
+      }
+    }
+
+    // Helper function to insert element at cursor
+    function insertAtCursor(element) {
+      const selection = window.getSelection();
+      if (selection.rangeCount) {
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(element);
+        range.collapse(false);
+      }
+    }
+
+    function initResize(e) {
+      e.preventDefault();
+      const handle = e.target;
+      const container = handle.parentNode;
+      const img = container.querySelector('img');
+      const startX = e.clientX;
+      const startY = e.clientY;
+      const startWidth = img.offsetWidth;
+      const startHeight = img.offsetHeight;
+      
+      function handleResize(e) {
+        const deltaX = e.clientX - startX;
+        const newWidth = startWidth + deltaX;
+        const aspectRatio = startWidth / startHeight;
+        const newHeight = newWidth / aspectRatio;
+        img.style.width = `${newWidth}px`;
+        img.style.height = `${newHeight}px`;
+      }
+      function stopResize() {
+        window.removeEventListener('mousemove', handleResize);
+        window.removeEventListener('mouseup', stopResize);
+      }
+      window.addEventListener('mousemove', handleResize);
+      window.addEventListener('mouseup', stopResize);
+    }
+
+    // Save draft function (stores draft locally)
+    function saveDraft() {
+      const title = titleInput.value;
+      const content = editor.innerHTML;
+      const category = document.getElementById('categorySelect').value;
+      const draft = {
+        title,
+        article:content,
+        category,
+        draftDate: new Date().toISOString()
+      };
+      fetch('/publish-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(draft)
+      })
+      .then(response => response.json())
+      .then(result => {
+        alert('Draft saved successfully!');
+        // Optionally redirect to dashboard:
+        // window.location.href = '/dashboard';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error publishing the article.');
+      });
+    }
+
+    // Publish article function (calls API to create a new article)
+    function publishArticle() {
+      const title = titleInput.value;
+      const content = editor.innerHTML;
+      const category = document.getElementById('categorySelect').value;
+      if (!title || !content) {
+        alert('Please provide a title and content before publishing.');
+        return;
+      }
+      const data = {
+        title,
+        article: content,
+        category,
+        publishedDate: new Date().toISOString()
+      };
+      fetch('/publish-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        alert('Article published successfully!');
+        // Optionally redirect to dashboard:
+        // window.location.href = '/dashboard';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error publishing the article.');
+      });
+    }
+
+    // Schedule article function (calls API to create a scheduled article)
+    function scheduleArticle() {
+      const title = titleInput.value;
+      const content = editor.innerHTML;
+      const category = document.getElementById('categorySelect').value;
+      const scheduledTime = document.getElementById('scheduleDateTime').value;
+      if (!title || !content || !scheduledTime) {
+        alert('Please provide a title, content, and scheduled time.');
+        return;
+      }
+      const data = {
+        title,
+        article: content,
+        category,
+        schedule: scheduledTime
+      };
+      fetch('/publish-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        alert('Article scheduled successfully!');
+        // Optionally redirect:
+        // window.location.href = '/dashboard';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error scheduling the article.');
+      });
+    }
+
+    // Handle editor keydown events
+    function handleEditorKeydown(e) {
+      if (e.key === 'Enter' && e.shiftKey) {
+        e.preventDefault();
+        document.execCommand('insertLineBreak');
+      }
+    }
+
+    // Handle editor input events
+    function handleEditorInput() {
+      // Auto-save or other actions can be implemented here
+    }
+  </script>
+</body>
+</html>

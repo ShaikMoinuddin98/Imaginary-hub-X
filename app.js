@@ -128,10 +128,10 @@ const articleschema = new mongoose.Schema({
   schedule: {
     type: Date,
   },
-  published: {
-    type: Boolean,
-    default: false,
-  },
+  draftDate:{
+    type:Date
+  }
+  ,
   publishedDate: {
     type: Date,
   },
@@ -398,6 +398,17 @@ app.get("/dashboard", isLoggedIn, async (req, res) => {
   }
 });
 
+app.get("/analytics", isLoggedIn, async (req, res) => {
+  try {
+    let arts = await articles.find({ email: req.user.email },"email title category schedule draftDate publishedDate views shares timespent engagementRatio scrolldepth likes");
+
+     res.render("dashboard-2.ejs", { articles: arts });
+  }
+  catch (err) {
+    res.render("error.ejs", { message: err.message })
+  }
+});
+
 app.get("/signup", (req, res) => {
   try {
     res.render("signup.ejs");
@@ -519,7 +530,7 @@ app.get("/about", async (req, res) => {
 app.get("/allnews", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true } })
+      .find({ publishedDate: { $exists: true } },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
 
     for (let i = 0; i < arts.length; i++) {
@@ -536,7 +547,7 @@ app.get("/allnews", async (req, res) => {
 app.get("/tech", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true }, category: "Tech" })
+      .find({ publishedDate: { $exists: true }, category: "Tech" },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
 
     for (let i = 0; i < arts.length; i++) {
@@ -553,7 +564,7 @@ app.get("/tech", async (req, res) => {
 app.get("/art", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true }, category: "Design & Art" })
+      .find({ publishedDate: { $exists: true }, category: "Design & Art" },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
     for (let i = 0; i < arts.length; i++) {
       let u = await creator.findOne({ email: arts[i].email }, "username");
@@ -569,7 +580,7 @@ app.get("/art", async (req, res) => {
 app.get("/business", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true }, category: "Business" })
+      .find({ publishedDate: { $exists: true }, category: "Business" },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
 
     for (let i = 0; i < arts.length; i++) {
@@ -586,7 +597,7 @@ app.get("/business", async (req, res) => {
 app.get("/education", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true }, category: "Education" })
+      .find({ publishedDate: { $exists: true }, category: "Education" },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
 
     for (let i = 0; i < arts.length; i++) {
@@ -603,7 +614,7 @@ app.get("/education", async (req, res) => {
 app.get("/psychology", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true }, category: "Psychology" })
+      .find({ publishedDate: { $exists: true }, category: "Psychology" },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
 
     for (let i = 0; i < arts.length; i++) {
@@ -620,7 +631,7 @@ app.get("/psychology", async (req, res) => {
 app.get("/finance", async (req, res) => {
   try {
     let arts = await articles
-      .find({ publishedDate: { $exists: true }, category: "Finance" })
+      .find({ publishedDate: { $exists: true }, category: "Finance" },"email title category schedule draftDate publishedDate views shares timespent engagementRatio")
       .sort({ engagementRatio: -1 });
 
     for (let i = 0; i < arts.length; i++) {
@@ -634,18 +645,18 @@ app.get("/finance", async (req, res) => {
   }
 });
 
-app.get("/analytics", (req, res) => {
-  try {
-    res.render("analytics.ejs");
-  }
-  catch (err) {
-    res.render("error.ejs", { message: err.message })
-  }
-});
+// app.get("/analytics", (req, res) => {
+//   try {
+//     res.render("analytics.ejs");
+//   }
+//   catch (err) {
+//     res.render("error.ejs", { message: err.message })
+//   }
+// });
 
 app.get("/article-writing", isLoggedIn, (req, res) => {
   try {
-    res.render("article-writing.ejs");
+    res.render("article-writing-2.ejs");
   }
   catch (err) {
     res.render("error.ejs", { message: err.message })
@@ -710,8 +721,13 @@ app.post("/publish-article", isLoggedIn, async (req, res) => {
     let data;
     if (req.body.schedule) {
       data = { email: req.user.email, ...req.body };
-    } else
+    } 
+    else if(req.body.publishedDate){
       data = { email: req.user.email, ...req.body, publishedDate: currentTime };
+    }
+    else if(req.body.draftDate){
+      data = { email: req.user.email, ...req.body, draftDate: currentTime };
+    }
     const u = new articles(data);
     await u.save();
     res.json({ message: "done" });
@@ -1011,19 +1027,19 @@ app.post("/update-engagement", async (req, res) => {
   }
 });
 
-app.get("/get-analytics", isLoggedIn, async (req, res) => {
-  try {
-    let article = await articles.find(
-      { email: req.user.email },
-      "title views shares timespent scrolldepth engagementRatio"
-    );
+// app.get("/get-analytics", isLoggedIn, async (req, res) => {
+//   try {
+//     let article = await articles.find(
+//       { email: req.user.email },
+//       "title views shares timespent scrolldepth engagementRatio"
+//     );
 
-    res.json({ article });
-  }
-  catch (err) {
-    res.render("error.ejs", { message: err.message })
-  }
-});
+//     res.json({ article });
+//   }
+//   catch (err) {
+//     res.render("error.ejs", { message: err.message })
+//   }
+// });
 
 app.get("/writers", async (req, res) => {
   try {
