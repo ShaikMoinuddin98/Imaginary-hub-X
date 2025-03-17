@@ -418,38 +418,38 @@ app.post("/signup", async (req, res) => {
       throw new Error("Password must be equal or above 6 characters")
     }
 
-    // await data.register(newUser, pass);
+    await data.register(newUser, pass);
 
-    // req.login(newUser, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //     return res.redirect("/signup");
-    //   }
-    //   let c = new creator({ email: email });
-    //   c.save()
+    req.login(newUser, (err) => {
+      if (err) {
+        console.log(err);
+        return res.redirect("/signup");
+      }
+      let c = new creator({ email: email });
+      c.save()
 
-    //     .then((re) => {
-    //       ejs.renderFile(__dirname + "/views/writer-email.ejs", (err, html) => {
-    //         if (err) {
-    //           console.log("Error rendering EJS:", err);
-    //         } else {
-    //           // Use `html` for sending email
+        .then((re) => {
+          ejs.renderFile(__dirname + "/views/writer-email.ejs", (err, html) => {
+            if (err) {
+              console.log("Error rendering EJS:", err);
+            } else {
+              // Use `html` for sending email
     
-    //           mailoptions.to = req.user.email;
-    //           mailoptions.subject = "Welcome to Imaginary Hub X";
-    //           mailoptions.html = html;
-    //           send(transporter, mailoptions)  
-    //         }
-    //       });
-    //       mailoptions.html=""
-    //       res.redirect("/terms");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       res.json({ message: err.message });
-    //     });
-    // });
-    throw new Error("Currently Writer Onboarding is Closed")
+              mailoptions.to = req.user.email;
+              mailoptions.subject = "Welcome to Imaginary Hub X";
+              mailoptions.html = html;
+              send(transporter, mailoptions)  
+            }
+          });
+          mailoptions.html=""
+          res.redirect("/terms");
+        })
+        .catch((err) => {
+          console.log(err);
+          res.json({ message: err.message });
+        });
+    });
+    // throw new Error("Currently Writer Onboarding is Closed")
   }
   catch (err) {
     res.render("error.ejs", { message: err.message })
