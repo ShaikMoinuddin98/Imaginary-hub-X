@@ -1,153 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="Eliot
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Welcome to Imaginary Hub X</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f9f9f9;
-            font-family: Arial, sans-serif;
-            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            font-family: 'Arial', sans-serif;
+            color: #2d3748;
+            line-height: 1.6;
         }
-        .email-container {
+        table {
+            border-collapse: collapse;
+            width: 100%;
             max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
         }
-        .header, .membership-section {
+        a { text-decoration: none; }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #007bff, #00c4cc);
+            color: #ffffff;
+            padding: 30px 20px;
             text-align: center;
         }
         .header h1 {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            color: #333;
+            margin: 0;
         }
         .header p {
             font-size: 16px;
+            margin: 5px 0 0;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 25px;
         }
         .highlight {
             background-color: #ffd700;
-            padding: 2px 5px;
-            border-radius: 3px;
-            color: #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #2d3748;
             font-weight: bold;
         }
         .features ul {
             list-style: none;
             padding: 0;
-            font-size: 16px;
-            color: #333;
+            margin: 20px 0;
         }
-        .features li::before {
+        .features li {
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .features li:before {
             content: '✓';
-            color: #007BFF;
-            margin-right: 10px;
+            color: #007bff;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
         }
         .button {
             display: inline-block;
-            background-color: #007BFF;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #007bff, #00c4cc);
+            color: #ffffff !important;
+            padding: 12px 25px;
+            border-radius: 25px;
             text-align: center;
             font-weight: bold;
+            font-size: 15px;
             text-decoration: none;
-        }
-        .membership-section {
-            background-color: #ffd700;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .membership-section h2 {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 15px;
-        }
-        .membership-section ul {
-            list-style: none;
-            padding: 0;
-            color: #333;
-            font-size: 16px;
-        }
-        .membership-section li::before {
-            content: '✓';
-            color: #007BFF;
-            margin-right: 10px;
         }
         .footer {
+            background-color: #f8fafc;
             text-align: center;
-            font-size: 14px;
-            color: #666;
-            margin-top: 30px;
+            padding: 20px;
+            font-size: 12px;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
         }
         .footer a {
-            color: #007BFF;
+            color: #007bff;
             text-decoration: none;
+            margin: 0 10px;
         }
-
-        /* Dark Mode Support */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #121212;
-                color: #f5f5f5;
-            }
-            .email-container {
-                background-color: #1e1e1e;
-                box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-            }
-            .header h1, .membership-section h2 {
-                color: #f5f5f5;
-            }
-            .highlight {
-                background-color: #ffc107;
-                color: #000;
-            }
-            .features li::before,
-            .membership-section li::before {
-                color: #ffc107;
-            }
-            .footer {
-                color: #ccc;
-            }
-            .footer a {
-                color: #ffc107;
-            }
+        .preheader {
+            display: none;
+            visibility: hidden;
+            font-size: 1px;
+            color: #f5f7fa;
+        }
+        @media only screen and (max-width: 600px) {
+            table { width: 100%; margin: 10px; }
+            .header h1 { font-size: 22px; }
+            .content { padding: 20px; }
         }
     </style>
 </head>
 <body>
-<div class="email-container">
-    <div class="header">
-        <h1>Welcome to Imaginary Hub X!</h1>
-        <p>Hi, I’m <span class="highlight">Jabir Hussain</span>, the founder of Imaginary Hub X. First of all, thank you for subscribing and joining us on this journey. We’re excited to have you as one of the founding members of our community.</p>
-        <p>Imaginary Hub X is a new platform where curious minds can explore, learn, and grow through insightful articles on technology, finance, education, human psychology, and more.</p>
-        <p>Thank you for being here. We can’t wait to help you expand your knowledge and connect with like-minded readers!</p>
-        <p><strong>Jabir Hussain</strong><br>Founder, Imaginary Hub X</p>
-    </div>
-
-    <div class="membership-section">
-        <h2>What you can do with <span class="highlight">Imaginary Hub X subscription</span></h2>
-        <p>Take your experience to the next level with our membership:</p>
-        <ul>
-            <li>Access premium, subscriber-only content</li>
-            <li>Exclusive, ad-free content on topics that matter</li>
-            <li>Curated insights on emerging technologies, finance, and self-development</li>
-            <li>Bookmark, share, and discuss articles that inspire you</li>
-            <li>Contribute your own thoughts and join community discussions</li>
-        </ul>
-        <a href="https://www.imaginaryhub.in/allnews" class="button">Welcome to Our Community</a>
-    </div>
-
-    <div class="footer">
-        <p>Sent by Imaginary Hub X</p>
-        <p><a href="#">Unsubscribe</a> · <a href="https://www.imaginaryhub.in/contact">Help Center</a> · <a href="https://www.imaginaryhub.in/privacy">Privacy Policy</a> · <a href="https://www.imaginaryhub.in/terms-cond">Terms of Service</a></p>
-    </div>
-</div>
+    <div class="preheader">Welcome to Imaginary Hub X – Your Journey Begins Here!</div>
+    <table align="center" cellpadding="0" cellspacing="0" class="email-container">
+        <tr>
+            <td class="header">
+                <h1>Welcome to Imaginary Hub X!</h1>
+                <p>We’re Thrilled to Have You Onboard</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="content">
+                <p>Hello,</p>
+                <p>I’m <span class="highlight">Jabir Hussain</span>, the founder of Imaginary Hub X. Thank you for subscribing and joining our community. It’s an honor to welcome you as one of our founding members!</p>
+                <p>Imaginary Hub X is a platform where curious minds like yours can explore insightful articles on technology, finance, education, human psychology, and more. We’re here to help you learn, grow, and connect.</p>
+                <p>We can’t wait to see you dive into the exciting content awaiting you!</p>
+                <p>Warm regards,<br><strong>Jabir Hussain</strong><br>Founder, Imaginary Hub X</p>
+                <div class="features">
+                    <p><strong>What’s in Store for You:</strong></p>
+                    <ul>
+                        <li>Access to premium, subscriber-only content</li>
+                        <li>Ad-free, exclusive articles</li>
+                        <li>Curated insights on emerging trends</li>
+                        <li>Tools to bookmark, share, and discuss articles</li>
+                        <li>A vibrant community of like-minded readers</li>
+                    </ul>
+                </div>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="center">
+                            <a href="https://www.imaginaryhub.in/allnews" class="button">Start Exploring</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="footer">
+                <p>Sent by Imaginary Hub X</p>
+                <p>
+                    <a href="#">Unsubscribe</a> | 
+                    <a href="https://www.imaginaryhub.in/contact">Help Center</a> | 
+                    <a href="https://www.imaginaryhub.in/privacy">Privacy Policy</a> | 
+                    <a href="https://www.imaginaryhub.in/terms-cond">Terms of Service</a>
+                </p>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
