@@ -1,143 +1,311 @@
 <!DOCTYPE html>
-<html data-wf-domain="newslettertemplate.webflow.io" data-wf-page="60e89dfce959595cd2a9437d"
-    data-wf-site="60e78cd29a6063dc4dd03bcb" lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<html data-wf-domain="newslettertemplate.webflow.io" data-wf-page="60e89dfce959595cd2a9437d" data-wf-site="60e78cd29a6063dc4dd03bcb" lang="en">
 <head>
-
-    <meta charset="utf-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>News Page - Imaginary Hub X</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-6290396655730555">
+    <!-- SEO Enhancements -->
+    <meta name="description" content="<%= data.description || 'A compelling article on a valuable topic from Imaginary Hub X.' %>">
+    <meta name="keywords" content="tech, finance, business, education, psychology, design, art, <%= data.title %>, Imaginary Hub X">
+    <meta name="author" content="<%= username %>">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<%= data.title %> - Imaginary Hub X" />
+    <meta property="og:description" content="<%= data.description || 'A compelling article on a valuable topic from Imaginary Hub X.' %>" />
+    <meta property="og:image" content="<%= data.images && data.images[0] ? data.images[0] : 'https://i.postimg.cc/SNKyYCWP/download-1.png' %>" />
+    <meta property="og:url" content="<%= data.url || 'https://imaginaryhub.in' %>" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Imaginary Hub X" />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= data.title %> - Imaginary Hub X">
+    <meta name="twitter:description" content="<%= data.description || 'A compelling article on a valuable topic from Imaginary Hub X.' %>">
+    <meta name="twitter:image" content="<%= data.images && data.images[0] ? data.images[0] : 'https://i.postimg.cc/SNKyYCWP/download-1.png' %>">
+    <meta name="twitter:creator" content="@imaginaryhubx">
+    <!-- Page Title -->
+    <title><%= data.title %> - Imaginary Hub X</title>
     <link href="/assests/css/mainstyle.css" rel="stylesheet" type="text/css" />
-<link
-    href="/assests/svg/IH X.png"
-    rel="shortcut icon" type="image/x-icon" />
-<link
-    href="/assests/svg/IH X.png"
-    rel="apple-touch-icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/assests/svg/IH X.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="/assests/svg/IH X.png" rel="apple-touch-icon" />
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "<%= data.title %>",
+            "author": {
+                "@type": "Person",
+                "name": "<%= username %>",
+                "url": "https://imaginaryhub.in/profile/<%= encodeURIComponent(username) %>"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Imaginary Hub X",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://imaginaryhub.in/assests/svg/IH X.png"
+                }
+            },
+            "datePublished": "<%= new Date(data.publishedDate).toISOString() %>",
+            "image": "<%= data.images && data.images[0] ? data.images[0] : 'https://i.postimg.cc/SNKyYCWP/download-1.png' %>",
+            "description": "<%= data.description || 'A compelling article on a valuable topic from Imaginary Hub X.' %>",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "<%= data.url || 'https://imaginaryhub.in' %>"
+            }
+        }
+    </script>
+    <style>
+        /* Retain existing styles with enhancements for clarity and structure */
+        .team-detail-content {
+            max-width: 100%;
+            overflow: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .team-detail-content p {
+            margin: 0 0 15px;
+            padding: 0;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        #liked {
+            color: #74C0FC;
+        }
+        /* Improved Article Meta Layout */
+        .newsletter-content-top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .newsletter-content-top-divider {
+            display: none; /* Replaced with gap for better spacing */
+        }
+        .newsletter-content-top > div {
+            font-size: 14px;
+            color: #555555;
+        }
+        .newsletter-content-top a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .newsletter-content-top a:hover {
+            color: #0056b3;
+        }
+        /* Share Modal Enhancements */
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .button-primary {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .button-primary:hover {
+            transform: translateY(-2px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .modal-content h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        .modal-content li {
+            margin: 10px 0;
+        }
+        .modal-content a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .modal-content a:hover {
+            color: #0056b3;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #2d3748;
+        }
+        /* Subscribe Section Enhancements */
+        .card-newsletter-subscribe {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+        .card-newsletter-subscribe-content-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .card-newsletter-subscribe-icon {
+            flex-shrink: 0;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .newsletter-form input[type="email"] {
+            flex: 1;
+        }
+        /* Related Articles Enhancements */
+        .newsletters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .newsletter-item {
+            transition: transform 0.2s ease;
+        }
+        .newsletter-item:hover {
+            transform: translateY(-5px);
+        }
+        /* Footer Enhancements */
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .footer-nav-item a {
+            transition: color 0.3s ease;
+        }
+        /* Accessibility */
+        a:focus, button:focus {
+            outline: 2px solid #007bff;
+            outline-offset: 2px;
+        }
+        @media (max-width: 768px) {
+            .newsletter-content-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .newsletters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7QXPMYT3BK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7QXPMYT3BK');
-</script>
-<style>
-    /* Ensure the text in team-detail-content does not overflow */
-    .team-detail-content {
-      max-width: 100%;
-      overflow: hidden;
-      word-wrap: break-word;
-      /* Older browsers */
-      overflow-wrap: break-word;
-      /* Modern browsers */
-      word-break: break-word;
-      /* Ensure long words break correctly */
-    }
-  
-    /* Additional styling to ensure text fits within the container */
-    .team-detail-content p {
-      margin: 0;
-      /* Reset margin */
-      padding: 0;
-      /* Reset padding */
-      line-height: 1.5;
-      /* Adjust line height for better readability */
-      text-align: justify;
-      /* Justify text to align it neatly */
-    }
-  </style>
 <body>
-    <div style="opacity:0" class="page-wrapper">
-        <div data-collapse="medium" data-animation="over-left" data-duration="400"
-            data-w-id="58db7844-5919-d71b-dd74-2323ed8dffe9" data-easing="ease" data-easing2="ease" role="banner"
-            class="header w-nav">
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QXPMYT3BK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-7QXPMYT3BK');
+    </script>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header data-collapse="medium" data-animation="over-left" data-duration="400" data-w-id="58db7844-5919-d71b-dd74-2323ed8dffe9" data-easing="ease" data-easing2="ease" role="banner" class="header w-nav">
             <div class="container-default w-container">
                 <div class="header-wrapper">
-                    <div class="split-content header-right"><a href="/" aria-current="page"
-                            class="brand w-nav-brand w--current">
-                            <h3 style="margin: 10px;"> Imaginary Hub X</h3>
+                    <div class="split-content header-right">
+                        <a href="/" aria-current="page" class="brand w-nav-brand w--current">
+                            <h3 style="margin: 10px;">Imaginary Hub X</h3>
                         </a>
                         <div class="header-divider"></div>
                         <nav role="navigation" class="nav-menu w-nav-menu">
                             <ul role="list" class="header-navigation">
-                                <li class="nav-item-wrapper"><a href="/" aria-current="page"
-                                        class="nav-link w--current">Home</a></li>
-                                <li class="nav-item-wrapper"><a href="/about"
-                                        class="nav-link">About</a></li>
-                                <li class="nav-item-wrapper"><a href="/allnews" class="nav-link">Past
-                                        issues</a>
-                                </li>
+                                <li class="nav-item-wrapper"><a href="/" aria-current="page" class="nav-link w--current">Home</a></li>
+                                <li class="nav-item-wrapper"><a href="/about" class="nav-link">About</a></li>
+                                <li class="nav-item-wrapper"><a href="/allnews" class="nav-link">Past Issues</a></li>
                                 <li class="nav-item-wrapper">
-                                    <div data-hover="true" data-delay="0"
-                                        data-w-id="043ef42a-34a9-1a0f-55ac-1fd10d021335"
-                                        class="nav-link-dropdown w-dropdown">
+                                    <div data-hover="true" data-delay="0" data-w-id="043ef42a-34a9-1a0f-55ac-1fd10d021335" class="nav-link-dropdown w-dropdown">
                                         <div class="nav-link dropdown w-dropdown-toggle">
                                             <div>Our Topics <span class="dropdown-arrow"></span></div>
                                         </div>
                                         <nav class="dropdown-list w-dropdown-list">
                                             <div class="dropdown-nav-main-wrapper">
                                                 <div class="dropdown-nav-pages-wrapper">
-                                                    <div class="title dropdown-nav-title">Topics
-                                                    </div>
+                                                    <div class="title dropdown-nav-title">Topics</div>
                                                     <div class="dropdown-nav-content">
-                                                         <ul role="list" class="dropdown-nav">
-                                                            <li class="dropdown-nav-item"><a href="/tech"
-                                                                    aria-current="page"
-                                                                    class="dropdown-nav-link w--current">Tech</a></li>
-                                                            <li class="dropdown-nav-item"><a href="/finance"
-                                                                    class="dropdown-nav-link">Fianace</a></li>
-                                                            <li class="dropdown-nav-item"><a href="/business"
-                                                                    class="dropdown-nav-link">Bussiness News</a></li>
+                                                        <ul role="list" class="dropdown-nav">
+                                                            <li class="dropdown-nav-item"><a href="/tech" class="dropdown-nav-link">Tech</a></li>
+                                                            <li class="dropdown-nav-item"><a href="/finance" class="dropdown-nav-link">Finance</a></li>
+                                                            <li class="dropdown-nav-item"><a href="/business" class="dropdown-nav-link">Business News</a></li>
                                                         </ul>
                                                         <ul role="list" class="dropdown-nav last">
-                                                            <li class="dropdown-nav-item"><a href="/education"
-                                                                    class="dropdown-nav-link">Education</a></li>
-                                                            <li class="dropdown-nav-item"><a href="/pyschology"
-                                                                    class="dropdown-nav-link tag w-inline-block">
-                                                                    <div>Human Pscyology</div>
-                                                                    <div class="dropdown-nav-link-tag">Exclusive</div>
-                                                                </a></li>
-                                                           <li class="dropdown-nav-item"><a href="/art"
-                                                                    class="dropdown-nav-link tag w-inline-block">
-                                                                    <div>Desgin & art</div>
-                                                                    <div class="dropdown-nav-link-tag">Exclusive</div>
-                                                                </a></li>
+                                                            <li class="dropdown-nav-item"><a href="/education" class="dropdown-nav-link">Education</a></li>
+                                                            <li class="dropdown-nav-item"><a href="/psychology" class="dropdown-nav-link tag w-inline-block">
+                                                                <div>Human Psychology</div>
+                                                                <div class="dropdown-nav-link-tag">Exclusive</div>
+                                                            </a></li>
+                                                            <li class="dropdown-nav-item"><a href="/art" class="dropdown-nav-link tag w-inline-block">
+                                                                <div>Design & Art</div>
+                                                                <div class="dropdown-nav-link-tag">Exclusive</div>
+                                                            </a></li>
                                                         </ul>
                                                     </div>
-                                                </div>
-                                                <div class="dropdown-nav-pages-wrapper last">
-
                                                 </div>
                                             </div>
                                         </nav>
                                     </div>
                                 </li>
-                                <li class="nav-item-wrapper button-mobile"><a href="/subscribe"
-                                        class="button-primary header-button mobile w-inline-block">
+                                <li class="nav-item-wrapper button-mobile">
+                                    <a href="/subscribe" class="button-primary header-button mobile w-inline-block">
                                         <div class="newsletter-button-icon"></div>
                                         <div>Subscribe</div>
-                                    </a></li>
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
-                        <div><a href="/allnews" class="cart-button w-inline-block" role="button">
-                                <div class="w-inline-block">Latest Issue</div>
-
+                        <div>
+                            <a href="/writers" class="cart-button w-inline-block" role="button">
+                                <div class="w-inline-block">Our Writers</div>
                             </a>
-
                         </div>
                     </div>
-                    <div class="split-content header-left"><a data-w-id="03c57ad5-5287-7bc0-b112-b394ba6fbcd1"
-                            href="/writer" class="link-underline-wrapper header-link w-inline-block">
+                    <div class="split-content header-left">
+                        <a data-w-id="03c57ad5-5287-7bc0-b112-b394ba6fbcd1" href="/writer" class="link-underline-wrapper header-link w-inline-block">
                             <div>Become a Writer</div>
                             <div class="underline-wrapper header-link">
                                 <div class="underline"></div>
                             </div>
-                        </a><a href="/subscribe" class="button-primary header-button w-inline-block">
+                        </a>
+                        <a href="/subscribe" class="button-primary header-button w-inline-block">
                             <div class="newsletter-button-icon header-button"></div>
                             <div>Subscribe</div>
                         </a>
@@ -154,374 +322,308 @@
                 </div>
             </div>
             <div class="bg header-bg"></div>
-        </div>
-        <section class="section newsletter">
-            <div class="container-medium-920px">
-                <div data-w-id="d0ab7fc5-06d6-ace8-a204-a8fd170e358c"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="newsletter-content-top">
-                    <div class="newsletter-issue-wrapper">
-                        <a href="/profile/<%=encodeURIComponent(username)%>" class="link-underline-wrapper">
-                            <div><%=username%></div>
-                        </a>
-                    </div>
-                    <div class="newsletter-content-top-divider"></div>
-                    <div> <%= new Date(data.publishedDate).toLocaleDateString('en-US', { year: 'numeric' ,
-                              month: 'long' , day: 'numeric' })%></div>
-                    <div class="newsletter-content-top-divider"></div>
-                    <div>Reads: <%=data.views%> people</div>
-                    <div class="newsletter-content-top-divider"></div>
-                   
-                </div>
-                <div data-w-id="c56c7e68-53c6-5610-fc70-a2c26b150f66"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="rich-text w-richtext team-detail-content">
-                    <figure style="max-width:1744pxpx" class="w-richtext-align-fullwidth w-richtext-figure-type-image">
+        </header>
+
+        <!-- Article Section -->
+        <main>
+            <section class="section newsletter">
+                <div class="container-medium-920px">
+                    <div data-w-id="d0ab7fc5-06d6-ace8-a204-a8fd170e358c" class="newsletter-content-top">
+                        <div class="newsletter-issue-wrapper">
+                            <a href="/profile/<%= encodeURIComponent(username) %>" class="link-underline-wrapper">
+                                <div>By <%= username %></div>
+                            </a>
+                        </div>
+                        <div class="newsletter-content-top-divider"></div>
+                        <div><%= new Date(data.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+                        <div class="newsletter-content-top-divider"></div>
+                        <div>Reads: <%= data.views %> people</div>
+                        <div class="newsletter-content-top-divider"></div>
                         <div>
-                            <%for(i of data.images){%>
-                                <img src='<%=i%>' loading="lazy" alt="" />
-                                <%}%>
-                        </div>
-                         <!-- <figcaption>Mattis rhoncus urna neque viverra justo.</figcaption> -->
-                    </figure>
-
-                    <p><%-data.article%></p>
-                </div>
-                <!-- Share Button -->
-<div class="button-container">
-    <button class="btn btn-primary" onclick="openShareModal()">Share this Page</button>
-</div>
-
-<!-- Share Modal -->
-<div id="shareModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeShareModal()">&times;</span>
-        <h2>Share this Page</h2>
-        <p>Share via:</p>
-        <ul>
-            <li><a href="#" onclick="shareOnFacebook()" class="link-underline-wrapper" id="share-button">Facebook</a></li>
-            <li><a href="#" onclick="shareOnTwitter()" class="link-underline-wrapper" id="share-button">Twitter</a></li>
-            <li><a href="#" onclick="shareOnLinkedIn()" class="link-underline-wrapper" id="share-button">LinkedIn</a></li>
-            <li><a href="#" onclick="copyLink()" class="link-underline-wrapper" id="share-button">Copy Link</a></li>
-        </ul>
-    </div>
-</div>
-
-<script>
-    // Capture the current page URL dynamically
-    const shareUrl = window.location.href;
-
-    function openShareModal() {
-        document.getElementById('shareModal').style.display = 'block';
-    }
-
-    function closeShareModal() {
-        document.getElementById('shareModal').style.display = 'none';
-    }
-
-    function shareOnFacebook() {
-        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-        window.open(facebookUrl, '_blank');
-        closeShareModal();
-    }
-
-    function shareOnTwitter() {
-        const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`;
-        window.open(twitterUrl, '_blank');
-        closeShareModal();
-    }
-
-    function shareOnLinkedIn() {
-        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-        window.open(linkedInUrl, '_blank');
-        closeShareModal();
-    }
-
-    function copyLink() {
-        navigator.clipboard.writeText(shareUrl)
-            .then(() => {
-                alert('Link copied to clipboard!');
-                closeShareModal();
-            })
-            .catch(err => {
-                console.error('Failed to copy: ', err);
-                alert('Failed to copy the link. Please try again.');
-            });
-    }
-</script>
-
-<style>
-    /* Center the button container */
-    .button-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 10vh; /* Full viewport height to center vertically */
-    }
-
-    .btn {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .btn:hover {
-        background-color: #0056b3;
-    }
-
-    /* Modal Styles */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0,0,0,0.4); /* Black with opacity */
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto; /* 15% from the top and centered */
-        padding: 2px;
-        border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
-        border-radius: 5px;
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-</style>
-
-
-                <div data-w-id="aae45622-6d0f-fe99-2566-d7ece6899986"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="card newsletter-subscribe">
-                    <div class="card-newsletter-subscribe-content-top">
-                        <div class="image-wrapper card-newsletter-subscribe-icon"><img src="/assests/svg/Email.svg"
-                                loading="eager" alt="Email Icon - Newsletter X Webflow Template"
-                                class="image card-newsletter-subscribe-icon" /></div>
-                        <div class="card-newsletter-subscribe-content-top-title-wrapper">
-                            <h2 class="title card-newsletter-subscribe heading-size-h3">Subscribe to our newsletter</h2>
-                            <p class="paragraph card-newsletter-subscribe">Join our growing community and receive
-                                exclusive content on tech, finance, business, education, and psychology—all delivered
-                                straight to your inbox!</span></p>
+                            <i id="liked" <% if(!liked) { %>style="display: none;"<% } %> class="fa-solid fa-thumbs-up fa-xl" aria-label="Unlike this article"></i>
+                            <i id="unliked" <% if(liked) { %>style="display: none;"<% } %> class="fa-regular fa-thumbs-up fa-xl" aria-label="Like this article"></i>
+                            <span id="likescount"><%= data.likes.length %></span> Likes
                         </div>
                     </div>
-                    <div class="newsletter-form-block w-form">
-                        <form id="wf-form-Newsletter-Form" name="wf-form-Newsletter-Form" data-name="Newsletter Form"
-                            method="get" class="newsletter-form" data-wf-page-id="60e89dfce959595cd2a9437d"
-                            data-wf-element-id="cad85076-438a-e0c8-c2af-8d3f31d2a756"><input
-                                class="input newsletter w-input" maxlength="256" name="Email" data-name="Email"
-                                placeholder="Enter your email address" type="email" id="email" required="" />
-                            <div class="button-primary newsletter">
-                                <div class="newsletter-button-icon"></div><input type="submit"
-                                    data-wait="Please wait..." class="newsletter-button-text w-button"
-                                    value="Subscribe" />
-                            </div>
-                        </form>
-                        <div class="success-message w-form-done">
-                            <div>Thanks for joining my newsletter.</div>
-                        </div>
-                        <div class="error-message w-form-fail">
-                            <div>Oops! Something went wrong.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section bg-neutral-200">
-            <div class="container-medium-812px">
-                <div data-w-id="63a64e91-e3e8-caa5-a0ca-06ca533b1454"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="content-top past-newsletters">
-                    <div class="split-content past-newsletters-left">
-                        <h2 class="title past-newsletters">From <%=username%></h2>
-                    </div>
-                    <div class="split-content past-newsletters-right"><a href="/newsletters"
-                            class="button-secondary w-button">Browse All</a></div>
-                </div>
-                <div data-w-id="55d62345-eb52-8a03-0616-9b051e7cb230"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="w-dyn-list">
-                    <div role="list" class="newsletters-grid w-dyn-items">
-                        <%for(i of toparts){%>
-                        <div role="listitem" class="newsletter-item w-dyn-item"><a
-                                href="/article/<%=encodeURIComponent(i.title)%>/<%=i._id%>"
-                                class="card newsletter w-inline-block">
-                                <div class="card-newsletter-content-top">
-                                    <div class="card-newsletter-issue-wrapper">
-                                    </div>
-                                    <div class="card-newsletter-content-top-divider"></div>
-                                    <div> <%= new Date(i.publishedDate).toLocaleDateString('en-US', { year: 'numeric' ,
-                              month: 'long' , day: 'numeric' })%></div>
+                    <article data-w-id="c56c7e68-53c6-5610-fc70-a2c26b150f66" class="rich-text w-richtext team-detail-content">
+                        <% if(data.images && data.images.length > 0) { %>
+                            <figure style="max-width: 100%;" class="w-richtext-align-fullwidth w-richtext-figure-type-image">
+                                <div>
+                                    <% for(let i of data.images) { %>
+                                        <img src="<%= i %>" loading="lazy" alt="Article image for <%= data.title %>" />
+                                    <% } %>
                                 </div>
-                                <h3 class="title card-newsletter"><%=i.title%>
-                                </h3>
-                               
-                            </a></div>
-                       <%}%>
+                            </figure>
+                        <% } %>
+                        <div><%- data.article %></div>
+                    </article>
+
+                    <!-- Share Button -->
+                    <div class="button-container">
+                        <button class="button-primary" onclick="openShareModal()" aria-label="Share this article">Share this Article</button>
                     </div>
-                </div>
-            </div>
-        </section>
-        <footer class="footer">
-            <div class="container-default w-container">
-                <div data-w-id="69754c41-08b9-6ecf-91b8-95942fc59e5b" class="footer-content-top">
-                    <div class="split-content footer-content-top-main-content"><a href="/"
-                            aria-current="page"
-                            class="footer-logo-container w-inline-block w--current link-underline-wrapper">
-                            <h3 class="footer-logo-container">Imaginary Hub X</h3>
-                        </a>
-                        <p class="paragraph footer-content-top-main-content-paragraph">Get the latest insights and
-                            trends delivered straight to your inbox, covering tech, finance, business, education, and
-                            psychology.</span>
-                        </p>
+
+                    <!-- Share Modal -->
+                    <div id="shareModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeShareModal()" aria-label="Close share modal">×</span>
+                            <h2>Share this Article</h2>
+                            <p>Share via:</p>
+                            <ul>
+                                <li><a href="#" onclick="shareOnFacebook()" class="link-underline-wrapper" id="share-button">Facebook</a></li>
+                                <li><a href="#" onclick="shareOnTwitter()" class="link-underline-wrapper" id="share-button">Twitter</a></li>
+                                <li><a href="#" onclick="shareOnLinkedIn()" class="link-underline-wrapper" id="share-button">LinkedIn</a></li>
+                                <li><a href="#" onclick="copyLink()" class="link-underline-wrapper" id="share-button">Copy Link</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="newsletter-form-block footer-newsletter w-form">
-                        <form class="newsletter-form"><input class="input newsletter w-input" maxlength="256"
-                                name="Email" data-name="Email" placeholder="Enter your email address" type="email"
-                                id="email" required="" />
-                            <div class="button-primary newsletter">
-                                <div class="newsletter-button-icon"></div><input type="submit"
-                                    data-wait="Please wait..." class="newsletter-button-text w-button"
-                                    value="Subscribe" />
+
+                    <!-- Google AdSense -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6290396655730555" crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-6290396655730555" data-ad-slot="8125228602"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+
+                    <!-- Subscribe Section -->
+                    <div data-w-id="aae45622-6d0f-fe99-2566-d7ece6899986" class="card newsletter-subscribe">
+                        <div class="card-newsletter-subscribe-content-top">
+                            <div class="image-wrapper card-newsletter-subscribe-icon">
+                                <img src="/assests/svg/Email.svg" loading="eager" alt="Email Icon - Imaginary Hub X Newsletter" class="image card-newsletter-subscribe-icon" />
                             </div>
-                        </form>
-                        <div class="success-message w-form-done">
-                            <div>Thanks for joining my newsletter.</div>
+                            <div class="card-newsletter-subscribe-content-top-title-wrapper">
+                                <h2 class="title card-newsletter-subscribe heading-size-h3">Subscribe to Our Newsletter</h2>
+                                <p class="paragraph card-newsletter-subscribe">Join our growing community and receive exclusive content on tech, finance, business, education, and psychology—all delivered straight to your inbox!</p>
+                            </div>
                         </div>
-                        <div class="error-message w-form-fail">
-                            <div>Oops! Something went wrong.</div>
+                        <div class="newsletter-form-block w-form">
+                            <form id="subscribeForm" name="wf-form-Newsletter-Form" data-name="Newsletter Form" method="post" class="newsletter-form">
+                                <input class="input newsletter w-input" maxlength="256" name="email" data-name="Email" placeholder="Enter your email address" type="email" id="email" required aria-label="Enter your email to subscribe" />
+                                <div class="button-primary newsletter">
+                                    <div class="newsletter-button-icon"></div>
+                                    <input type="submit" data-wait="Please wait..." class="newsletter-button-text w-button" value="Subscribe" aria-label="Subscribe to newsletter" />
+                                </div>
+                            </form>
+                            <div class="success-message w-form-done">
+                                <div>Thanks for joining our newsletter!</div>
+                            </div>
+                            <div class="error-message w-form-fail">
+                                <div>Oops! Something went wrong.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="divider footer-content-top-divider"></div>
-                <div data-w-id="3f15247b-179c-b94a-4019-bc7e40900fba" class="footer-content">
-                    <div class="footer-menu-main-content">
-                        <div class="footer-menu-wrapper">
-                            <div class="title footer-menu-title">Useful Links</div>
-                            <div class="footer-menu-content">
-                                <ul role="list" class="footer-nav w-list-unstyled">
-                                    <li class="footer-nav-item"><a href="/" aria-current="page"
-                                            class="footer-nav-link w--current">Home</a></li>
-                                    <li class="footer-nav-item"><a href="/about"
-                                            class="footer-nav-link">About</a></li>
-                                    <li class="footer-nav-item"><a href="/contact"
-                                            class="footer-nav-link">Contact</a>
-                                    </li>
-                                    <li class="footer-nav-item"><a href="/allnews"
-                                            class="footer-nav-link tag w-inline-block">
+            </section>
+
+            <!-- Related Articles -->
+            <section class="section bg-neutral-200">
+                <div class="container-medium-812px">
+                    <div data-w-id="63a64e91-e3e8-caa5-a0ca-06ca533b1454" class="content-top past-newsletters">
+                        <div class="split-content past-newsletters-left">
+                            <h2 class="title past-newsletters">More from <%= username %></h2>
+                        </div>
+                        <div class="split-content past-newsletters-right">
+                            <a href="/newsletters" class="button-secondary w-button">Browse All</a>
+                        </div>
+                    </div>
+                    <div data-w-id="55d62345-eb52-8a03-0616-9b051e7cb230" class="w-dyn-list">
+                        <div role="list" class="newsletters-grid w-dyn-items">
+                            <% for(let i of toparts) { %>
+                                <div role="listitem" class="newsletter-item w-dyn-item">
+                                    <a href="/article/<%= i.title.replace(/ /g, '-') %>/<%= i._id %>" class="card newsletter w-inline-block">
+                                        <div class="card-newsletter-content-top">
+                                            <div class="card-newsletter-issue-wrapper"></div>
+                                            <div class="card-newsletter-content-top-divider"></div>
+                                            <div><%= new Date(i.publishedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+                                        </div>
+                                        <h3 class="title card-newsletter"><%= i.title %></h3>
+                                    </a>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container-default w-container">
+                    <div data-w-id="69754c41-08b9-6ecf-91b8-95942fc59e5b" class="footer-content-top">
+                        <div class="split-content footer-content-top-main-content">
+                            <a href="/" aria-current="page" class="footer-logo-container w-inline-block w--current link-underline-wrapper">
+                                <h3 class="footer-logo-container">Imaginary Hub X</h3>
+                            </a>
+                            <p class="paragraph footer-content-top-main-content-paragraph">Get the latest insights and trends delivered straight to your inbox, covering tech, finance, business, education, and psychology.</p>
+                        </div>
+                        <div class="newsletter-form-block footer-newsletter w-form">
+                            <form class="newsletter-form">
+                                <input class="input newsletter w-input" maxlength="256" name="email" data-name="Email" placeholder="Enter your email address" type="email" id="footer-email" required aria-label="Enter your email to subscribe" />
+                                <div class="button-primary newsletter">
+                                    <div class="newsletter-button-icon"></div>
+                                    <input type="submit" data-wait="Please wait..." class="newsletter-button-text w-button" value="Subscribe" aria-label="Subscribe to newsletter" />
+                                </div>
+                            </form>
+                            <div class="success-message w-form-done">
+                                <div>Thanks for joining our newsletter!</div>
+                            </div>
+                            <div class="error-message w-form-fail">
+                                <div>Oops! Something went wrong.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider footer-content-top-divider"></div>
+                    <div data-w-id="3f15247b-179c-b94a-4019-bc7e40900fba" class="footer-content">
+                        <div class="footer-menu-main-content">
+                            <div class="footer-menu-wrapper">
+                                <div class="title footer-menu-title">Useful Links</div>
+                                <div class="footer-menu-content">
+                                    <ul role="list" class="footer-nav w-list-unstyled">
+                                        <li class="footer-nav-item"><a href="/" aria-current="page" class="footer-nav-link w--current">Home</a></li>
+                                        <li class="footer-nav-item"><a href="/about" class="footer-nav-link">About</a></li>
+                                        <li class="footer-nav-item"><a href="/contact" class="footer-nav-link">Contact</a></li>
+                                        <li class="footer-nav-item"><a href="/allnews" class="footer-nav-link tag w-inline-block">
                                             <div>Newsletters</div>
                                             <div class="footer-nav-link-tag">ALL</div>
                                         </a></li>
-                                    <li class="footer-nav-item"><a href="/allnews"
-                                            class="footer-nav-link tag w-inline-block">
-                                            <div>Latest issues</div>
+                                        <li class="footer-nav-item"><a href="/allnews" class="footer-nav-link tag w-inline-block">
+                                            <div>Latest Issues</div>
                                             <div class="footer-nav-link-tag">Single</div>
                                         </a></li>
-                                </ul>
-                                <ul role="list" class="footer-nav last w-list-unstyled">
-                                    <li class="footer-nav-item"><a href="/subscribe"
-                                            class="footer-nav-link">Subscribe</a></li>
-                                    <li class="footer-nav-item"><a href="/privacy"
-                                                class="footer-nav-link">Privacy-Policy</a></li>
-                                    <li class="footer-nav-item"><a href="/terms-cond"
-                                                    class="footer-nav-link">Terms & Conditions</a></li>
-                                   
-                                </ul>
+                                    </ul>
+                                    <ul role="list" class="footer-nav last w-list-unstyled">
+                                        <li class="footer-nav-item"><a href="/subscribe" class="footer-nav-link">Subscribe</a></li>
+                                        <li class="footer-nav-item"><a href="/privacy" class="footer-nav-link">Privacy Policy</a></li>
+                                        <li class="footer-nav-item"><a href="/terms-cond" class="footer-nav-link">Terms & Conditions</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="footer-menu-wrapper last">
-                        </div>
+                    </div>
+                    <div class="divider footer-content-bottom-divider"></div>
+                    <div data-w-id="4a24e60e-bea5-a418-e416-88b53fbdd0a6" class="footer-content-bottom">
+                        <div class="footer-small-print">Copyright © Imaginary Hub X</div>
                     </div>
                 </div>
-                <div class="divider footer-content-bottom-divider"></div>
-                <div data-w-id="4a24e60e-bea5-a418-e416-88b53fbdd0a6" class="footer-content-bottom">
-                    <div class="footer-small-print">Copyright © Imaginary Hub X</div>
-                </div>
-        </footer>
-        </a>
-        <script src="/assests/js/page.js" type="text/javascript"></script>
-        <script src="/assests/js/main.js" type="text/javascript"></script>
-        up 
- <script>
-            let startTime;
-            let totalScrollDepth = 0;
-            let articleId=location.pathname.split("/")[3]
-            let hasViewed = false;
-            let shared = 0;
-         
+            </footer>
+        </main>
+    </div>
 
-            let shbtns=document.querySelectorAll("#share-button")
-            for(i of shbtns){
-            i.addEventListener("click",()=>{
-                shared+=1
-            })
+    <!-- Scripts -->
+    <script src="/assests/js/page.js" type="text/javascript"></script>
+    <script src="/assests/js/main.js" type="text/javascript"></script>
+    <script>
+        let liked = <%- liked %>;
+        let articleId = location.pathname.split("/")[3];
+        let shared = 0;
+        let startTime = Date.now();
+        let totalScrollDepth = 0;
+        let hasViewed = true;
+
+        // Like/Unlike Functionality
+        const likeBtn = document.getElementById("liked");
+        const unlikeBtn = document.getElementById("unliked");
+        const likesCount = document.getElementById("likescount");
+
+        unlikeBtn.addEventListener("click", () => {
+            liked = true;
+            likeBtn.style.display = "inline";
+            unlikeBtn.style.display = "none";
+            likesCount.innerText = parseInt(likesCount.innerText) + 1;
+        });
+
+        likeBtn.addEventListener("click", () => {
+            liked = false;
+            likeBtn.style.display = "none";
+            unlikeBtn.style.display = "inline";
+            likesCount.innerText = parseInt(likesCount.innerText) - 1;
+        });
+
+        // Share Functionality
+        const shareUrl = window.location.href;
+        document.querySelectorAll("#share-button").forEach(btn => {
+            btn.addEventListener("click", () => shared += 1);
+        });
+
+        function openShareModal() {
+            document.getElementById('shareModal').style.display = 'block';
         }
-            
-            // Start tracking time when the page loads
-            window.onload = function () {
-                startTime = Date.now();
-                hasViewed = true; // Consider a view when the page loads
-            };
 
-            // Track scroll depth
-            window.addEventListener('scroll', () => {
-                console.log(totalScrollDepth)
-                const scrollTop = window.scrollY;
-                const windowHeight = window.innerHeight;
-                const docHeight = document.body.scrollHeight;
-                const scrollDepth = (scrollTop + windowHeight) / docHeight * 100;
+        function closeShareModal() {
+            document.getElementById('shareModal').style.display = 'none';
+        }
 
-                if (scrollDepth > totalScrollDepth) {
-                    totalScrollDepth = scrollDepth;
-                }
+        function shareOnFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+            closeShareModal();
+        }
 
+        function shareOnTwitter() {
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`, '_blank');
+            closeShareModal();
+        }
 
+        function shareOnLinkedIn() {
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+            closeShareModal();
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('Link copied to clipboard!');
+                closeShareModal();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy the link. Please try again.');
             });
-           
+        }
 
-            window.addEventListener("unload",async function () {
-                const timeSpent = (Date.now() - startTime) / 1000; // Time spent in seconds
+        // Scroll Depth Tracking
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const docHeight = document.body.scrollHeight;
+            const scrollDepth = (scrollTop + windowHeight) / docHeight * 100;
+            if (scrollDepth > totalScrollDepth) totalScrollDepth = scrollDepth;
+        });
 
-                // Prepare data to send
+        // Engagement Tracking
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "hidden") {
+                const timeSpent = (Date.now() - startTime) / 1000;
                 const engagementData = {
-                    articleId:articleId ,
+                    articleId,
                     views: hasViewed ? 1 : 0,
                     shares: shared,
-                    
                     totalScrollDepth,
-                   
                     timeSpent,
+                    liked
                 };
                 const blob = new Blob([JSON.stringify(engagementData)], { type: 'application/json' });
-
-                // Send data to the server
-                navigator.sendBeacon('/update-engagement',blob);
-
-           
+                navigator.sendBeacon('/update-engagement', blob);
             }
-        )
+        });
 
-        </script>
+        // Subscribe Form Submission
+        document.getElementById('subscribeForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.querySelector('.success-message').style.display = 'block';
+                document.querySelector('.error-message').style.display = 'none';
+                document.getElementById('subscribeForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.querySelector('.error-message').style.display = 'block';
+                document.querySelector('.success-message').style.display = 'none';
+            });
+        });
+    </script>
 </body>
-
 </html>
