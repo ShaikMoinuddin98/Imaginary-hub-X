@@ -3,130 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Imaginary Hub X, Our New Writer!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Welcome to Imaginary Hub X, New Writer!</title>
     <style>
         body {
-            background-color: #eef2f3;
-            font-family: 'Roboto', sans-serif;
-            color: #444;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            font-family: 'Arial', sans-serif;
+            color: #333333;
+            line-height: 1.6;
         }
-        .email-container {
+        table {
+            border-collapse: collapse;
+            width: 100%;
             max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
+            margin: 0 auto;
+        }
+        a { text-decoration: none; }
+        .email-container {
             background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px auto;
         }
         .header {
-            text-align: center;
-            border-bottom: 2px solid #ff6f61;
-            padding-bottom: 10px;
-        }
-        .header h1 {
-            font-size: 26px;
-            font-weight: bold;
-            color: #ff6f61;
-        }
-        .header p {
-            font-size: 16px;
-        }
-        .highlight {
-            background-color: #ff6f61;
-            padding: 2px 5px;
-            border-radius: 3px;
-            color: #ffffff;
-            font-weight: bold;
-        }
-        .features ul {
-            list-style: none;
-            padding: 0;
-            font-size: 16px;
-            color: #444;
-        }
-        .features li::before {
-            content: '✔';
-            color: #28a745;
-            margin-right: 10px;
-        }
-        .button {
-            display: inline-block;
-            background-color: #28a745;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-            text-decoration: none;
-            margin-top: 20px;
-        }
-        .community-benefits {
-            background-color: #ffecb3;
-            color: #333;
             padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
+            text-align: left;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        .content {
+            padding: 25px;
+        }
+        .content h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 15px;
+            color: #2d3748;
+        }
+        .content p {
+            font-size: 16px;
+            margin: 0 0 15px;
+            color: #555555;
+        }
+        .content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        .content li {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #555555;
+        }
+        .content a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .content a:hover {
+            color: #0056b3;
+        }
+        .signature {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #2d3748;
+        }
+        .signature strong {
+            font-weight: bold;
         }
         .footer {
             text-align: center;
-            font-size: 14px;
-            color: #666;
-            margin-top: 30px;
+            padding: 20px;
+            font-size: 12px;
+            color: #666666;
+        }
+        .footer p {
+            margin: 5px 0;
         }
         .footer a {
-            color: #007BFF;
+            color: #007bff;
             text-decoration: none;
+            margin: 0 5px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .preheader {
+            display: none;
+            visibility: hidden;
+            font-size: 1px;
+            color: #f5f7fa;
+        }
+        @media only screen and (max-width: 600px) {
+            table { width: 100%; margin: 10px; }
+            .content { padding: 15px; }
+            .content h1 { font-size: 20px; }
+            .content p, .content li { font-size: 14px; }
         }
     </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7QXPMYT3BK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7QXPMYT3BK');
-</script>
 <body>
-
-<div class="email-container">
-    <div class="header">
-        <h1>Welcome to Imaginary Hub X, New Writer!</h1>
-        <p>Hi There<span class="highlight">Amazing Creator</span>,</p>
-        <p>We’re excited to welcome you to the Imaginary Hub X writing community! Thank you for joining us on this journey to inspire, educate, and engage readers.</p>
-        <p>As a writer, you'll have the opportunity to share your insights and creativity, connecting with a community of learners and thinkers. Together, we aim to make knowledge accessible and engaging for everyone.</p>
-    </div>
-
-    <div class="features">
-        <h3>What You Can Expect as a Writer</h3>
-        <p>Here’s what awaits you:</p>
-        <ul>
-            <li>Publish your articles on a platform dedicated to knowledge sharing.</li>
-            <li>Receive feedback and support from our community.</li>
-            <li>Engage with readers and fellow writers through discussions and collaborations.</li>
-            <li>Access resources and guides to enhance your writing skills.</li>
-        </ul>
-        <a href="https://www.imaginaryhub.in/login" class="button">Get Started Now</a>
-    </div>
-
-    <div class="community-benefits">
-        <h3>Community Benefits</h3>
-        <ul>
-            <li><strong>In-depth Learning:</strong> Gain access to a wealth of resources and insights.</li>
-            <li><strong>Network and Grow:</strong> Connect with like-minded individuals who share your passion for writing.</li>
-            <li><strong>Make an Impact:</strong> Contribute to India’s largest intellectual community.</li>
-            <li><strong>Stay Updated:</strong> Receive notifications on trends, community news, and events.</li>
-        </ul>
-    </div>
-
-    <div class="footer">
-        <p>Sent by Imaginary Hub X </p>
-        <p><a href="#">Unsubscribe</a> · <a href="#">Help Center</a> · <a href="https://www.imaginaryhub.in/privacy">Privacy Policy</a> · <a href="https://www.imaginaryhub.in/terms-cond">Terms of Service</a></p>
-    </div>
-</div>
-
+    <div class="preheader">Welcome to Imaginary Hub X – Start Sharing Your Voice!</div>
+    <table align="center" cellpadding="0" cellspacing="0" class="email-container">
+        <tr>
+            <td class="header">
+                <img src="https://ph-files.imgix.net/ff7439da-bb1e-4dde-b3f2-21e072898ae0.png?auto=compress&codec=mozjpeg&cs=strip&auto=format&w=64&h=64&fit=crop&frame=1&dpr=2" alt="Imaginary Hub X Logo">
+            </td>
+        </tr>
+        <tr>
+            <td class="content">
+                <h1>Welcome to Imaginary Hub X, Amazing Creator! ✍️</h1>
+                <p>We’re so excited to have you join our writing community!</p>
+                <p>You’re now part of a platform where you can share your insights, inspire readers, and connect with a global audience of learners and thinkers. Your words have the power to make an impact, and we can’t wait to see what you create.</p>
+                <p>To ensure you never miss updates or feedback on your articles, here’s what you can do:</p>
+                <ul>
+                    <li>If you’re a <strong>Gmail user</strong>, move us to your Primary inbox. Here’s how:<br>
+                        On mobile: Tap the 3 dots at the top right > Click “Move to” > Choose “Primary”<br>
+                        On desktop: Drag this email to the “Primary” tab on the left of your screen.</li>
+                    <li>If you’re an <strong>Apple Mail user</strong>, tap on our email address and click “Add to VIPs”.</li>
+                </ul>
+                <p>One last thing: We’re building a vibrant community of creators. Want to connect with other writers and stay updated? Follow us on <a href="https://www.linkedin.com/showcase/imaginary-hub-x/">LinkedIn</a> and <a href="https://www.instagram.com/imaginaryhubx/">Instagram</a>. It’ll be fun, we promise!</p>
+                <p>P.S. Ready to start writing? Log in and <a href="https://www.imaginaryhub.in/login">create your first article</a> now!</p>
+                <div class="signature">
+                    <p>Cheers,</p>
+                    <p><strong>Jabir Hussain</strong><br>Founder, Imaginary Hub X</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="footer">
+                <p>Crafted with 💡 by Imaginary Hub X</p>
+                <p>Not interested in these updates? <a href="#">Unsubscribe here</a>.</p>
+                <p>
+                    <a href="https://www.imaginaryhub.in/contact">Help Center</a> | 
+                    <a href="https://www.imaginaryhub.in/privacy">Privacy Policy</a> | 
+                    <a href="https://www.imaginaryhub.in/terms-cond">Terms of Service</a>
+                </p>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
