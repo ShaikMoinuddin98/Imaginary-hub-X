@@ -1,24 +1,200 @@
 <!DOCTYPE html>
-
 <html data-wf-page="60e78cd29a6063a172d03bcd" data-wf-site="60e78cd29a6063dc4dd03bcb" data-wf-status="1" lang="en">
-
 <head>
-
     <meta charset="utf-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Google ad tag -->
-<meta name="google-adsense-account" content="ca-pub-6290396655730555">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6290396655730555"
-     crossorigin="anonymous"></script>
+    <!-- Google ad tag -->
+    <meta name="google-adsense-account" content="ca-pub-6290396655730555">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6290396655730555"
+         crossorigin="anonymous"></script>
     <title>Home - Imaginary Hub X</title>
     <link href="/assests/css/mainstyle.css" rel="stylesheet" type="text/css" />
-<link
-    href="/assests/svg/IH X.png"
-    rel="shortcut icon" type="image/x-icon" />
-<link
-    href="/assests/svg/IH X.png"
-    rel="apple-touch-icon" />
+    <link href="/assests/svg/IH X.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="/assests/svg/IH X.png" rel="apple-touch-icon" />
+    <style>
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(0);
+            z-index: 10000;
+        }
+
+        .popup-content h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .category-checkboxes {
+            margin-bottom: 20px;
+        }
+
+        .subscribe-category-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .subscribe-category-checkbox input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .popup-buttons button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .popup-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Success Message */
+        #thanksMessage {
+            color: green;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Close Button */
+        #closePopupButton {
+            background-color: #28a745;
+        }
+
+        #closePopupButton:hover {
+            background-color: #218838;
+        }
+
+        /* Center the popup exactly in the middle */
+        .popup-content {
+            position: relative;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Form Success/Error Message Styling */
+        .success-message,
+        .error-message {
+            display: none;
+        }
+
+        /* Latest Articles Section Styling */
+        .w-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        .w-col-4 {
+            width: 33.333%;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card.past-newsletter {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-past-newsletter-content-top {
+            margin-bottom: 15px;
+        }
+
+        .past-newsletter-tag-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .past-newsletter-tag {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .title.card-past-newsletter a {
+            color: #0f2137;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .title.card-past-newsletter a:hover {
+            color: #007bff;
+        }
+
+        .paragraph.card-past-newsletter {
+            font-size: 14px;
+            color: #585858;
+            margin-bottom: 15px;
+        }
+
+        .card-past-newsletter-content-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .past-newsletter-author-name {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .flex-vc.past-newsletters {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 767px) {
+            .w-col-4 {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QXPMYT3BK"></script>
@@ -26,112 +202,8 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-7QXPMYT3BK');
 </script>
-<style>
-    /* Popup Overlay */
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        display: none;
-        /* Hidden by default */
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
-    /* Popup Content */
-    .popup-content {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        max-width: 500px;
-        width: 100%;
-        text-align: center;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-        transform: translateY(0);
-        /* Make sure it's in the middle vertically */
-        z-index: 10000;
-    }
-
-    .popup-content h3 {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
-
-    .category-checkboxes {
-        margin-bottom: 20px;
-    }
-
-    .subscribe-category-checkbox {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .subscribe-category-checkbox input[type="checkbox"] {
-        margin-right: 10px;
-    }
-
-    .popup-buttons {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-    }
-
-    .popup-buttons button {
-        padding: 10px 20px;
-        border: none;
-        background-color: #007BFF;
-        color: #fff;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .popup-buttons button:hover {
-        background-color: #0056b3;
-    }
-
-    /* Success Message */
-    #thanksMessage {
-        color: green;
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 20px;
-    }
-
-    /* Close Button */
-    #closePopupButton {
-        background-color: #28a745;
-    }
-
-    #closePopupButton:hover {
-        background-color: #218838;
-    }
-
-    /* Center the popup exactly in the middle */
-    .popup-content {
-        position: relative;
-        margin: 0 auto;
-        /* Center horizontally */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    /* Form Success/Error Message Styling */
-    .success-message,
-    .error-message {
-        display: none;
-    }
-</style>
-
 <body>
     <div style="opacity:0" class="page-wrapper">
         <div data-collapse="medium" data-animation="over-left" data-duration="400"
@@ -170,9 +242,9 @@
                                                                     aria-current="page"
                                                                     class="dropdown-nav-link w--current">Tech</a></li>
                                                             <li class="dropdown-nav-item"><a href="/finance"
-                                                                    class="dropdown-nav-link">Fianace</a></li>
+                                                                    class="dropdown-nav-link">Finance</a></li>
                                                             <li class="dropdown-nav-item"><a href="/business"
-                                                                    class="dropdown-nav-link">Bussiness News</a></li>
+                                                                    class="dropdown-nav-link">Business News</a></li>
                                                         </ul>
                                                         <ul role="list" class="dropdown-nav last">
                                                             <li class="dropdown-nav-item"><a href="/education"
@@ -182,17 +254,15 @@
                                                                     <div>Human psychology</div>
                                                                     <div class="dropdown-nav-link-tag">Exclusive</div>
                                                                 </a></li>
-                                                           <li class="dropdown-nav-item"><a href="/art"
+                                                            <li class="dropdown-nav-item"><a href="/art"
                                                                     class="dropdown-nav-link tag w-inline-block">
-                                                                    <div>Desgin & art</div>
+                                                                    <div>Design & Art</div>
                                                                     <div class="dropdown-nav-link-tag">Exclusive</div>
                                                                 </a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="dropdown-nav-pages-wrapper last">
-
-                                                </div>
+                                                <div class="dropdown-nav-pages-wrapper last"></div>
                                             </div>
                                         </nav>
                                     </div>
@@ -206,9 +276,7 @@
                         </nav>
                         <div><a href="/writers" class="cart-button w-inline-block" role="button">
                                 <div class="w-inline-block">Our Writers</div>
-
                             </a>
-
                         </div>
                     </div>
                     <div class="split-content header-left"><a data-w-id="03c57ad5-5287-7bc0-b112-b394ba6fbcd1"
@@ -241,7 +309,6 @@
                     <div class="split-content subscribe-left">
                         <h1 class="title subscribe">A weekly newsletter about tech, and more</h1>
                         <p class="paragraph subscribe">Stay informed with the latest insights on emerging technologies, smart investments, startups, education, and personal development.</p>
-
                         <div class="w-layout-grid subscribe-features-grid">
                             <div class="subscribe-feature-wrapper">
                                 <img src="assests/svg/check.svg" alt="Check Icon" class="subscribe-feature-icon" />
@@ -256,22 +323,18 @@
                                 <div>Access to our Writers community</div>
                             </div>
                         </div>
-
                         <!-- Newsletter Subscription Form -->
                         <div class="newsletter-form-block subscribe w-form">
                             <form id="newsletter-form" class="newsletter-form">
                                 <input class="input newsletter w-input" maxlength="256" name="email"
                                     placeholder="Enter your email address" type="email" required />
-
                                 <!-- Subscribe Button -->
                                 <div class="button-primary newsletter">
                                     <div class="newsletter-button-icon"></div>
-                                    <!-- Triggering the Popup with the existing classes -->
                                     <button type="button" class="newsletter-button-text w-button"
                                         onclick="openCategoryPopup()">Subscribe</button>
                                 </div>
                             </form>
-
                             <div class="success-message w-form-done">
                                 <div>Thanks for joining our newsletter.</div>
                             </div>
@@ -280,16 +343,13 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="split-content home-hero-right">
                         <div class="home-hero-shape"></div>
-                        <img src="assests/img/email.jpg" loading="eager"  class="image subscribe-mockup" />
-                        <!-- <img src="/public/assests/img/news-home.jpg" loading="eager" Template" class="image subscribe-mockup" /> -->
+                        <img src="assests/img/email.jpg" loading="eager" class="image subscribe-mockup" />
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- Category Selection Popup -->
         <div id="categoryPopup" class="popup-overlay">
             <div class="popup-content">
@@ -317,20 +377,17 @@
                     </div>
                     <div class="subscribe-category-checkbox">
                         <input type="checkbox" id="Design & Art" name="category" value="Design & Art" />
-                        <label for="psychology">Design & Art</label>
-                      </div>
+                        <label for="Design & Art">Design & Art</label>
+                    </div>
                 </div>
-
                 <!-- Confirmation and Close Buttons -->
                 <div class="popup-buttons">
                     <button onclick="confirmSubscription()">Confirm</button>
                     <button id="closePopupButton" onclick="closePopup()" style="display:none;">Close</button>
                 </div>
-
                 <div id="thanksMessage" style="display:none;">Thanks for subscribing to your selected categories!</div>
             </div>
         </div>
-        </section>
         <section class="section">
             <div class="container-default w-container">
                 <div class="home-about-wrapper">
@@ -351,7 +408,8 @@
                             content on tech, finance, business, education, and human psychology. We aim to deliver
                             concise, engaging, and valuable information to keep you informed and inspired. Stay ahead of
                             the curve with the latest trends and actionable advice, delivered right to your
-                            inbox.</span></p><a data-w-id="6c32f6f8-b292-3e21-19f0-8e4d17792ff8" href="/about"
+                            inbox.</p>
+                        <a data-w-id="6c32f6f8-b292-3e21-19f0-8e4d17792ff8" href="/about"
                             class="link-underline-wrapper w-inline-block">
                             <div>About us</div>
                             <div class="underline-wrapper">
@@ -361,52 +419,110 @@
                     </div>
                     <div data-w-id="3fb7073b-5e9c-3d34-ea19-c009d4a4b7cf"
                         style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                        class="image-wrapper home-about"><img src="/assests/img/writer 1.jpg" loading="eager"
+                        class="image-wrapper home-about">
+                        <img src="/assests/img/writer 1.jpg" loading="eager"
                             sizes="(max-width: 479px) 93vw, (max-width: 767px) 94vw, (max-width: 991px) 95vw, (max-width: 1919px) 59vw, 882px"
-                            class="image home-about" /></div>
+                            class="image home-about" />
+                    </div>
                 </div>
             </div>
         </section>
-        <!-- <section class="section bg-neutral-200">
-            <div data-w-id="b24c8019-0743-256b-0e87-daa291de43f8"
-                style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                class="container-small-536px past-newsletters">
-                <h2 class="title home-past-newsletters">Past newsletters</h2>
-                <p class="paragraph past-newsletters">Catch up on the topics that matter and stay informed with our
-                    expertly curated content.</span></p>
-            </div>
-            <div class="container-medium-812px">
-                <div data-w-id="7e2f8cf7-f35a-9ec3-728c-24c8050626e5"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="w-dyn-list">
-
-
-
-
-
-
-
+        <!-- Latest Articles Section -->
+       <!-- Latest Articles Section -->
+<section class="section bg-neutral-200">
+    <div class="container-default w-container">
+      <div
+        data-w-id="b24c8019-0743-256b-0e87-daa291de43f8"
+        style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+        class="container-small-536px past-newsletters"
+      >
+        <h2 class="title home-past-newsletters">Latest Articles</h2>
+        <p class="paragraph past-newsletters">
+          Catch up on the topics that matter and stay informed with our expertly curated content.
+        </p>
+      </div>
+      <div class="container-medium-812px">
+        <div
+          data-w-id="7e2f8cf7-f35a-9ec3-728c-24c8050626e5"
+          style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+          class="w-dyn-list"
+        >
+          <div role="list" class="w-dyn-items w-row">
+            <% if (latestArticles && latestArticles.length > 0) { %>
+              <% latestArticles.forEach(article => { %>
+                <% 
+                  // Generate a URL-friendly title by replacing spaces with hyphens
+                  const urlTitle = article.title.replace(/\s+/g, '-').toLowerCase();
+                  
+                  // Function to strip HTML tags and get plain text
+                  const stripHtmlTags = (html) => {
+                    return html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+                  };
+                  
+                  // Get the plain text from the article and create a short excerpt
+                  const plainText = stripHtmlTags(article.article);
+                  const excerpt = plainText.length > 100 
+                    ? plainText.substring(0, 100) + '...' 
+                    : plainText;
+                %>
+                <div role="listitem" class="w-dyn-item w-col w-col-4">
+                  <div class="card past-newsletter">
+                    <div class="card-past-newsletter-content-top">
+                      <div class="card-past-newsletter-content-top-left">
+                        <div class="past-newsletter-tag-wrapper">
+                          <div class="past-newsletter-tag">
+                            <%= article.category %>
+                          </div>
+                        </div>
+                        <h3 class="title card-past-newsletter">
+                          <a href="/article/<%= urlTitle %>/<%= article._id %>">
+                            <%= article.title %>
+                          </a>
+                        </h3>
+                        <p class="paragraph card-past-newsletter">
+                          <%= excerpt %>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card-past-newsletter-content-bottom">
+                      <div class="past-newsletter-author-wrapper">
+                        <div class="past-newsletter-author-name">
+                          <%= article.username %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div data-w-id="f2442c6c-fb65-8ffa-c2ab-df4f30b91f17"
-                    style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
-                    class="flex-vc past-newsletters">
-                    <a href="/allnews" class="button-primary w-button">Se all past
-                        newsletters</a>
-                </div>
-            </div>
-        </section> -->
+              <% }); %>
+            <% } else { %>
+              <div class="w-dyn-empty">
+                <div>No articles found.</div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        <div
+          data-w-id="f2442c6c-fb65-8ffa-c2ab-df4f30b91f17"
+          style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
+          class="flex-vc past-newsletters"
+        >
+          <a href="/allnews" class="button-primary w-button">See all past newsletters</a>
+        </div>
+      </div>
+    </div>
+  </section>
         <section class="section bg-primary-1 cta">
             <div class="container-default w-container">
                 <div class="cta-wrapper">
-                    <div><img
+                    <div>
+                        <img
                             src="https://cdn.prod.website-files.com/60e78cd29a6063dc4dd03bcb/610350b8629928d1770fbfe2_newsletter-envelop-icon-newsletter-x-webflow-template.svg"
                             loading="eager" alt="Newsletter Icon - Newsletter X Webflow Template"
                             class="image cta-icon" />
                         <h2 class="title color-neutral-100 cta">Subscribe to our newsletter</h2>
                         <p class="paragraph color-neutral-100 cta">Get exclusive insights on tech, finance, business,
                             education, and psychology delivered straight to your inbox. Stay informed with content
-                            that’s
-                            concise, valuable, and tailored to your interests.</span></p>
+                            that’s concise, valuable, and tailored to your interests.</p>
                     </div>
                     <div data-w-id="e7606716-ab59-5325-be38-093ededee135"
                         style="-webkit-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 50px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"
@@ -418,7 +534,6 @@
                                 <!-- Subscribe Button -->
                                 <div class="button-primary newsletter">
                                     <div class="newsletter-button-icon"></div>
-                                    <!-- Triggering the Popup with the existing classes -->
                                     <button type="button" class="newsletter-button-text w-button"
                                         onclick="openCategoryPopup()">Subscribe</button>
                                 </div>
@@ -430,8 +545,8 @@
                                 <div>Oops! Something went wrong.</div>
                             </div>
                         </div>
-                        <div class="cta-right-message-wrapper"><img src="/assests/svg/right.svg" loading="eager"
-                                class="image cta-right-message-icon" />
+                        <div class="cta-right-message-wrapper">
+                            <img src="/assests/svg/right.svg" loading="eager" class="image cta-right-message-icon" />
                             <div class="cta-right-message">Don’t worry, we only send great content, no SPAM</div>
                         </div>
                     </div>
@@ -510,8 +625,7 @@
                                     </div>
                                 </div>
                                 <p class="paragraph card-testimonial">I share valuable content on tech, finance, and
-                                    more.
-                                    Join the conversation and stay connected!</p>
+                                    more. Join the conversation and stay connected!</p>
                             </div>
                         </div>
                     </div>
@@ -533,10 +647,8 @@
                             <h3 class="footer-logo-container">Imaginary Hub X</h3>
                         </a>
                         <p class="paragraph footer-content-top-main-content-paragraph">Get the latest insights and
-                            trends
-                            delivered straight to your inbox, covering tech, finance, business, education, and
-                            psychology.</span>
-                        </p>
+                            trends delivered straight to your inbox, covering tech, finance, business, education, and
+                            psychology.</p>
                     </div>
                     <div class="newsletter-form-block footer-newsletter w-form">
                         <form id="newsletter-form" class="newsletter-form">
@@ -545,7 +657,6 @@
                             <!-- Subscribe Button -->
                             <div class="button-primary newsletter">
                                 <div class="newsletter-button-icon"></div>
-                                <!-- Triggering the Popup with the existing classes -->
                                 <button type="button" class="newsletter-button-text w-button"
                                     onclick="openCategoryPopup()">Subscribe</button>
                             </div>
@@ -557,7 +668,6 @@
                             <div>Oops! Something went wrong.</div>
                         </div>
                     </div>
-
                 </div>
                 <div class="divider footer-content-top-divider"></div>
                 <div data-w-id="3f15247b-179c-b94a-4019-bc7e40900fba" class="footer-content">
@@ -585,135 +695,124 @@
                                 <ul role="list" class="footer-nav last w-list-unstyled">
                                     <li class="footer-nav-item"><a href="/subscribe"
                                             class="footer-nav-link">Subscribe</a></li>
-                                            <li class="footer-nav-item"><a href="/privacy"
-                                              class="footer-nav-link">Privacy-Policy</a></li>
-                                  <li class="footer-nav-item"><a href="/terms-cond"
-                                                  class="footer-nav-link">Terms & Conditions</a></li>
-                                   
+                                    <li class="footer-nav-item"><a href="/privacy"
+                                            class="footer-nav-link">Privacy-Policy</a></li>
+                                    <li class="footer-nav-item"><a href="/terms-cond"
+                                            class="footer-nav-link">Terms & Conditions</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="footer-menu-wrapper last">
-                        </div>
+                        <div class="footer-menu-wrapper last"></div>
                     </div>
                 </div>
                 <div class="divider footer-content-bottom-divider"></div>
                 <div data-w-id="4a24e60e-bea5-a418-e416-88b53fbdd0a6" class="footer-content-bottom">
                     <div class="footer-small-print">Copyright © Imaginary Hub X</div>
                 </div>
+            </div>
         </footer>
-        </a>
-        <script src="/assests/js/page.js" type="text/javascript"></script>
-        <script src="/assests/js/home.js" type="text/javascript"></script>
-        <script>
-            // Get DOM elements
-            const subscribeButtons = document.querySelectorAll('.button-primary.newsletter');
-            const categoryPopup = document.getElementById('categoryPopup');
-            const confirmButton = categoryPopup.querySelector('.popup-buttons').firstElementChild;
-            const closeButton = categoryPopup.querySelector('.popup-buttons').lastElementChild;
-            const thanksMessage = document.getElementById('thanksMessage');
-            const categoryCheckboxes = document.querySelectorAll('.subscribe-category-checkbox');
-            const successMessages = document.querySelectorAll('.success-message');
-            const errorMessages = document.querySelectorAll('.error-message');
+    </div>
+    <script src="/assests/js/page.js" type="text/javascript"></script>
+    <script src="/assests/js/home.js" type="text/javascript"></script>
+    <script>
+        // Get DOM elements
+        const subscribeButtons = document.querySelectorAll('.button-primary.newsletter');
+        const categoryPopup = document.getElementById('categoryPopup');
+        const confirmButton = categoryPopup.querySelector('.popup-buttons').firstElementChild;
+        const closeButton = categoryPopup.querySelector('.popup-buttons').lastElementChild;
+        const thanksMessage = document.getElementById('thanksMessage');
+        const categoryCheckboxes = document.querySelectorAll('.subscribe-category-checkbox input');
+        const successMessages = document.querySelectorAll('.success-message');
+        const errorMessages = document.querySelectorAll('.error-message');
 
-            let currentEmailInput = null;
+        let currentEmailInput = null;
 
-            // Add click handlers to all subscribe buttons
-            subscribeButtons.forEach(button => {
-                button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const emailInput = this.previousElementSibling;
+        // Add click handlers to all subscribe buttons
+        subscribeButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const emailInput = this.previousElementSibling;
 
-                    if (!emailInput || !emailInput.value) {
-                        showError('Please enter an email address');
-                        return;
-                    }
-
-                    if (!isValidEmail(emailInput.value)) {
-                        showError('Please enter a valid email address');
-                        return;
-                    }
-
-                    currentEmailInput = emailInput;
-                    showCategoryPopup();
-                });
-            });
-
-            // Show/hide popup functions
-            function showCategoryPopup() {
-                categoryPopup.style.display = 'flex';
-                // Reset checkboxes
-                categoryCheckboxes.forEach(checkbox => checkbox.classList.remove('selected'));
-            }
-
-            function hideCategoryPopup() {
-                categoryPopup.style.display = 'none';
-                thanksMessage.style.display = 'none';
-            }
-
-            // Toggle category selection
-            categoryCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function () {
-                    this.classList.add('selected');
-                });
-            });
-
-            // Handle form submission
-            confirmButton.addEventListener('click', async function () {
-                const selectedCategories = Array.from(categoryCheckboxes)
-                    .filter(checkbox => checkbox.classList.contains('selected'))
-                    .map(checkbox => checkbox.textContent.trim());
-
-                if (selectedCategories.length === 0) {
-                    showError('Please select at least one category');
+                if (!emailInput || !emailInput.value) {
+                    showError('Please enter an email address');
                     return;
                 }
 
-                try {
-                    const response = await fetch('/subscribe', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            email: currentEmailInput.value,
-                            topics: selectedCategories
-                        })
-                    });
-
-                    if (response.ok) {
-                        showSuccess();
-                        setTimeout(hideCategoryPopup, 2000);
-                    } else {
-                        throw new Error('Subscription failed');
-                    }
-                } catch (error) {
-                    showError('Failed to subscribe. Please try again later.');
+                if (!isValidEmail(emailInput.value)) {
+                    showError('Please enter a valid email address');
+                    return;
                 }
+
+                currentEmailInput = emailInput;
+                showCategoryPopup();
             });
+        });
 
-            // Close popup when clicking close button
-            closeButton.addEventListener('click', hideCategoryPopup);
+        function openCategoryPopup() {
+            showCategoryPopup();
+        }
 
-            // Helper functions
-            function isValidEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        function showCategoryPopup() {
+            categoryPopup.style.display = 'flex';
+            categoryCheckboxes.forEach(checkbox => checkbox.checked = false);
+        }
+
+        function closePopup() {
+            categoryPopup.style.display = 'none';
+            thanksMessage.style.display = 'none';
+        }
+
+        function confirmSubscription() {
+            const selectedCategories = Array.from(categoryCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            if (selectedCategories.length === 0) {
+                showError('Please select at least one category');
+                return;
             }
 
-            function showSuccess() {
-                thanksMessage.style.display = 'block';
-                successMessages.forEach(msg => msg.style.display = 'block');
-                errorMessages.forEach(msg => msg.style.display = 'none');
-            }
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: currentEmailInput.value,
+                    topics: selectedCategories
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    showSuccess();
+                    setTimeout(closePopup, 2000);
+                } else {
+                    throw new Error('Subscription failed');
+                }
+            })
+            .catch(error => {
+                showError('Failed to subscribe. Please try again later.');
+            });
+        }
 
-            function showError(message) {
-                errorMessages.forEach(msg => {
-                    msg.querySelector('div').textContent = message;
-                    msg.style.display = 'block';
-                });
-                successMessages.forEach(msg => msg.style.display = 'none');
-            }
-        </script>
+        // Helper functions
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showSuccess() {
+            thanksMessage.style.display = 'block';
+            successMessages.forEach(msg => msg.style.display = 'block');
+            errorMessages.forEach(msg => msg.style.display = 'none');
+        }
+
+        function showError(message) {
+            errorMessages.forEach(msg => {
+                msg.querySelector('div').textContent = message;
+                msg.style.display = 'block';
+            });
+            successMessages.forEach(msg => msg.style.display = 'none');
+        }
+    </script>
 </body>
-
 </html>
