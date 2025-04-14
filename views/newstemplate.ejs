@@ -13,7 +13,7 @@
     <meta property="og:title" content="<%= data.title %> - Imaginary Hub X" />
     <meta property="og:description" content="<%= data.description || 'A compelling article on a valuable topic from Imaginary Hub X.' %>" />
     <meta property="og:image" content="<%= data.images && data.images[0] ? data.images[0] : 'https://i.postimg.cc/SNKyYCWP/download-1.png' %>" />
-    <meta property="og:url" content="<%= data.url || 'https://imaginaryhub.in' %>" />
+    <meta property="og:url" content="<%= data.url || 'https://imaginaryhubx.com' %>" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Imaginary Hub X" />
     <!-- Twitter Card Meta Tags -->
@@ -37,14 +37,14 @@
             "author": {
                 "@type": "Person",
                 "name": "<%= username %>",
-                "url": "https://imaginaryhub.in/profile/<%= encodeURIComponent(username) %>"
+                "url": "https://imaginaryhubx.com/profile/<%= encodeURIComponent(username) %>"
             },
             "publisher": {
                 "@type": "Organization",
                 "name": "Imaginary Hub X",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://imaginaryhub.in/assests/svg/IH X.png"
+                    "url": "https://imaginaryhubx.com/assests/svg/IH X.png"
                 }
             },
             "datePublished": "<%= new Date(data.publishedDate).toISOString() %>",
@@ -52,7 +52,7 @@
             "description": "<%= data.description || 'A compelling article on a valuable topic from Imaginary Hub X.' %>",
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "<%= data.url || 'https://imaginaryhub.in' %>"
+                "@id": "<%= data.url || 'https://imaginaryhubx.com' %>"
             }
         }
     </script>
