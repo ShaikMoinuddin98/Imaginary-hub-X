@@ -4,6 +4,7 @@
 
 ---
 
+
 ## 🚀 Overview
 
 Imaginary Hub X empowers:
@@ -65,7 +66,7 @@ Whether you're a writer or a reader, the platform ensures a clean, intuitive, an
 ---
 
 ## 📸 Screenshots
-> _Coming soon..._
+<img width="1901" height="907" alt="Screenshot 2025-07-27 221030" src="https://github.com/user-attachments/assets/44b92071-27e0-40c2-888a-2b79056aa299" />
 
 ---
 
@@ -75,9 +76,4 @@ Whether you're a writer or a reader, the platform ensures a clean, intuitive, an
 
 ---
 
-## 📬 Stay Tuned
-> We are working on adding support for user profiles, comment sections, and dark mode in future updates!
-
----
-
-## 🌐 Visit Live: [https://imaginaryhubx.com](https://imaginaryhubx.com) *(Example Domain)*
+## 🌐 Visit Live: [https://imaginaryhubx.com](https://imaginaryhubx.com)
